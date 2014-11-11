@@ -1,0 +1,59 @@
+﻿<div class="content">
+    <div class="sidebar sidebar-middle">
+        <div class="list-group code-tool">
+            <div class="btn-group">
+                <a href="javascript://" ng-click="runServer()" class="btn btn-primary" ng-show="!serverRuning" title="启动服务器" style="border-radius:0;"><i class="glyphicon glyphicon-play"></i></a>
+                <a href="javascript://" ng-click="stopServer()" class="btn btn-success" style="display:none;" ng-show="serverRuning" title="运行中,点击关闭服务器" style="border-radius:0;"><i class="glyphicon glyphicon-stop"></i></a>
+                <a href="javascript:;" ng-click="addProItem()" class="btn btn-primary" title="新增代理设置" style="border-radius:0;"><i class="glyphicon glyphicon-plus"></i></a>
+                <a href="javascript://" class="btn btn-primary disabled" title="打开项目目录" ng-click="openPath()"><i class="glyphicon glyphicon-folder-open"></i></a>
+                <a href="javascript://" class="btn btn-primary disabled" title="刷新目录" ng-click="reload()"><i class="glyphicon glyphicon-retweet"></i></a>
+                <a href="javascript://" class="btn btn-primary disabled" title="复制预览地址" ng-click="publish()"><i class="glyphicon glyphicon-transfer"></i></a>
+                <a href="javascript://" class="btn btn-primary disabled" title="保存更改" id="editorSave" ng-click="save()" style="border-radius:0;"><i class="glyphicon glyphicon-floppy-disk"></i></a>
+            </div>
+        </div>
+        <ul class="ztree" code-tree></ul>
+        <div class="list-group">
+            <div class="list-group-item active drag-to-add-dir" id="msg">
+                拖动工作目录到此
+            </div>
+        </div>
+    </div>
+    <div class="container-right container-right-middle" ui-view ng-animate="'animate'">
+        <div id="logContentWrap">
+            <textarea name="" id="logContent"></textarea>
+        </div>
+    </div>
+    <!--弹窗-->
+    <div class="dialog panel panel-primary" ng-class="{'hidden':!currentProItem}">
+        <div class="panel-heading">
+            <h3 class="panel-title">代理文件</h3>
+        </div>
+        <div class="panel-body">
+            <form name="newProItemForm" ng-submit="saveProItem(currentProItem)">
+                <div class="form-group" ng-class="{'has-error':currentProItem.url.$error.required || currentProItem.url.$error.pattern}">
+                    <label class="control-label">线上文件地址</label>
+                    <input type="text" autofocus="true" class="form-control" name="url" required ng-model="currentProItem.url" placeholder="要调试的线上文件地址,如果是目录,请右键点击目录并选择(代理设置)按钮" />
+                </div>
+                <div class="form-group" ng-class="{'has-error':currentProItem.localFile.$error.pattern}">
+                    <label class="control-label">本地文件路径</label>
+                    <input type="text" class="form-control" name="localFile" ng-pattern="/^[a-zA-Z]:(([a-zA-Z]*)||([a-zA-Z]*\\))*/" ng-model="currentProItem.localFile" placeholder="本地文件路径,为空则自动下载线上文件" />
+                </div>
+                <div class="form-group">
+                    <button href="javascript://" ng-disabled="newProItemForm.$invalid" class="btn btn-primary">保 存</button>
+                    <a href="javascript://" class="btn btn-primary" ng-click="closeProItemForm()">关 闭</a>
+                    <span class="error-message" ng-show="currentProItemErrorMsg">{{currentProItemErrorMsg}}</span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--end弹窗-->
+    <!--右键菜单-->
+    
+    <ul class="dropdown-menu studio-contextmenu" id="studioContext">
+        <li><a tabindex="-1" href="javascript:;" ng-click="browse($event)">预 览</a></li>
+        <li><a tabindex="-1" href="javascript:;" ng-click="explorer($event)">打开目录</a></li>
+        <li><a tabindex="-1" href="javascript:;"  ng-click="editNode($event)">代理设置</a></li>
+        <li ng-class="{'disabled':!deleteNodeAble}"><a tabindex="-1" href="javascript:;"  ng-click="deleteNode($event)">删 除</a></li>
+    </ul>
+    <!--end右键菜单-->
+</div>

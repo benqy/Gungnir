@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title>Gungnir</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/zTreeStyle.css" rel="stylesheet" />
+    <link href="lib/codemirror/codemirror.css" rel="stylesheet" />
+    
+<link href="lib/codemirror/theme/ambiance.css" rel="stylesheet" />
+<link href="lib/codemirror/addon/fold/foldgutter.css" rel="stylesheet" />
+<link href="lib/codemirror/addon/dialog/dialog.css" rel="stylesheet" />
+<link href="lib/codemirror/addon/lint/lint.css" rel="stylesheet" />
+<link href="css/index.css" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="-webkit-app-region: drag;">
+        <div class="container">
+            <div class="navbar-header">
+                <img src="img/logo.png">
+                <a class="navbar-brand" title="v0.1.0.0" href="javascript://">Gungnir</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav" id="navlist">
+                    <li class="studio" ><a href="#/studio">编辑器</a></li>
+                    <li class="system"><a href="#/system">帮助</a></li>
+                </ul>
+                <div class="btn-group window-tool">
+                    <a class="btn rectbtn" href="javascript://" title="v0.1.0.0" av-site><i class="glyphicon glyphicon-usd"></i></a>
+                    <a class="btn rectbtn" href="javascript://" av-minisize><i class="glyphicon glyphicon-minus"></i></a>
+                    <a class="btn rectbtn" href="javascript://" av-max-toggle><i class="glyphicon glyphicon-fullscreen"></i></a>
+                    <a class="btn rectbtn" href="javascript://" av-close><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container app" ui-view ng-animate="'view'"></div>
+    <script src="lib/jquery-2.0.3.js"></script>
+    <script src="lib/angular/angular1.1.5.js"></script>
+    <script src="lib/angular/angular-ui-router.js"></script>
+    <script src="lib/jquery.ztree.all-3.5.js"></script>
+
+
+    <!--codemirror-->
+    <script src="lib/codemirror/codemirror.js"></script>
+    <script src="lib/codemirror/util/formatting.js"></script>
+    <script src="lib/codemirror/mode/javascript/javascript.js"></script>
+    <script src="lib/codemirror/mode/css/css.js"></script>
+    <script src="lib/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="lib/codemirror/mode/xml/xml.js"></script>
+
+<script src="lib/codemirror/addon/selection/active-line.js"></script>
+<script src="lib/codemirror/addon/edit/matchbrackets.js"></script>
+
+<!--搜索-->
+<script src="lib/codemirror/addon/dialog/dialog.js"></script>
+<script src="lib/codemirror/addon/search/searchcursor.js"></script>
+<script src="lib/codemirror/addon/search/search.js"></script>
+<script src="lib/codemirror/addon/search/match-highlighter.js"></script>
+
+    
+<script src="lib/codemirror/addon/edit/closebrackets.js"></script>
+<script src="lib/codemirror/addon/edit/matchtags.js"></script>
+    <!--fold-->
+    <script src="lib/codemirror/addon/fold/foldcode.js"></script>
+<script src="lib/codemirror/addon/fold/foldgutter.js"></script>
+<script src="lib/codemirror/addon/fold/brace-fold.js"></script>
+<script src="lib/codemirror/addon/fold/comment-fold.js"></script>
+<script src="lib/codemirror/addon/fold/indent-fold.js"></script>
+<script src="lib/codemirror/addon/fold/markdown-fold.js"></script>
+<script src="lib/codemirror/addon/fold/xml-fold.js"></script>
+
+    <!--jslint-->
+<script src="lib/codemirror/jshint.js"></script>
+<script src="lib/codemirror/jsonlint.js"></script>
+<script src="lib/codemirror/csslint.js"></script>
+<script src="lib/codemirror/addon/lint/lint.js"></script>
+<script src="lib/codemirror/addon/lint/javascript-lint.js"></script>
+<script src="lib/codemirror/addon/lint/json-lint.js"></script>
+<script src="lib/codemirror/addon/lint/css-lint.js"></script>
+    <!--end codemirror-->
+    <script src="modules/app.js"></script>
+    <script src="modules/filters.js"></script>
+    <script src="modules/directives.js"></script>
+<script src="modules/win.js"></script>
+    <script>
+        //启动app
+        angular.bootstrap($('body'), ['adv']);
+    </script>
+</body>
+</html>

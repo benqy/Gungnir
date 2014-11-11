@@ -1,0 +1,11 @@
+{
+        "name"    : "proxy",
+        "description" : "proxy setting",
+        "author"  : {
+                "name"  : "benqy",
+                "email" : "hmjlr123@gmail.com",
+                "url"   : "https://github.com/benqy"
+        },
+        "version" : "0.1.2",
+        "main"    : "index.js"
+}

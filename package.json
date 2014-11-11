@@ -1,0 +1,33 @@
+{
+  "name": "Gungnir",
+  "version": "0.1.0.0",
+  "description": "Online Page Debug Tool",
+  "main": "app/index.html",
+  "author": "benqy",
+  "license": "WTFPL",
+  "directories": {
+    "test": "no"
+  },
+  "dependencies": {
+    "iconv-lite": "~0.2.11",
+    "http-proxy": "~0.10.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "no"
+  },
+  "keywords": [
+    "adv"
+  ],
+  "window": {
+    "title": "Gungnir",
+    "icon": "app/img/logo.png",
+    "toolbar": true,
+    "frame": false,
+    "width": 1200,
+    "height": 700,
+    "position": "center",
+    "min_width": 1200,
+    "min_height": 700
+  }
+}
