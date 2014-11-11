@@ -14,7 +14,8 @@
     lint: false,
     autoCloseBrackets: true,
     highlightSelectionMatches: { showToken: /\w/ },
-    matchTags: { bothTags: true }
+    matchTags: { bothTags: true },
+    profile: 'xhtml'
   };
 
   var isTxt = function (file) {
