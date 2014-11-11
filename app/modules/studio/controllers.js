@@ -9,7 +9,7 @@
   studio
     .controller('studio', function ($scope, $state, $stateParams) {
       var system = adv.system.get();
-
+      adv.codeEditer.init();
 
       //添加文件
       $scope.addProItem = function () {
@@ -22,7 +22,7 @@
       $scope.saveProItem = function (currentProItem) {
         //http://www.17173cdn.com/a/b
         $scope.currentProItemErrorMsg = "正在下载页面...";
-        if (util.isdir(currentProItem.localFile)) {
+        if (currentProItem.localFile && util.isdir(currentProItem.localFile)) {
           studio.saveProItem(currentProItem);
           $scope.currentProItem = null;
           $scope.currentProItemErrorMsg = '完成';
@@ -41,6 +41,13 @@
             $scope.$digest();
           });
         }
+      };
+
+      $scope.delProItem = function (currentProItem) {
+        studio.delProItem(currentProItem);
+        $scope.currentProItem = null;
+        //更新目录结构
+        studio.updateTree();
       };
 
       $scope.closeProItemForm = function () {
@@ -81,7 +88,6 @@
       });
 
       $scope.save = function () {
-        console.log('savebtn');
         adv.codeEditer.save();
       };
 
@@ -124,13 +130,19 @@
       };
 
       $scope.deleteNode = function ($event) {
+        var ss = adv.system.get();
         if ($($event.currentTarget).parent().hasClass('disabled')) {
           $event.stopPropagation();
           return;
         }
         else {
           if (util.isdir($scope.currentNode.path)) {
+            console.log(1)
             require("child_process").exec('rd /q /s ' + $scope.currentNode.path);
+            if (ss.workspace == $scope.currentNode.path) {
+              ss.workspace = '';
+              adv.system.save(ss);
+            }
           }
           else {
             fs.unlinkSync($scope.currentNode.path);

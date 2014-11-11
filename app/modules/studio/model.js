@@ -74,6 +74,18 @@
     return { success: true, msg: '保存成功' };
   };
 
+  studio.delProItem = function (proItem) {
+    var ss = adv.system.get();
+    if (!ss.workspace) return;
+    var datas = studio.getProItems();
+    var proFilePath = ss.workspace + '\\zproject.json';
+    console.log(datas)
+    delete datas[proItem.id];
+    console.log(datas)
+    util.writeFileSync(proFilePath, JSON.stringify(datas));
+    return { success: true, msg: '完成' };
+  };
+
   studio.downFile = function (proItem, fn) {
     proxy.downloadPage(proItem.url)
       .then(function (data) {
@@ -96,9 +108,6 @@
           util.mkdir(path, true);
           util.writeFileSync(file, data.text);
           proItem.localFile = file;
-        }
-        else {
-          console.log('has');
         }
         studio.saveProItem(proItem);
         //更新目录结构

@@ -362,6 +362,7 @@ border-color: #428bca;
     border-radius: 0;
 }
 #logContent {
+    display:none;
     background: #f5f5f5;
 }
 .CodeMirror {

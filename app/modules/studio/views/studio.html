@@ -39,7 +39,8 @@
                     <input type="text" class="form-control" name="localFile" ng-pattern="/^[a-zA-Z]:(([a-zA-Z]*)||([a-zA-Z]*\\))*/" ng-model="currentProItem.localFile" placeholder="本地文件路径,为空则自动下载线上文件" />
                 </div>
                 <div class="form-group">
-                    <button href="javascript://" ng-disabled="newProItemForm.$invalid" class="btn btn-primary">保 存</button>
+                    <button ng-disabled="newProItemForm.$invalid" class="btn btn-primary">保 存</button>
+                    <a href="javascript://" ng-disabled="!currentProItem.id" ng-click="delProItem(currentProItem)" class="btn btn-primary">移除代理</a>
                     <a href="javascript://" class="btn btn-primary" ng-click="closeProItemForm()">关 闭</a>
                     <span class="error-message" ng-show="currentProItemErrorMsg">{{currentProItemErrorMsg}}</span>
                 </div>
@@ -53,7 +54,7 @@
         <li><a tabindex="-1" href="javascript:;" ng-click="browse($event)">预 览</a></li>
         <li><a tabindex="-1" href="javascript:;" ng-click="explorer($event)">打开目录</a></li>
         <li><a tabindex="-1" href="javascript:;"  ng-click="editNode($event)">代理设置</a></li>
-        <li ng-class="{'disabled':!deleteNodeAble}"><a tabindex="-1" href="javascript:;"  ng-click="deleteNode($event)">删 除</a></li>
+        <li><a tabindex="-1" href="javascript:;"  ng-click="deleteNode($event)">删 除</a></li>
     </ul>
     <!--end右键菜单-->
 </div>
