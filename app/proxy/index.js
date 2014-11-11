@@ -64,6 +64,7 @@ var runServer = function (adv) {
   var configs = ss.localServer;
   module.exports.setProxy();
   var serverHandler = function (req, res) {
+    var ss = adv.system.get();
     var urlModule = require('url'),
       proItem,
       urlOpt = urlModule.parse(req.url, true),
@@ -101,6 +102,7 @@ var runServer = function (adv) {
     else {
       header = setHeader(urlOpt);
       var path = require('path').resolve(ss.workspace + urlOpt.path);
+      console.log(ss.workspace + urlOpt.path);
       if (!fs.existsSync(path)) {
         resData = '文件不存在:' + path;
       }

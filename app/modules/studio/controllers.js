@@ -137,7 +137,6 @@
         }
         else {
           if (util.isdir($scope.currentNode.path)) {
-            console.log(1)
             require("child_process").exec('rd /q /s ' + $scope.currentNode.path);
             if (ss.workspace == $scope.currentNode.path) {
               ss.workspace = '';
