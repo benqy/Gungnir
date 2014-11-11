@@ -1,6 +1,7 @@
 ﻿(function () {
   'use strict';
   var util = require('./helpers/util');
+  var fs = require('fs');
   var studio = adv.studio;
   studio.directive('codeTree', function () {
     return function ($scope, elem) {
