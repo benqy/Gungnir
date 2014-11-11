@@ -150,7 +150,6 @@
           $scope.currentNode = null;
         }
       };
-
     });
 
 })();

@@ -58,14 +58,21 @@
       studio.updateTree = function () {
         var treeNodes, ss = adv.system.get();
         if (ss.workspace) {
-          treeNodes = studio.dirObjToTreeNode(ss.workspace);
-          studio.tree = $.fn.zTree.init($el, setting, treeNodes);
-          var node = studio.tree.getNodeByParam('name', ss.currentFile);
-          if (node) {
-            setTimeout(function () {
-              studio.tree.selectNode(node);
-              selectNode(node);
-            }, 0);
+          //如果目录已被删除或者被变更为一个文件,则删除workspace
+          if (fs.existsSync(ss.workspace) && util.isdir(ss.workspace)) {
+            treeNodes = studio.dirObjToTreeNode(ss.workspace);
+            studio.tree = $.fn.zTree.init($el, setting, treeNodes);
+            var node = studio.tree.getNodeByParam('name', ss.currentFile);
+            if (node) {
+              setTimeout(function () {
+                studio.tree.selectNode(node);
+                selectNode(node);
+              }, 0);
+            }
+          }
+          else {
+            ss.workspace = '';
+            adv.system.save(ss);
           }
         }
       }

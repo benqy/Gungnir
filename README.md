@@ -2,51 +2,23 @@ Gungnir
 =======
 
 ###简介
-本地代理调试工具,用于替代fiddler. 使用起来比较简便,功能较单一.
+代理线上文件到本地(fiddler,支持代理整个目录以及自动下载线上文件),代码编辑器,web服务器.
 
+###帮助文档
+撸个视频比较方便  
 
-
-###自动下载线上文件到本地并开启代理.
-
-1. 拖动一个本地工作目录到软件左下角  
-![](http://oneaboveall.qiniudn.com/dgzf8jta50v5zzp9no2zot0fqo.png)
-
-2. 点击左上工具条的"+"按钮,出现表单  
-![](http://oneaboveall.qiniudn.com/zeqg9ot49hvkj6f2x8h1le3w37.png)
-
-3. 填写要调试的线上文件地址,如下:  
-![](http://oneaboveall.qiniudn.com/b0z5kq6uxejhs9xdxg2h7z7u8f.png)
-
-4. 点击保存后,自动生成本地文件:  
-![](http://oneaboveall.qiniudn.com/zn4rvo1xuki0mk92ce0k6fhudt.png)
-
-5. 修改本地文件,如下把首页的背景颜色改为red:   
-![](http://oneaboveall.qiniudn.com/oatzxfq3pw0icrlb2sfmenopqf.png)
-
-
-6. 右键点击代理文件,选择预览,可以看到线上文件已经代理到本地:  
-![](http://oneaboveall.qiniudn.com/087d9cpfo8v6ai3r91olsadm6x.png)
-
-![](http://oneaboveall.qiniudn.com/76iuh197tamdkxblz7hdprfcg1.png)
- 
-
-
-###代理工作目录中本已存在的文件
-
-1. localStyle.css是本已存在的文件:  
-![](http://oneaboveall.qiniudn.com/seyyuomyhahmpjc5bnqc23sy06.png)
-  
-2. 右键点击文件localStyle,选中编辑:  
-![](http://oneaboveall.qiniudn.com/dl0y8wxwtvpzm6njd3asnuioir.png) 
-
-3. 填写要代理的线上地址,并保存:  
-![](http://oneaboveall.qiniudn.com/7wrfm97d55yu8u3p3ohvvh63l3.png)
-
-4. 预览:  
-![](http://oneaboveall.qiniudn.com/lwg4wuzisznz5xufpr8evzxvtp.png)
+1. 当web服务器使用   
+2. 调试线上文件  
+3. 使用已存在的本地文件  
+4. 代理整个目录   
+5. 代码编辑器
 
 
 ###CHANGELOG
+v0.1.1.3 2014-11-11 16:57:03 
+
+1. bug修复
+
 v0.1.1.2   2014-11-11 15:42:46  
 
 1. 代码编辑器增加Emmett(zencoding)支持,快捷键ctrl+E. 
