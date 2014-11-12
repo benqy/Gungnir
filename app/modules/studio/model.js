@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
 
   var util = require('./helpers/util'),
@@ -135,6 +135,8 @@
   };
 
   var pathToTreeNode = function (path, parentNode, projectId) {
+    //要从项目浏览器视图中排除的文件,TODO:改为可配置
+    if(~path.indexOf('node_modules')) return;
     var isDir = fs.statSync(path).isDirectory(),
         ipAddres = ip.address(),
         ss = adv.system.get(),
@@ -161,7 +163,7 @@
       if (!parentNode) {
         node.open = true;
       }
-      node.icon = './img/project.png';
+      node.icon = './img/folder.png';
       node.children = [];
       fs.readdirSync(path)
         .forEach(function (file) {
@@ -174,7 +176,7 @@
     if (parentNode) {
       parentNode.children.push(node);
     } else {
-      node.icon = './img/project.png';
+      node.icon = './img/home.png';
       node.isProject = true;
       //node.projectId = projectId;
       return node;
@@ -225,7 +227,7 @@
     else if (node.fileType == studio.FILE_TYPES.css) {
       return './img/css.png';
     } else {
-      return './img/txt.png';
+      return './img/text.png';
     }
   };
 })()

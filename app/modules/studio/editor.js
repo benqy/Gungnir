@@ -1,8 +1,9 @@
-﻿(function () {
+(function () {
   var util = require('./helpers/util');
 
   var defaultConfig = {
     theme: 'ambiance',
+    tabSize:2,
     autofocus:true,
     lineNumbers: true,
     lineWrapping: true,
@@ -19,13 +20,13 @@
   };
 
   var isTxt = function (file) {
-    return ~file.indexOf('.js')
-      || ~file.indexOf('.css')
-      || ~file.indexOf('.txt')
-      || ~file.indexOf('.html')
-      || ~file.indexOf('.json')
-      || ~file.indexOf('.adv')
-      || ~file.indexOf('.md');
+    return ~file.indexOf('.js') || 
+      ~file.indexOf('.css') || 
+      ~file.indexOf('.txt') || 
+      ~file.indexOf('.html') || 
+      ~file.indexOf('.json') || 
+      ~file.indexOf('.adv') || 
+      ~file.indexOf('.md');
   };
 
   var htmlmixed = {
@@ -85,25 +86,35 @@
         },
         "Ctrl-M": function () {
           me.format();
+        },        
+        "Ctrl-L": function () {
+          CodeMirror.commands.gotoLine(me.cm);
         },
         "Ctrl-K": function () {
           me.commentSelection(true);
-        },
-        "Ctrl-L": function () {
+        },        
+        "Ctrl-N": function () {
           me.commentSelection();
         },
         "Ctrl-Tab": function () {
           adv.studio.nextFile && adv.studio.nextFile();
         },
         "Ctrl-W": function () {
-          adv.studio.nextFile && adv.studio.prevFile();
+          adv.studio.prevFile && adv.studio.prevFile();
         }
-      })
-      //console.log(CodeMirror.keyMap)
+      });
     },
     events: {},
     getSelectedRange:function () {
         return { from: this.cm.getCursor(true), to: this.cm.getCursor(false) };
+    },
+    goToLine: function (line) {
+      var cm = this.cm;
+      line = line - 1;
+      cm.setCursor({ line: line, ch: 0 });
+      var myHeight = cm.getScrollInfo().clientHeight;
+      var coords = cm.charCoords({ line: line, ch: 0 }, "local");
+      cm.scrollTo(null, (coords.top + coords.bottom - myHeight) / 2);
     },
     format:function(){
       var range = this.getSelectedRange();
@@ -113,7 +124,7 @@
         range.from  = {
           line : 0,
           ch : 0
-        }
+        };
         range.to = {
           line: line,
           ch: ch
@@ -163,4 +174,4 @@
     }
   };
 
-})()
+})();

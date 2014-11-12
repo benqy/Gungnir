@@ -1,16 +1,16 @@
-﻿var when = require('when'),
+var when = require('when'),
  fs = require('fs');
 
 var isGbk = function (contentType, buffer) {
-  var contentType = contentType || '', contentStr = buffer.toString();
+  contentType = contentType || '', contentStr = buffer.toString();
   if (~contentType.toLowerCase().indexOf('utf-8')) {
     return false;
   }
-  var meta = contentStr.match(/\<meta.*>/igm);
+  var meta = contentStr.match(/<meta.*>/igm);
   meta = meta?meta.join(','):'';
-  if (~contentType.toLowerCase().indexOf('gbk') || ~contentType.toLowerCase().indexOf('gb2312')
-     || ~meta.indexOf('charset=gb2312') || ~meta.indexOf('charset=gbk')
-     || ~meta.indexOf('charset="gbk"') || ~meta.indexOf('charset="gb2312"')) {
+  if (~contentType.toLowerCase().indexOf('gbk') || ~contentType.toLowerCase().indexOf('gb2312') || 
+      ~meta.indexOf('charset=gb2312') || ~meta.indexOf('charset=gbk')|| 
+      ~meta.indexOf('charset="gbk"') || ~meta.indexOf('charset="gb2312"')) {
     return true;
   }
   return false;

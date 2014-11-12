@@ -1,4 +1,4 @@
-﻿var spider = require('./spider');
+var spider = require('./spider');
 
 var proxyServer,
   localServer;
@@ -65,6 +65,7 @@ var runServer = function (adv) {
   module.exports.setProxy();
   var serverHandler = function (req, res) {
     var ss = adv.system.get();
+    var path;
     var urlModule = require('url'),
       proItem,
       urlOpt = urlModule.parse(req.url, true),
@@ -79,7 +80,7 @@ var runServer = function (adv) {
       //代理整个目录
       if (util.isdir(proItem.localFile)) {
         resData = '文件夹';
-        var path = urlOpt.query.oriurl.replace(proItem.url, ''),
+        path = urlOpt.query.oriurl.replace(proItem.url, ''),
           localFile = require('path').resolve(proItem.localFile + path);
         if (!fs.existsSync(localFile)) {
           resData = '文件不存在:' + localFile;
@@ -101,7 +102,7 @@ var runServer = function (adv) {
     //非代理
     else {
       header = setHeader(urlOpt);
-      var path = require('path').resolve(ss.workspace + urlOpt.path);
+      path = require('path').resolve(ss.workspace + urlOpt.path);
       console.log(ss.workspace + urlOpt.path);
       if (!fs.existsSync(path)) {
         resData = '文件不存在:' + path;
@@ -136,14 +137,14 @@ var matchProxy = function (proItem, urlOpt) {
     }
   }
   return isMatch;
-}
+};
 
 module.exports = {
   runProxyServer: function (adv) {
     var ss = adv.system.get(),
       localServerConfig = ss.localServer;
     proxyServer = httpProxy.createServer(function (req, res, proxy) {
-      ss = adv.system.get()
+      ss = adv.system.get();
       var buffer = httpProxy.buffer(req),
         url = req.url.toLowerCase(),
         urlOpt = require('url').parse(url, true),
@@ -156,11 +157,11 @@ module.exports = {
           if (matchProxy(proItem, urlOpt)) {
             host = localServerConfig.host;
             port = localServerConfig.port;
-            req.url = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port)
-              + '?proxyid=' + proItem.id
-              + '&oriurl=' + encodeURIComponent(url);
+            req.url = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port) + 
+              '?proxyid=' + proItem.id + 
+              '&oriurl=' + encodeURIComponent(url);
           }
-        };
+        }
       }
       proxy.proxyRequest(req, res, {
         host: host,
@@ -179,7 +180,7 @@ module.exports = {
     }
     else {
       runServer(adv);
-      fn()
+      fn();
     }
   },
   stopServer: function (fn) {

@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
   var util = require('./helpers/util');
   var fs = require('fs');
@@ -7,12 +7,12 @@
     return function ($scope, elem) {
       //选中文件,在编辑器中打开该文件
       var selectNode = function (node) {
+        //记住最后一次打开的文件
+        var ss = adv.system.get();
+        ss.currentFile = node.path;
         if (!node.isDir && node.fileType != studio.FILE_TYPES.image) {
           adv.codeEditer.init(node.path);
         }
-        var ss = adv.system.get();
-        //记住最后一次打开的文件
-        ss.currentFile = node.name;
         adv.system.save();
         $scope.currentNode = node;
       };
@@ -50,10 +50,6 @@
         }
       };
       var $el = $(elem[0]);
-      var getCurrentNode = function () {
-        var ss = adv.system.get();
-        return
-      };
 
       //刷新文件目录
       studio.updateTree = function () {
@@ -65,7 +61,7 @@
             setTimeout(function () {
               treeNodes = studio.dirObjToTreeNode(ss.workspace);
               studio.tree = $.fn.zTree.init($el, setting, treeNodes);
-              var node = studio.tree.getNodeByParam('name', ss.currentFile);
+              var node = studio.tree.getNodeByParam('path', ss.currentFile);
               if (node) {
                 //setTimeout(function () {
                   studio.tree.selectNode(node);
@@ -73,14 +69,14 @@
                 //}, 0);
               }
               adv.msg('项目加载完毕!');
-            },500)
+            },500);
           }
           else {
             ss.workspace = '';
             adv.system.save(ss);
           }
         }
-      }
+      };
       studio.updateTree();
     };
   });

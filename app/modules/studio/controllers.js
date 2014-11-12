@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
 
   var studio = adv.studio;
@@ -9,14 +9,13 @@
   studio
     .controller('studio', function ($scope, $state, $stateParams) {
       var system = adv.system.get();
-      adv.codeEditer.init();
-
+	  $scope.hasWorkspace = !!system.workspace;
       //添加文件
       $scope.addProItem = function () {
         $scope.currentProItem = {
           url: '',
           localFile: ''
-        }
+        };
       };
 
       $scope.saveProItem = function (currentProItem) {
@@ -77,6 +76,11 @@
       //#end代理服务器
 
 
+      //刷新目录
+      $scope.reload = function () {
+        studio.updateTree && studio.updateTree();
+      };
+
       //代码编辑器保存
       $scope.editorChange = adv.codeEditer.hasChange;
       adv.codeEditer.on('change', function (cm, change) {
@@ -123,7 +127,7 @@
             proItem = {
               url: '',
               localFile: $scope.currentNode.path
-            }
+            };
           }
           $scope.currentProItem = proItem;
         }
@@ -135,11 +139,12 @@
           $event.stopPropagation();
           return;
         }
-        else {
+        else if (confirm('确认删除文件:' + $scope.currentNode.path)) {
           if (util.isdir($scope.currentNode.path)) {
             require("child_process").exec('rd /q /s ' + $scope.currentNode.path);
             if (ss.workspace == $scope.currentNode.path) {
               ss.workspace = '';
+              $scope.hasWorkspace = false;
               adv.system.save(ss);
             }
           }

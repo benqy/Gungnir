@@ -1,4 +1,4 @@
-﻿(function (global) {
+(function (global) {
   'use strict';
   var adv = global.adv = angular.module('adv', ['ui.router', 'adv.filters', 'adv.directives', 'adv.system', 'adv.studio']),
       fs = require('fs'),

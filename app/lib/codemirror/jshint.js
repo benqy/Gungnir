@@ -3216,7 +3216,9 @@ if (typeof window === 'undefined') window = {};
           } else if (/I\d{3}/.test(code)) {
             msg = messages.info[code];
           }
-
+          else {
+            msg = {};
+          }
           t = t || state.tokens.next;
           if (t.id === "(end)") {  // `~
             t = state.tokens.curr;
@@ -3227,8 +3229,8 @@ if (typeof window === 'undefined') window = {};
 
           w = {
             id: "(error)",
-            raw: msg.desc,
-            code: msg.code,
+            raw: msg?msg.desc:'',
+            code: msg?msg.code:'',
             evidence: state.lines[l - 1] || "",
             line: l,
             character: ch,
@@ -3239,7 +3241,7 @@ if (typeof window === 'undefined') window = {};
             d: d
           };
 
-          w.reason = supplant(msg.desc, w);
+          w.reason = supplant(msg ? msg.desc : '', w);
           JSHINT.errors.push(w);
 
           removeIgnoredMessages();
@@ -4411,7 +4413,8 @@ if (typeof window === 'undefined') window = {};
 
           if (!t.block) {
             if (!state.option.expr && (!r || !r.exps)) {
-              warning("W030", state.tokens.curr);
+              //TODO
+              //warning("W030", state.tokens.curr);
             } else if (state.option.nonew && r && r.left && r.id === "(" && r.left.id === "new") {
               warning("W031", t);
             }

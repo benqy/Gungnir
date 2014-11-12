@@ -1,4 +1,4 @@
-﻿var pth = require('path');
+var pth = require('path');
 var fs = require('fs');
 var CONF_DIR = '../conf/';
 var readFile = function (filename, encoding, fn) {
@@ -20,7 +20,7 @@ var writeFile = function (filename, data, encoding, fn) {
     encoding = 'utf-8';
   }
   fs.writeFile(filename, data, encoding, fn);
-}
+};
 
 var writeFileSync = function (filename, data, encoding) {
   if (arguments.length < 3) {
@@ -28,7 +28,7 @@ var writeFileSync = function (filename, data, encoding) {
     data = arguments[1];
   }
   return fs.writeFileSync(filename, data, encoding);
-}
+};
 
 
 var readJson = function (filename, fn) {
@@ -38,8 +38,8 @@ var readJson = function (filename, fn) {
     } catch (e) {
       fn(e, undefined);
     }
-  })
-}
+  });
+};
 
 var readJsonSync = function (filename) {
   var txt='{}', data = null;
@@ -52,7 +52,7 @@ var readJsonSync = function (filename) {
     data = {};
   }
   return data;
-}
+};
 
 var readConf = function (name) {
   return require(CONF_DIR + name);
@@ -70,15 +70,15 @@ var unlinkSync = function (path) {
     fs.unlinkSync(path);
   }
   return false;
-}
+};
 
 function exists(path) {
   return fs.existsSync(path);
-};
+}
 
 function isfile(path) {
   return fs.statSync(path).isFile();
-};
+}
 
 var isdir = function (path) {
   return fs.statSync(path).isDirectory();
@@ -86,7 +86,7 @@ var isdir = function (path) {
 
 function dirname(path) {
   return pth.dirname(path).replace(/\\/g, '/');
-};
+}
 
 var mkdir = function (path, recursivly) {
   if (exists(path) && isdir(path)) {
@@ -146,6 +146,6 @@ exports.url2SiteDir = function (url) {
     path: '\\' + path.join('\\'),
     fileName:fileName
   };
-}
+};
 
 exports.mkdir = mkdir;
