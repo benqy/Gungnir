@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   'use strict';
 
   var util = require('./helpers/util'),
@@ -194,20 +194,20 @@
   };
 
   var getFileType = function (fileName) {
-    if (~fileName.indexOf(".html") || ~fileName.indexOf(".shtml") || ~fileName.indexOf(".php")) {
+    if (~fileName.toLowerCase().indexOf(".html") || ~fileName.toLowerCase().indexOf(".shtml") || ~fileName.toLowerCase().indexOf(".php")) {
       return studio.FILE_TYPES.html;
     }
-    else if (~fileName.indexOf(".json")) {
+    else if (~fileName.toLowerCase().indexOf(".json")) {
       return studio.FILE_TYPES.json;
     }
-    else if (~fileName.indexOf(".js")) {
+    else if (~fileName.toLowerCase().indexOf(".js")) {
       return studio.FILE_TYPES.javascript;
     }
-    else if (~fileName.indexOf(".css")) {
+    else if (~fileName.toLowerCase().indexOf(".css")) {
       return studio.FILE_TYPES.css;
     }
-    else if (~fileName.indexOf(".png") || ~fileName.indexOf(".jpg")
-      || ~fileName.indexOf(".gif") || ~fileName.indexOf(".bmp") || ~fileName.indexOf(".ico")) {
+    else if (~fileName.toLowerCase().indexOf(".png") || ~fileName.toLowerCase().indexOf(".jpg")
+      || ~fileName.toLowerCase().indexOf(".gif") || ~fileName.toLowerCase().indexOf(".bmp") || ~fileName.toLowerCase().indexOf(".ico")) {
       return studio.FILE_TYPES.image;
     }
     else {

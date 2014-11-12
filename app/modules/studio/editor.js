@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   var util = require('./helpers/util');
 
   var defaultConfig = {
@@ -20,13 +20,13 @@
   };
 
   var isTxt = function (file) {
-    return ~file.indexOf('.js') || 
-      ~file.indexOf('.css') || 
-      ~file.indexOf('.txt') || 
-      ~file.indexOf('.html') || 
-      ~file.indexOf('.json') || 
-      ~file.indexOf('.adv') || 
-      ~file.indexOf('.md');
+    return ~file.indexOf('.js')
+      || ~file.indexOf('.css')
+      || ~file.indexOf('.txt')
+      || ~file.indexOf('.html')
+      || ~file.indexOf('.json')
+      || ~file.indexOf('.adv')
+      || ~file.indexOf('.md');
   };
 
   var htmlmixed = {
@@ -68,7 +68,7 @@
       else {
         this.filepath = null;
       }
-      $(el).text(txt.trim());
+      el.text(txt.trim());
       el = el[0];
       this.cm = CodeMirror.fromTextArea(el, options);
       this.cm.on('change', function (em, changeObj) {

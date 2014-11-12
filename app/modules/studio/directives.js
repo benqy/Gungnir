@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   'use strict';
   var util = require('./helpers/util');
   var fs = require('fs');
@@ -10,8 +10,14 @@
         //记住最后一次打开的文件
         var ss = adv.system.get();
         ss.currentFile = node.path;
-        if (!node.isDir && node.fileType != studio.FILE_TYPES.image) {
-          adv.codeEditer.init(node.path);
+        if (!node.isDir) {
+          if (node.fileType == studio.FILE_TYPES.image) {
+            $('.CodeMirror').hide();
+            $('#logContentWrap').text('').append('<img class="content-img" src="' + node.path + '" alt="">');
+          } else {
+            adv.codeEditer.init(node.path);
+            $('.CodeMirror').show();
+          }
         }
         adv.system.save();
         $scope.currentNode = node;
