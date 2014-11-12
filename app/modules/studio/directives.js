@@ -7,7 +7,7 @@
     return function ($scope, elem) {
       //选中文件,在编辑器中打开该文件
       var selectNode = function (node) {
-        if (!node.isDir) {
+        if (!node.isDir && node.fileType != studio.FILE_TYPES.image) {
           adv.codeEditer.init(node.path);
         }
         var ss = adv.system.get();
@@ -61,15 +61,19 @@
         if (ss.workspace) {
           //如果目录已被删除或者被变更为一个文件,则删除workspace
           if (fs.existsSync(ss.workspace) && util.isdir(ss.workspace)) {
-            treeNodes = studio.dirObjToTreeNode(ss.workspace);
-            studio.tree = $.fn.zTree.init($el, setting, treeNodes);
-            var node = studio.tree.getNodeByParam('name', ss.currentFile);
-            if (node) {
-              setTimeout(function () {
-                studio.tree.selectNode(node);
-                selectNode(node);
-              }, 0);
-            }
+            adv.msg('正在加载项目...');
+            setTimeout(function () {
+              treeNodes = studio.dirObjToTreeNode(ss.workspace);
+              studio.tree = $.fn.zTree.init($el, setting, treeNodes);
+              var node = studio.tree.getNodeByParam('name', ss.currentFile);
+              if (node) {
+                //setTimeout(function () {
+                  studio.tree.selectNode(node);
+                  selectNode(node);
+                //}, 0);
+              }
+              adv.msg('项目加载完毕!');
+            },500)
           }
           else {
             ss.workspace = '';

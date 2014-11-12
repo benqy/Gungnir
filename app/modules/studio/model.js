@@ -161,7 +161,7 @@
       if (!parentNode) {
         node.open = true;
       }
-      node.icon = './img/dir.png';
+      node.icon = './img/project.png';
       node.children = [];
       fs.readdirSync(path)
         .forEach(function (file) {
@@ -192,30 +192,37 @@
   };
 
   var getFileType = function (fileName) {
-    if (~fileName.indexOf(".html")) {
+    if (~fileName.indexOf(".html") || ~fileName.indexOf(".shtml") || ~fileName.indexOf(".php")) {
       return studio.FILE_TYPES.html;
-    }
-    else if (~fileName.indexOf(".js")) {
-      return studio.FILE_TYPES.javascript;
     }
     else if (~fileName.indexOf(".json")) {
       return studio.FILE_TYPES.json;
     }
+    else if (~fileName.indexOf(".js")) {
+      return studio.FILE_TYPES.javascript;
+    }
     else if (~fileName.indexOf(".css")) {
       return studio.FILE_TYPES.css;
-    } else {
+    }
+    else if (~fileName.indexOf(".png") || ~fileName.indexOf(".jpg")
+      || ~fileName.indexOf(".gif") || ~fileName.indexOf(".bmp") || ~fileName.indexOf(".ico")) {
+      return studio.FILE_TYPES.image;
+    }
+    else {
       return studio.FILE_TYPES.unknow;
     }
   };
-
   var generalTypeIcon = function (node) {
-    if (~node.name.indexOf(".html")) {
+    if (node.fileType == studio.FILE_TYPES.html) {
       return './img/html.png';
     }
-    else if (~node.name.indexOf(".js")) {
+    else if (node.fileType == studio.FILE_TYPES.javascript) {
       return './img/js.png';
     }
-    else if (~node.name.indexOf(".css")) {
+    else if (node.fileType == studio.FILE_TYPES.image) {
+      return './img/img.png';
+    }
+    else if (node.fileType == studio.FILE_TYPES.css) {
       return './img/css.png';
     } else {
       return './img/txt.png';
