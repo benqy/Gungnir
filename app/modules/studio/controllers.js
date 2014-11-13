@@ -230,7 +230,7 @@
       };
 
       $scope.saveExplorerItem = function (currentExplorerItem) {
-        var cei = currentExplorerItem, path, fullName, fileExists;
+        var cei = currentExplorerItem, path, fullName, fileExists,parentNode;
         cei.name = cei.name.trim();
         var succes = false;
         //新建
@@ -261,6 +261,7 @@
           //adv.system.setCurrentFile(cei.path + '\\' + cei.name);
           //$scope.closeExplorerItemForm();
           //studio.updateTree();
+          parentNode = $scope.currentNode;
         }
         //改名
         else if (cei.oldName != cei.name) {
@@ -280,11 +281,15 @@
             fs.renameSync(basePath + '\\' + cei.oldName, fullName);
             adv.system.setCurrentFile(cei.path + '\\' + cei.name);
             succes = true;
+            parentNode = $scope.currentNode.getParentNode();
+            studio.tree.removeNode($scope.currentNode);
+            $scope.currentNode = null;
           }
         }
         if (succes) {
+          studio.pathToTreeNode(fullName, parentNode)
           adv.system.setCurrentFile(fullName);
-          studio.updateTree();
+          //studio.updateTree();
           $scope.closeExplorerItemForm();
         }
       }

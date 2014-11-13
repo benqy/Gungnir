@@ -6,7 +6,7 @@
   studio.directive('codeTree', function () {
     return function ($scope, elem) {
       //选中文件,在编辑器中打开该文件
-      var selectNode = function (node) {
+      var selectNode = studio.selectNode = function (node) {
         //记住最后一次打开的文件
         var ss = adv.system.get();
         ss.currentFile = node.path;
