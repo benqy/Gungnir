@@ -176,19 +176,11 @@
         $scope.currentExplorerItem = null;
       };
       $scope.createFile = function ($event) {
-        //var ss = adv.system.get(),filename,path,fullName;
         if ($($event.currentTarget).parent().hasClass('disabled')) {
           $event.stopPropagation();
           return;
         }
         else {
-          //path = $scope.currentNode.path;
-          //filename = generalFileName(path, 'newItem.txt');
-          //fullName = path  + '\\' + filename;
-          //fs.writeFileSync(fullName, '');
-          //ss.currentFile = fullName;
-          //adv.system.save(ss);
-          //studio.updateTree();
           $scope.currentExplorerItem = {
             isDir: false,
             path: $scope.currentNode.path,
@@ -204,12 +196,6 @@
           return;
         }
         else {
-          //path = $scope.currentNode.path;
-          //filename = generalFileName(path, 'newDir');
-          //fullName = path + '\\' + filename;
-          //fs.mkdirSync(fullName);
-          //adv.system.setCurrentFile(fullName);
-          //studio.updateTree();
           $scope.currentExplorerItem = {
             isDir: true,
             path: $scope.currentNode.path,
@@ -257,10 +243,6 @@
             }
           }
           //改名
-          //fs.renameSync(cei.path + '\\' + cei.oldName, cei.path + '\\' + cei.name);
-          //adv.system.setCurrentFile(cei.path + '\\' + cei.name);
-          //$scope.closeExplorerItemForm();
-          //studio.updateTree();
           parentNode = $scope.currentNode;
         }
         //改名
