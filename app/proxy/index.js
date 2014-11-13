@@ -196,11 +196,11 @@ module.exports = {
   },
   setProxy: function () {
     var exec = require("child_process").exec;
-    exec(__dirname + '\\runproxy.exe');
+    exec('"' + __dirname + '\\runproxy.exe"');
   },
   disProxy: function (fn) {
     var exec = require("child_process").exec;
-    exec(__dirname + '\\stopproxy.exe', function () {
+    exec('"' + __dirname + '\\stopproxy.exe"', function () {
       fn && fn();
     });
   },

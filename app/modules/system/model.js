@@ -21,7 +21,7 @@
     ssData = util.readJsonSync(dataFile);
     ssData.localServer = {
       host: ip,
-      port: 80
+      port: 10086
     };
     ssData.proxyServer = {
       port: 17173
