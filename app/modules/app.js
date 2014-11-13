@@ -39,10 +39,19 @@
     },
     msg: function (txt, lv) {
       lv = lv || adv.MSG_LEVEL.info;
-      $('#msg').text(txt);
+      $('#msg')
+        .removeClass(adv.MSG_LEVEL.info)
+        .removeClass(adv.MSG_LEVEL.warnings)
+        .removeClass(adv.MSG_LEVEL.debug)
+        .removeClass(adv.MSG_LEVEL.errors)
+        .addClass(lv).text(txt);
       clearTimeout(msgTimer);
       msgTimer = setTimeout(function () {
-        //$('#msg').text('呵呵...');
+        $('#msg')
+        .removeClass(adv.MSG_LEVEL.info)
+        .removeClass(adv.MSG_LEVEL.warnings)
+        .removeClass(adv.MSG_LEVEL.debug)
+        .removeClass(adv.MSG_LEVEL.errors);
       }, 5000);
     }
   });

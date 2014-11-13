@@ -9,8 +9,8 @@
   studio
     .controller('studio', function ($scope, $state, $stateParams) {
       var system = adv.system.get();
-	  $scope.hasWorkspace = !!system.workspace;
-      //添加文件
+      $scope.hasWorkspace = !!system.workspace;
+      //添加代理设置
       $scope.addProItem = function () {
         $scope.currentProItem = {
           url: '',
@@ -52,7 +52,7 @@
       $scope.closeProItemForm = function () {
         $scope.currentProItem = null;
       };
-      //end添加文件
+      //end添加代理设置
 
       //#region 代理服务器
       adv.studio.serverRuning = adv.studio.serverRuning || false;
@@ -155,6 +155,139 @@
           $scope.currentNode = null;
         }
       };
+
+
+      var generalFileName = function (baseDir, name, index) {
+        index = index || 1;
+        var nameSpt = name.split('.'), length = nameSpt.length;
+        var itemName = length > 1 ? (nameSpt.slice(0, length - 1).join('.') + index + '.' + nameSpt[length - 1]) : (name + index);
+        var path = require('path').resolve(baseDir + '\\' + itemName);
+        if (fs.existsSync(path)) {
+          index++;
+          return generalFileName(baseDir, name, index);
+        }
+        else {
+          return itemName;
+        }
+      };
+
+      //文件管理器操作
+      $scope.closeExplorerItemForm = function () {
+        $scope.currentExplorerItem = null;
+      };
+      $scope.createFile = function ($event) {
+        //var ss = adv.system.get(),filename,path,fullName;
+        if ($($event.currentTarget).parent().hasClass('disabled')) {
+          $event.stopPropagation();
+          return;
+        }
+        else {
+          //path = $scope.currentNode.path;
+          //filename = generalFileName(path, 'newItem.txt');
+          //fullName = path  + '\\' + filename;
+          //fs.writeFileSync(fullName, '');
+          //ss.currentFile = fullName;
+          //adv.system.save(ss);
+          //studio.updateTree();
+          $scope.currentExplorerItem = {
+            isDir: false,
+            path: $scope.currentNode.path,
+            oldName: null,
+            name: ''
+          };
+        }
+      };
+
+      $scope.createDir = function ($event) {
+        if ($($event.currentTarget).parent().hasClass('disabled')) {
+          $event.stopPropagation();
+          return;
+        }
+        else {
+          //path = $scope.currentNode.path;
+          //filename = generalFileName(path, 'newDir');
+          //fullName = path + '\\' + filename;
+          //fs.mkdirSync(fullName);
+          //adv.system.setCurrentFile(fullName);
+          //studio.updateTree();
+          $scope.currentExplorerItem = {
+            isDir: true,
+            path: $scope.currentNode.path,
+            oldName: null,
+            name: ''
+          };
+        }
+      };
+
+      $scope.explorerRename = function ($event) {
+        var filename, path, fullName;
+        $scope.currentExplorerItem = {
+          isDir: true,
+          path: $scope.currentNode.path,
+          oldName: $scope.currentNode.name,
+          name: $scope.currentNode.name
+        };
+      };
+
+      $scope.saveExplorerItem = function (currentExplorerItem) {
+        var cei = currentExplorerItem, path, fullName, fileExists;
+        cei.name = cei.name.trim();
+        var succes = false;
+        //新建
+        if (!cei.oldName) {
+          path = $scope.currentNode.path;
+          fullName = path + '\\' + cei.name;
+          fileExists = fs.existsSync(fullName);
+          //是目录
+          if (cei.isDir) {
+            //已存在的目录则只提示
+            if (!fileExists) {
+              fs.mkdirSync(fullName);
+              succes = true;
+            }
+            else {
+              adv.msg('目录已存在!', adv.MSG_LEVEL.warnings);
+            }
+          }
+          else {
+            //如果文件已存在,则提示是否覆盖
+            if (!fileExists || confirm('文件' + cei.name + '已存在,是否覆盖?')) {
+              fs.writeFileSync(fullName, '');
+              succes = true;
+            }
+          }
+          //改名
+          //fs.renameSync(cei.path + '\\' + cei.oldName, cei.path + '\\' + cei.name);
+          //adv.system.setCurrentFile(cei.path + '\\' + cei.name);
+          //$scope.closeExplorerItemForm();
+          //studio.updateTree();
+        }
+        //改名
+        else if (cei.oldName != cei.name) {
+          var basePath = '';
+          if (cei.isDir) {
+            var pathSpt = cei.path.split('\\');
+            basePath = pathSpt.slice(0, pathSpt.length - 1).join('\\');
+          }
+          else {
+            basePath = cei.path;
+          }
+          fullName = basePath + '\\' + cei.name;
+          if (fs.existsSync(fullName)) {
+            adv.msg('目录已存在!', adv.MSG_LEVEL.warnings);
+          }
+          else {
+            fs.renameSync(basePath + '\\' + cei.oldName, fullName);
+            adv.system.setCurrentFile(cei.path + '\\' + cei.name);
+            succes = true;
+          }
+        }
+        if (succes) {
+          adv.system.setCurrentFile(fullName);
+          studio.updateTree();
+          $scope.closeExplorerItemForm();
+        }
+      }
     });
 
 })();

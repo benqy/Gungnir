@@ -59,7 +59,8 @@
         txt = util.readFileSync(filepath);
         this.filepath = filepath;
         //如果没指定编辑器模式,则根据文件扩展名判断
-        var mode = filepath.match(/\.([^\.]+$)/)[1];
+        var fileSuff = filepath.match(/\.([^\.]+$)/);
+        var mode = fileSuff?fileSuff[1]:'null';
         if (!options.mode) options.mode = this.MODES[mode] || 'null';
         if (mode == 'js') {
           options.lint = true;
