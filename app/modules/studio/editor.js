@@ -19,16 +19,6 @@
     profile: 'xhtml'
   };
 
-  var isTxt = function (file) {
-    return ~file.indexOf('.js')
-      || ~file.indexOf('.css')
-      || ~file.indexOf('.txt')
-      || ~file.indexOf('.html')
-      || ~file.indexOf('.json')
-      || ~file.indexOf('.adv')
-      || ~file.indexOf('.md');
-  };
-
   var htmlmixed = {
     name: "htmlmixed",
     scriptTypes: [{
@@ -43,6 +33,9 @@
   adv.codeEditer = {
     MODES: {
       html: htmlmixed,
+      shtml: htmlmixed,
+      php: htmlmixed,
+      aspx:htmlmixed,
       js: 'javascript',
       css: 'css',
       txt: 'javascript',
