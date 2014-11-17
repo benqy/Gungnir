@@ -91,15 +91,14 @@
           //如果目录已被删除或者被变更为一个文件,则删除workspace
           if (fs.existsSync(ss.workspace) && util.isdir(ss.workspace)) {
             adv.msg('正在加载项目...');
+            //防卡
             setTimeout(function () {
               treeNodes = studio.dirObjToTreeNode(ss.workspace);
               studio.tree = $.fn.zTree.init($('#fileTree'), setting, treeNodes);
               var node = studio.tree.getNodeByParam('path', ss.currentFile);
               if (node) {
-                //setTimeout(function () {
-                  studio.tree.selectNode(node);
-                  selectNode(node);
-                //}, 0);
+                studio.tree.selectNode(node);
+                selectNode(node);
               }
               adv.msg('项目加载完毕!');
             },500);
