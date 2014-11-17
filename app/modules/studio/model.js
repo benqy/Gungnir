@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
 
   var util = require('./helpers/util'),
@@ -32,7 +32,7 @@
   studio.getProItems = function () {
     var ss = adv.system.get();
     if (!ss.workspace) return;
-    var proFilePath = ss.workspace + '\\zproject.json'
+    var proFilePath = ss.workspace + '\\zproject.json';
     if (!fs.existsSync(proFilePath)) {
       util.writeFileSync(proFilePath, JSON.stringify({}));
     }

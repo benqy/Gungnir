@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
 
   var util = require('./helpers/util'),
@@ -30,7 +30,7 @@
   };
 
   ss.setCurrentFile = function (fullName) {
-    var system  = adv.system.get()
+    var system  = adv.system.get();
     system.currentFile = fullName;
     adv.system.save(system);
   };

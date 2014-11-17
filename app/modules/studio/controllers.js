@@ -269,12 +269,12 @@
           }
         }
         if (succes) {
-          studio.pathToTreeNode(fullName, parentNode)
+          studio.pathToTreeNode(fullName, parentNode);
           adv.system.setCurrentFile(fullName);
           //studio.updateTree();
           $scope.closeExplorerItemForm();
         }
-      }
+      };
     });
 
 })();
