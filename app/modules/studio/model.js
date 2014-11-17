@@ -146,6 +146,7 @@
           path: path,
           title: path,
           isDir: isDir,
+          dragAble:true,
           isProxy: false
         };
     //将title设置为访问地址
@@ -174,6 +175,7 @@
       node.icon = generalTypeIcon(node);
     }
     if (parentNode) {
+      //如果已经是一个树节点,则直接添加到树中,否则添加到数据里
       if (parentNode.tId) {
         studio.tree && studio.tree.addNodes(parentNode, node);
       }
@@ -183,6 +185,7 @@
     } else {
       node.icon = './img/home.png';
       node.isProject = true;
+      node.dragAble = false;
       return node;
     }
   };

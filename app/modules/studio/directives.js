@@ -44,7 +44,35 @@
               $scope.$digest();
             }
            event.stopPropagation();
+          },
+          //根节点不可拖动
+          beforeDrag: function (treeId, treeNodes) {
+            for (var i = 0, l = treeNodes.length; i < l; i++) {
+              if (treeNodes[i].dragAble === false) {
+                return false;
+              }
+            }
+            return true;
+          },
+          //文件夹才可接受拖动节点
+          beforeDrop: function (treeId, treeNodes, targetNode, moveType) {
+            var node = treeNodes[0], targetFile;
+            if (node && targetNode && targetNode.isDir && confirm('确认移动文件:' + node.name)) {
+              targetFile = require('path').resolve(targetNode.path + '\\' + node.name);
+              fs.renameSync(node.path, targetFile);
+              adv.system.setCurrentFile(targetFile);
+              studio.updateTree();
+            }
+            else {
+              return false;
+            }
           }
+
+        },
+        edit: {
+          enable: true,
+          showRemoveBtn: false,
+          showRenameBtn: false
         },
         data: {
           key: {
@@ -55,7 +83,6 @@
           selectedMulti: false
         }
       };
-      var $el = $(elem[0]);
 
       //刷新文件目录
       studio.updateTree = function () {
@@ -66,7 +93,7 @@
             adv.msg('正在加载项目...');
             setTimeout(function () {
               treeNodes = studio.dirObjToTreeNode(ss.workspace);
-              studio.tree = $.fn.zTree.init($el, setting, treeNodes);
+              studio.tree = $.fn.zTree.init($('#fileTree'), setting, treeNodes);
               var node = studio.tree.getNodeByParam('path', ss.currentFile);
               if (node) {
                 //setTimeout(function () {
