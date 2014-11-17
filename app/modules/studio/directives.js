@@ -12,10 +12,10 @@
         ss.currentFile = node.path;
         if (!node.isDir) {
           if (node.fileType == studio.FILE_TYPES.image) {
-            $('.CodeMirror').hide();
-            $('#logContentWrap').text('').append('<img class="content-img" src="' + node.path + '" alt="">');
+            //$('.CodeMirror').hide();
+            //$('.logContentWrap').text('').append('<img class="content-img" src="' + node.path + '" alt="">');
           } else {
-            adv.codeEditer.init(node.path);
+            adv.codeEditer.init(node.path, {filename:node.name});
             $('.CodeMirror').show();
           }
         }
@@ -112,6 +112,27 @@
       studio.updateTree();
     };
   });
+
+
+  studio.directive('codeTabs', function () {
+    return function ($scope, elem) {
+      var $tool = $(elem[0]);
+      //$tool.find('.editor-tab-btn');
+      //tab按钮
+      $tool.on('click', '.editor-tab-btn', function () {
+        var index = $(this).attr('data-index');
+        adv.codeEditer.toggleToTab(index);
+      });
+
+      //关闭按钮
+      $tool.on('click', '.editor-tab-btn i', function (e) {
+        var index = $(this).parent().attr('data-index');
+        adv.codeEditer.closeTab(index);
+        e.stopPropagation();
+      });
+    }
+  });
+
 
   document.ondrop = function (e) {
     var path, $target = $(e.target), dir, system, ss = adv.system.get();

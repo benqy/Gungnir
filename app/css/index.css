@@ -114,7 +114,7 @@ body {
 }
 
 .app .sidebar {
-    padding: 15px 0 15px 15px;
+    padding: 15px;
     width: 250px;
     height: 100%;
 }
@@ -321,10 +321,10 @@ border-bottom-left-radius: 0;
 /********************End表单**********************/
 
 /*************ZTREE**************/
-.code-tool {
+.code-tool{
     margin-bottom: 0;
     background-color: #428bca;
-border-color: #428bca;
+    border-color: #428bca;
     text-align: center;
 }
 .code-tool a {
@@ -357,12 +357,13 @@ border-color: #428bca;
 
 
 /*****************code editer*********************/
-#logContentWrap {
-    height: calc(100% - 15px);
+.logContentWrap {
+    height: calc(100% - 49px);
     overflow: auto;
     border-radius: 0;
+    display:none;
 }
-#logContent {
+.logContent {
     display:none;
     background: #f5f5f5;
 }
@@ -393,3 +394,39 @@ div.errors{
         background-position: bottom;
         background-repeat: repeat-x;
       }
+
+.editor-tool .mdfi-icon{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+.editor-tool .mdfi-icon:hover{
+    background:#1C97EA;
+}
+.editor-tool {
+    margin-bottom: 0;
+    background:#2D2D30;
+    height:34px;
+}
+.editor-tool a{
+}
+.editor-tool .editor-tab-blur{
+    background:#2D2D30;
+    border:1px solid #2D2D30;
+}
+.editor-tool .editor-tab-blur:hover{
+    background-color: #3276b1;
+    border-color: #285e8e;
+}
+
+.editor-tool a.editor-tab-blur i{
+    visibility:hidden;
+}
+.editor-tool a.editor-tab-blur:hover i{
+    visibility:visible;
+}
+.editor-tool a i{
+    cursor:pointer;
+    margin-left: 5px;
+
+}

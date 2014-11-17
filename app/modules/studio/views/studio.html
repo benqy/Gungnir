@@ -18,10 +18,37 @@
             </div>
         </div>
     </div>
-    <div class="container-right container-right-middle" ui-view ng-animate="'animate'">
-        <div id="logContentWrap">
-            <textarea name="" id="logContent"></textarea>
+    <div class="container-right container-right-middle" id="editorRightContent" ui-view ng-animate="'animate'">
+        <!--<ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:;">abc.js</a></li>
+            <li><a href="javascript:;">Profile</a></li>
+            <li><a href="javascript:;">Messages</a></li>
+        </ul>-->
+        <!--编辑器tab页-->
+        <div class="list-group editor-tool" id="editorTabs" code-tabs>
+            <div class="btn-group">
+                <!--<a href="javascript://"  data-filepath="abc.js"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">abc.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
+                <a href="javascript://" data-filepath="container-ri.js"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">container-ri.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
+                <a href="javascript://"  data-filepath="studio.js" class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">studio.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
+                <a href="javascript://" data-filepath="directives.js" class="btn btn-primary editor-tab-btn" style="border-radius:0;">directives.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
+                <a href="javascript://" data-filepath="win.js" class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">win.js<i class="mdfi-icon mdfi_navigation_close"></i></a>-->
+            </div>
         </div>
+        <!--<div class="logContentWrap" data-filepath="abc.js">
+            1
+        </div>
+        <div class="logContentWrap"  data-filepath="container-ri.js">
+            2
+        </div>
+        <div class="logContentWrap"  data-filepath="studio.js">
+            3
+        </div>
+        <div class="logContentWrap"  data-filepath="directives.js">
+            4
+        </div>
+        <div class="logContentWrap"  data-filepath="win.js">
+            5
+        </div>-->
     </div>
     <!--代理设置弹窗-->
     <div class="dialog panel panel-primary" ng-class="{'hidden':!currentProItem}">
@@ -68,15 +95,15 @@
     </div>
     <!--end弹窗-->
     <!--右键菜单-->
-    
+
     <ul class="dropdown-menu studio-contextmenu" id="studioContext">
         <li><a tabindex="-1" href="javascript:;" ng-click="browse($event)">预览页面</a></li>
         <li><a tabindex="-1" href="javascript:;" ng-click="explorer($event)">打开目录</a></li>
-        <li><a tabindex="-1" href="javascript:;"  ng-click="editNode($event)">代理设置</a></li>
-        <li><a tabindex="-1" href="javascript:;"  ng-click="deleteNode($event)">删除文件</a></li>
-        <li ng-class="{'hidden':currentNode && !currentNode.isDir}"><a tabindex="-1" href="javascript:;"  ng-click="createFile($event)">新建文件</a></li>
-        <li ng-class="{'hidden':currentNode && !currentNode.isDir}"><a tabindex="-1" href="javascript:;"  ng-click="createDir($event)">新建文件夹</a></li>
-        <li ng-class="{'hidden':currentNode && currentNode.isProject}"><a tabindex="-1" href="javascript:;"  ng-click="explorerRename($event)">重命名</a></li>
+        <li><a tabindex="-1" href="javascript:;" ng-click="editNode($event)">代理设置</a></li>
+        <li><a tabindex="-1" href="javascript:;" ng-click="deleteNode($event)">删除文件</a></li>
+        <li ng-class="{'hidden':currentNode && !currentNode.isDir}"><a tabindex="-1" href="javascript:;" ng-click="createFile($event)">新建文件</a></li>
+        <li ng-class="{'hidden':currentNode && !currentNode.isDir}"><a tabindex="-1" href="javascript:;" ng-click="createDir($event)">新建文件夹</a></li>
+        <li ng-class="{'hidden':currentNode && currentNode.isProject}"><a tabindex="-1" href="javascript:;" ng-click="explorerRename($event)">重命名</a></li>
     </ul>
     <!--end右键菜单-->
 </div>

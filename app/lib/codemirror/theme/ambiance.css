@@ -49,8 +49,9 @@
 }
 
 .cm-s-ambiance .CodeMirror-gutters {
-  background: #3D3D3D;
-  border-right: 1px solid #4D4D4D;
+  background-image:none !important;
+  background: #2d2d30;
+  border-right: 1px solid #2d2d30;
   box-shadow: 0 10px 20px black;
 }
 

@@ -3,13 +3,13 @@
 
   var defaultConfig = {
     theme: 'ambiance',
-    tabSize:2,
-    autofocus:true,
+    tabSize: 2,
+    autofocus: true,
     lineNumbers: true,
     lineWrapping: true,
     extraKeys: { "Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }, "Ctrl-J": "toMatchingTag" },
     foldGutter: true,
-    gutters: ["CodeMirror-lint-markers","CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+    gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     styleActiveLine: true,
     matchBrackets: true,
     lint: false,
@@ -24,7 +24,7 @@
     scriptTypes: [{
       matches: /\/x-handlebars-template|\/x-mustache/i,
       mode: null
-    },{
+    }, {
       matches: /(text|application)\/(x-)?vb(a|script)/i,
       mode: "vbscript"
     }]
@@ -35,25 +35,61 @@
       html: htmlmixed,
       shtml: htmlmixed,
       php: htmlmixed,
-      aspx:htmlmixed,
+      aspx: htmlmixed,
       js: 'javascript',
       css: 'css',
       txt: 'javascript',
       json: 'json',
-      'null':'null',
+      'null': 'null',
       adv: 'javascript'
     },
+    editors: {
+
+    },
+    toggleToTab: function (index) {
+      var tab = $('.editor-tab-btn[data-index="' + index + '"]');
+      var filepath = tab.data('filepath');
+      var editor = this.editors[filepath];
+      this.cm = editor;
+      $('.editor-tab-btn').addClass('editor-tab-blur');
+      tab.removeClass('editor-tab-blur');
+      $('.logContentWrap').hide();
+      $('.logContentWrap[data-index="' + index + '"]').show();
+    },
+    closeTab: function (index) {
+      var tab = $('.editor-tab-btn[data-index="' + index + '"]');
+      var filepath = tab.data('filepath');
+      delete this.editors[filepath];
+      tab.remove()
+      $('.logContentWrap[data-index="' + index + '"]').remove();
+      if (!tab.hasClass('editor-tab-blur')) {
+        $('.editor-tab-btn:eq(0)').trigger('click');
+      }
+    },
     init: function (filepath, options) {
-      var me = this, txt = '', wrap = $('#logContentWrap'), el;
-      el = $('<textarea name="" id="logContent"></textarea>');
-      wrap.text('').append(el);
+      var editor = this.editors[filepath];
+      if(editor) {
+        var tab = $('.editor-tab-btn[data-filepath="' + filepath.replace(/\\/ig,'\\\\') + '"]');
+        this.toggleToTab(tab.data('index'));
+        return;
+      };
+      var index = util.generalId();
+      var me = this, txt = '', wrap = $('<div class="logContentWrap" data-index="' + index + '" data-filepath="' + filepath + '">'), el;
+      //生成编辑器
+      el = $('<textarea name="" class="logContent"></textarea>');
+      wrap.append(el);
+      wrap.show();
+      $('#editorRightContent').append(wrap);
+      //生成tab按钮
+      var tab = $('<a href="javascript://" title="'+filepath.replace(/\\/ig,'')+'" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename ||filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
+      $('#editorTabs .btn-group').append(tab);
       options = $.extend({}, defaultConfig, options);
       if (filepath) {
         txt = util.readFileSync(filepath);
         this.filepath = filepath;
         //如果没指定编辑器模式,则根据文件扩展名判断
         var fileSuff = filepath.match(/\.([^\.]+$)/);
-        var mode = fileSuff?fileSuff[1]:'null';
+        var mode = fileSuff ? fileSuff[1] : 'null';
         if (!options.mode) options.mode = this.MODES[mode] || 'null';
         if (mode == 'js') {
           options.lint = true;
@@ -80,13 +116,13 @@
         },
         "Ctrl-M": function () {
           me.format();
-        },        
+        },
         "Ctrl-L": function () {
           CodeMirror.commands.gotoLine(me.cm);
         },
         "Ctrl-K": function () {
           me.commentSelection(true);
-        },        
+        },
         "Ctrl-N": function () {
           me.commentSelection();
         },
@@ -97,10 +133,12 @@
           adv.studio.prevFile && adv.studio.prevFile();
         }
       });
+      this.editors[filepath] = this.cm;
+      this.toggleToTab(index);
     },
     events: {},
-    getSelectedRange:function () {
-        return { from: this.cm.getCursor(true), to: this.cm.getCursor(false) };
+    getSelectedRange: function () {
+      return { from: this.cm.getCursor(true), to: this.cm.getCursor(false) };
     },
     goToLine: function (line) {
       var cm = this.cm;
@@ -110,14 +148,14 @@
       var coords = cm.charCoords({ line: line, ch: 0 }, "local");
       cm.scrollTo(null, (coords.top + coords.bottom - myHeight) / 2);
     },
-    format:function(){
+    format: function () {
       var range = this.getSelectedRange();
       if (range.from.line === range.to.line && range.from.ch === range.to.ch) {
         var line = this.cm.lastLine(),
           ch = this.cm.getLine(line).length;
-        range.from  = {
-          line : 0,
-          ch : 0
+        range.from = {
+          line: 0,
+          ch: 0
         };
         range.to = {
           line: line,
@@ -153,11 +191,11 @@
         util.writeFileSync(adv.codeEditer.filepath, txt);
         this.hasChange = false;
         var fileNameArr = this.filepath.split('\\');
-        adv.msg('文件:' + fileNameArr[fileNameArr.length-1] + '保存成功!');
+        adv.msg('文件:' + fileNameArr[fileNameArr.length - 1] + '保存成功!');
         this.fire('save');
       }
     },
-    fire:function(eventName,obj){
+    fire: function (eventName, obj) {
       this.events[eventName] && this.events[eventName].forEach(function (fn) {
         fn(obj);
       });
