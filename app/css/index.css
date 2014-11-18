@@ -358,7 +358,7 @@ border-bottom-left-radius: 0;
 
 /*****************code editer*********************/
 .logContentWrap {
-    height: calc(100% - 51px);
+    height: calc(100% - 49px);
     overflow: auto;
     border-radius: 0;
     display:none;
@@ -405,13 +405,10 @@ div.errors{
 }
 .editor-tool {
     margin-bottom: 0;
-    border-bottom: 2px solid #357ebd;
     background:#2D2D30;
-    height:36px;
+    height:34px;
 }
 .editor-tool a{
-    cursor:default;
-    background:#357ebd ;
 }
 .editor-tool .editor-tab-blur{
     background:#2D2D30;

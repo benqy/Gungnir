@@ -81,7 +81,7 @@
       wrap.show();
       $('#editorRightContent').append(wrap);
       //生成tab按钮
-      var tab = $('<a href="javascript://" title="'+filepath+'" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename ||filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
+      var tab = $('<a href="javascript://" title="'+filepath.replace(/\\/ig,'')+'" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename ||filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
       $('#editorTabs .btn-group').append(tab);
       options = $.extend({}, defaultConfig, options);
       if (filepath) {
