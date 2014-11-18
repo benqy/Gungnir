@@ -81,7 +81,8 @@ var runServer = function (adv) {
       if (util.isdir(proItem.localFile)) {
         resData = '文件夹';
         path = urlOpt.query.oriurl.replace(proItem.url, ''),
-          localFile = require('path').resolve(proItem.localFile +'\\' + path);
+          localFile = require('path').resolve(proItem.localFile + '\\' + path);
+        localFile = decodeURIComponent(localFile);
         if (!fs.existsSync(localFile)) {
           resData = '文件不存在:' + localFile;
         }
@@ -103,6 +104,7 @@ var runServer = function (adv) {
     else {
       header = setHeader(urlOpt);
       path = require('path').resolve(ss.workspace + urlOpt.path);
+      path = decodeURIComponent(path)
       if (!fs.existsSync(path)) {
         resData = '文件不存在:' + path;
       }
