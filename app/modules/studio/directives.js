@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   'use strict';
   var util = require('./helpers/util');
   var fs = require('fs');
@@ -15,7 +15,7 @@
             //$('.CodeMirror').hide();
             //$('.logContentWrap').text('').append('<img class="content-img" src="' + node.path + '" alt="">');
           } else {
-            adv.codeEditer.init(node.path, {filename:node.name});
+            adv.codeEditer.init(node.path, { filename: node.name });
             $('.CodeMirror').show();
           }
         }
@@ -40,10 +40,10 @@
               $('#studioContext').css({
                 left: x,
                 top: y
-              }).show();              
+              }).show();
               $scope.$digest();
             }
-           event.stopPropagation();
+            event.stopPropagation();
           },
           //根节点不可拖动
           beforeDrag: function (treeId, treeNodes) {
@@ -101,7 +101,7 @@
                 selectNode(node);
               }
               adv.msg('项目加载完毕!');
-            },500);
+            }, 500);
           }
           else {
             ss.workspace = '';
@@ -141,10 +141,10 @@
     //返回值
     path = e.dataTransfer.files[0].path;
     //if ($target.hasClass('drag-to-add-dir')) {
-      ss = adv.system.get();
-      ss.workspace = path;
-      adv.system.save();
-      studio.updateTree && studio.updateTree();
+    ss = adv.system.get();
+    ss.workspace = path;
+    adv.system.save();
+    studio.updateTree && studio.updateTree();
     //}
   };
 })();
