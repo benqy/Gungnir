@@ -77,10 +77,10 @@ if (locPackage.gungnir && locPackage.gungnir.autoupdate) {
       if (!packageData.text) return;
       var remotePackage = JSON.parse(packageData.text);
       if (remotePackage.version != locPackage.version && confirm('是否更新到最新版本:' + remotePackage.version)) {
-        var totalFile = locPackage.gungnir.files.length,
+        var totalFile = remotePackage.gungnir.files.length,
           updateCount = 0;
         updater.updateInfo(totalFile, updateCount);
-        locPackage.gungnir.files.forEach(function (file) {
+        remotePackage.gungnir.files.forEach(function (file) {
           updater.get(serverPath + '/' + file + '?' + new Date()*1)
             .then(function (data) {
               var fullFilename =require('path').resolve(updatePath + '\\' + file);
