@@ -3,6 +3,7 @@
 //console.log(execPath)
 var serverPath = 'https://raw.githubusercontent.com/benqy/Gungnir/master/',
   execPath = require('path').dirname(process.execPath),
+  updatePath = execPath + '\\update',
   fs = require('fs'),
   util = require('./helpers/util'),
   when = require('./node_modules/when');
@@ -54,14 +55,49 @@ var updater = {
       });
     });
     return deferred.promise;
+  },
+  updateInfo: function (total, curr) {
+    adv.msg('===正在更新:' + curr + '/' + total + '===', adv.MSG_LEVEL.warnings);
+  },
+  install: function (version) {
+    var cmd1 = 'xcopy "' + updatePath + '\\app\\*" "' + execPath + '\\app" /s /e /y';
+    var cmd2 = 'xcopy "' + updatePath + '\\package.json" "' + execPath + '\\package.json" /s /e /y';
+    require("child_process").exec(cmd1);
+    require("child_process").exec(cmd2);
+    setTimeout(function () {
+      require("child_process").exec('rd /q /s "' + updatePath + '"');
+    }, 5000);
+    adv.msg('===版本:'+version+'更新完成,请重启===')
   }
 }
 var locPackage = require('nw.gui').App.manifest;
 if (locPackage.gungnir && locPackage.gungnir.autoupdate) {
-  updater.get(serverPath + '/package.json')
-    .then(function (data) {
-      if (!data.text) return;
-      var updaterPackage = JSON.parse(data.text);
-      console.log(updaterPackage.gungnir.files, execPath);
+  updater.get(serverPath + '/package.json?' + new Date() * 1)
+    .then(function (packageData) {
+      if (!packageData.text) return;
+      var remotePackage = JSON.parse(packageData.text);
+      if (remotePackage.version != locPackage.version && confirm('是否更新到最新版本:' + remotePackage.version)) {
+        var totalFile = locPackage.gungnir.files.length,
+          updateCount = 0;
+        updater.updateInfo(totalFile, updateCount);
+        locPackage.gungnir.files.forEach(function (file) {
+          updater.get(serverPath + '/' + file + '?' + new Date()*1)
+            .then(function (data) {
+              var fullFilename =require('path').resolve(updatePath + '\\' + file);
+              var lfArr = fullFilename.split('\\');
+              var dirName = lfArr.slice(0, lfArr.length - 1).join('\\');
+              if (!fs.existsSync(dirName)) {
+                util.mkdir(dirName, true);
+              }
+              fs.writeFileSync(fullFilename, data.text);
+              fs.writeFileSync(updatePath + '\\package.json', packageData.text);
+              updateCount++;
+              updater.updateInfo(totalFile, updateCount);
+              if (updateCount == totalFile) {
+                updater.install(remotePackage.version);
+              }
+            });
+        });
+      }
     });
 }
