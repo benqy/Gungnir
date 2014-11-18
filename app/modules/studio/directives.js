@@ -110,6 +110,21 @@
         }
       };
       studio.updateTree();
+
+      document.ondrop = function (e) {
+        var path, $target = $(e.target), dir, system, ss = adv.system.get();
+        e.preventDefault();
+        if (!e.dataTransfer.files.length) return;
+        //返回值
+        path = e.dataTransfer.files[0].path;
+        //if ($target.hasClass('drag-to-add-dir')) {
+        ss = adv.system.get();
+        ss.workspace = path;
+        adv.system.save();
+        studio.updateTree && studio.updateTree();
+        $scope.hasWorkspace = true;
+        $scope.$digest();
+      };
     };
   });
 
@@ -134,17 +149,5 @@
   });
 
 
-  document.ondrop = function (e) {
-    var path, $target = $(e.target), dir, system, ss = adv.system.get();
-    e.preventDefault();
-    if (!e.dataTransfer.files.length) return;
-    //返回值
-    path = e.dataTransfer.files[0].path;
-    //if ($target.hasClass('drag-to-add-dir')) {
-    ss = adv.system.get();
-    ss.workspace = path;
-    adv.system.save();
-    studio.updateTree && studio.updateTree();
-    //}
-  };
+
 })();
