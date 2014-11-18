@@ -51,10 +51,12 @@
       var filepath = tab.data('filepath');
       var editor = this.editors[filepath];
       this.cm = editor;
+      this.filepath = filepath;
       $('.editor-tab-btn').addClass('editor-tab-blur');
       tab.removeClass('editor-tab-blur');
       $('.logContentWrap').hide();
       $('.logContentWrap[data-index="' + index + '"]').show();
+      this.cm.focus();
     },
     closeTab: function (index) {
       var tab = $('.editor-tab-btn[data-index="' + index + '"]');
@@ -182,7 +184,7 @@
       this.cm.commentRange(isComment, range.from, range.to);
     },
     save: function () {
-      if (!this.hasChange) return;
+      //if (!this.hasChange) return;
       if (!this.filepath) {
         adv.msg('暂不支持保存新文件');
       }
