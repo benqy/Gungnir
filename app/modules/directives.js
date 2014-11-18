@@ -34,6 +34,13 @@
       });
     };
   }])
+  .directive('avUpdate', [function () {
+    return function (scope, elem) {
+      $(elem[0]).on('click', function () {
+        adv.updater.checkUpdate();
+      });
+    };
+  }])
   //最小化窗口
   .directive('avMinisize', [function () {
     return function (scope, elem) {
