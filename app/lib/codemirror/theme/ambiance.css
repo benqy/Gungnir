@@ -31,10 +31,15 @@
 .cm-s-ambiance .CodeMirror-nonmatchingbracket { color: #f22; }
 
 .cm-s-ambiance .CodeMirror-selected {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(225, 20, 165, 0.25);
 }
 .cm-s-ambiance.CodeMirror-focused .CodeMirror-selected {
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(225, 20, 165, 0.25);
+}
+
+.cm-s-ambiance .cm-searching {
+    background: #ffa;
+    background: rgba(255, 255, 0, 0.1);
 }
 
 /* Editor styling */
