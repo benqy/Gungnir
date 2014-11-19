@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.1.4.1",
+  "version": "0.1.5.0",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -33,6 +33,18 @@
   "gungnir":{
       "files":[
           "app/index.html",
+          "app/lib/acorn/acorn.js",
+          "app/lib/acorn/acorn_loose.js",
+          "app/lib/acorn/util/walk.js",
+          "app/lib/codemirror/addon/tern/ecma5.json",
+          "app/lib/tern/lib/comment.js",
+          "app/lib/tern/lib/def.js",
+          "app/lib/tern/lib/infer.js",
+          "app/lib/tern/lib/signal.js",
+          "app/lib/tern/lib/tern.js",
+          "app/lib/tern/plugin/doc_comment.js",
+          "app/lib/tern/polyfill.js",
+          "app/modules/studio/editor.js",
           "app/modules/updater.js",
           "app/modules/directives.js"
       ]

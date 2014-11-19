@@ -12,6 +12,8 @@
     <link href="lib/codemirror/addon/fold/foldgutter.css" rel="stylesheet" />
     <link href="lib/codemirror/addon/dialog/dialog.css" rel="stylesheet" />
     <link href="lib/codemirror/addon/lint/lint.css" rel="stylesheet" />
+    <link href="lib/codemirror/addon/hint/show-hint.css" rel="stylesheet" />
+    <link href="lib/codemirror/addon/tern/tern.css" rel="stylesheet" />
     <link href="css/mdfi.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet">
 </head>
@@ -82,15 +84,29 @@
 <script src="lib/codemirror/addon/lint/javascript-lint.js"></script>
 <script src="lib/codemirror/addon/lint/json-lint.js"></script>
 <script src="lib/codemirror/addon/lint/css-lint.js"></script>
-
+<script src="lib/codemirror/addon/hint/show-hint.js"></script>
 <!--emmet-->
 <script src="lib/codemirror/addon/emmet.js"></script>
+<!--tern-->
+<script src="lib/codemirror/addon/tern/tern.js"></script>
+<script src="lib/acorn/acorn.js"></script>
+<script src="lib/acorn/acorn_loose.js"></script>
+<script src="lib/acorn/util/walk.js"></script>
+<script src="lib/tern/polyfill.js"></script>
+
+<script src="lib/tern/lib/signal.js"></script>
+<script src="lib/tern/lib/tern.js"></script>
+<script src="lib/tern/lib/def.js"></script>
+<script src="lib/tern/lib/comment.js"></script>
+<script src="lib/tern/lib/infer.js"></script>
+<script src="lib/tern/plugin/doc_comment.js"></script>
+
     <!--end codemirror-->
     <script src="modules/app.js"></script>
     <script src="modules/updater.js"></script>
     <script src="modules/filters.js"></script>
     <script src="modules/directives.js"></script>
-<script src="modules/win.js"></script>
+    <script src="modules/win.js"></script>
     <script>
         //启动app
         angular.bootstrap($('body'), ['adv']);

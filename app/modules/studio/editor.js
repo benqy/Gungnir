@@ -1,6 +1,8 @@
 ﻿(function () {
   var util = require('./helpers/util');
 
+
+
   var defaultConfig = {
     theme: 'ambiance',
     tabSize: 2,
@@ -28,6 +30,23 @@
       matches: /(text|application)\/(x-)?vb(a|script)/i,
       mode: "vbscript"
     }]
+  };
+
+  var execPath = require('path').dirname(process.execPath);
+
+  //初始化Tern组件 http://ternjs.net/
+  var initTern = function (editor) {
+    var code = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\ecma5.json');
+    var server = new CodeMirror.TernServer({ defs: [code] });
+    editor.setOption("extraKeys", {
+      "Ctrl-.": function (cm) { server.complete(cm); },
+      "Ctrl-I": function (cm) { server.showType(cm); },
+      "Alt-.": function (cm) { server.jumpToDef(cm); },
+      //"Alt-,": function (cm) { server.jumpBack(cm); },
+      "Ctrl-Q": function (cm) { server.rename(cm); },
+      "Ctrl-R": function (cm) { server.selectName(cm); }
+    })
+    editor.on("cursorActivity", function (cm) { server.updateArgHints(cm); });
   };
 
   adv.codeEditer = {
@@ -70,8 +89,8 @@
     },
     init: function (filepath, options) {
       var editor = this.editors[filepath];
-      if(editor) {
-        var tab = $('.editor-tab-btn[data-filepath="' + filepath.replace(/\\/ig,'\\\\') + '"]');
+      if (editor) {
+        var tab = $('.editor-tab-btn[data-filepath="' + filepath.replace(/\\/ig, '\\\\') + '"]');
         this.toggleToTab(tab.data('index'));
         return;
       };
@@ -83,7 +102,7 @@
       wrap.show();
       $('#editorRightContent').append(wrap);
       //生成tab按钮
-      var tab = $('<a href="javascript://" title="'+filepath+'" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename ||filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
+      var tab = $('<a href="javascript://" title="' + filepath + '" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename || filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
       $('#editorTabs .btn-group').append(tab);
       options = $.extend({}, defaultConfig, options);
       if (filepath) {
@@ -137,7 +156,9 @@
       });
       this.editors[filepath] = this.cm;
       this.toggleToTab(index);
+      initTern(this.cm);
     },
+
     events: {},
     getSelectedRange: function () {
       return { from: this.cm.getCursor(true), to: this.cm.getCursor(false) };
