@@ -42,6 +42,10 @@
     var advCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\adv.json');
     var server = new CodeMirror.TernServer({ defs: [ecma5Code, jqueryCode, browserCode, advCode] });
     editor.setOption("extraKeys", {
+      "'.'": function(cm) { 
+        setTimeout(function () { server.complete(cm); }, 100);
+        throw CodeMirror.Pass; // tell CodeMirror we didn't handle the key 
+      } ,
       "Ctrl-.": function (cm) { server.complete(cm); },
       "Ctrl-I": function (cm) { server.showType(cm); },
       "Alt-.": function (cm) { server.jumpToDef(cm); },
