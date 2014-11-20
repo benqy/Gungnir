@@ -250,7 +250,13 @@
           tip.appendChild(document.createTextNode(" — " + data.doc));
         if (data.url) {
           tip.appendChild(document.createTextNode(" "));
-          tip.appendChild(elt("a", null, "[docs]")).href = data.url;
+          //CUSTOM, 修改成nw的打开链接方式
+          var tipLink = elt("a", null, "[docs]");
+          tipLink.addEventListener('click', function (e) {
+            require('nw.gui').Shell.openExternal(data.url);
+            e.preventDefault();
+          });
+          tip.appendChild(tipLink).href = data.url;
         }
       }
       tempTooltip(cm, tip);
@@ -587,7 +593,8 @@
       cm.off("cursorActivity", clear);
       fadeOut(tip);
     }
-    setTimeout(clear, 1700);
+    //CUSTOM 时间从1700改为5000
+    setTimeout(clear, 5000);
     cm.on("cursorActivity", clear);
   }
 
