@@ -1,0 +1,100 @@
+{
+    "!name": "adv",
+    "!type": "Object",
+    "adv": {
+        "Class": {
+            "!url": "http://ued.local.17173.com/classes/adv.cookie.html",
+            "!doc": "所有构造函数的父类,ADV中所有构造函数都是通过adv.Class.extend来创建.",
+            "!type": "fn()",
+            "extend": {
+                "!type": "fn(ns: string, prop: object)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "继承当前构造函数,创建新的构造函数"
+            }
+        },
+        "cookie": {
+            "!url": "http://ued.local.17173.com/classes/adv.cookie.html",
+            "!doc": "Cookie操作",
+            "deleteCookie": {
+                "!type": "fn(name: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "删除指定名称的cookie"
+            },
+            "getCookie": {
+                "!type": "fn(name: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "取得指定名称的cookie值"
+            },
+            "setCookie": {
+                "!type": "fn(name: string, value: string, expires: number, domain: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "写cookie"
+            }
+        },
+        "storage": {
+            "!url": "http://ued.local.17173.com/classes/adv.cookie.html",
+            "!doc": "简单的浏览器端key,value存储模块，如果浏览器支持local Storage，则使用，不支持则使用cookie ",
+            "get": {
+                "!type": "fn(key: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "根据关键字取出储存的值"
+            },
+            "set": {
+                "!type": "fn(name: string, value: string, expires: number, domain: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "根据key存储一条数据,类似Cookie,可以指定过期时间和域"
+            },
+            "remove": {
+                "!type": "fn(key: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "根据关键字移除储存的值"
+            }
+        },
+        "util": {
+            "!url": "http://ued.local.17173.com/classes/adv.cookie.html",
+            "!doc": "工具函数模块,提供了一系列辅助方法",
+            "random": {
+                "!type": "fn(range: number)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "返回一个大于等于0,小于指定的数值或者数组长度的随机整数"
+            },
+            "guid": {
+                "!type": "fn() -> string",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "生成一个唯一的\"adv+16为guid\"字符串"
+            },
+            "arrDel": {
+                "!type": "fn(arr: [?], index: number) -> [?]",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "删除数组中指定索引的值"
+            },
+            "forEach": {
+                "!type": "fn(obj: [?], iterator: fn(i: number, data: ?), context: ?)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "遍历对象或数组"
+            },
+            "getType": {
+                "!type": "fn(obj: ?) -> string",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "对象类型判断,获取类型字符串"
+            },
+            "isPlainObject": {
+                "!type": "fn(obj: ?)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "判断对象是否为简单对象"
+            },
+            "isWindow": {
+                "!type": "fn(obj: ?)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "判断是否为浏览器window对象"
+            },
+            "urlParams": {
+                "!type": "fn(url: string)",
+                "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
+                "!doc": "解析并将url的参数部分以key,value对象形式返回,如果参数为空,则取location.href"
+            }
+        },
+        "!url": "http://ued.local.17173.com/classes/adv.html",
+        "!doc": "广告开发框架,仅作命名空间使用,不可直接调用"
+    }
+}

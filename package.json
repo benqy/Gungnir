@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.1.5.1",
+  "version": "0.1.5.2",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -39,6 +39,7 @@
           "app/lib/codemirror/addon/tern/ecma5.json",
           "app/lib/codemirror/addon/tern/browser.json",
           "app/lib/codemirror/addon/tern/jquery.json",
+          "app/lib/codemirror/addon/tern/adv.json",
           "app/lib/codemirror/addon/tern/tern.js",
           "app/lib/tern/lib/comment.js",
           "app/lib/tern/lib/def.js",

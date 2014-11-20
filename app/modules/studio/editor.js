@@ -39,7 +39,8 @@
     var ecma5Code = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\ecma5.json');
     var jqueryCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\jquery.json');
     var browserCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\browser.json');
-    var server = new CodeMirror.TernServer({ defs: [ecma5Code, jqueryCode,browserCode] });
+    var advCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\adv.json');
+    var server = new CodeMirror.TernServer({ defs: [ecma5Code, jqueryCode, browserCode, advCode] });
     editor.setOption("extraKeys", {
       "Ctrl-.": function (cm) { server.complete(cm); },
       "Ctrl-I": function (cm) { server.showType(cm); },
