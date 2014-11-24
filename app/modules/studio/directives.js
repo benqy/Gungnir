@@ -117,13 +117,19 @@
         if (!e.dataTransfer.files.length) return;
         //返回值
         path = e.dataTransfer.files[0].path;
-        //if ($target.hasClass('drag-to-add-dir')) {
-        ss = adv.system.get();
-        ss.workspace = path;
-        adv.system.save();
-        studio.updateTree && studio.updateTree();
-        $scope.hasWorkspace = true;
-        $scope.$digest();
+        if (!fs.statSync(path).isDirectory()) {
+          //console.log(fs.statSync(path));
+          adv.codeEditer.init(path, { filename: util.getFilename(path) });
+        }
+        else {
+          //if ($target.hasClass('drag-to-add-dir')) {
+          ss = adv.system.get();
+          ss.workspace = path;
+          adv.system.save();
+          studio.updateTree && studio.updateTree();
+          $scope.hasWorkspace = true;
+          $scope.$digest();
+        }
       };
     };
   });

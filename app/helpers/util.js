@@ -130,6 +130,11 @@ exports.url2FileName = function (url) {
   };
 };
 
+exports.getFilename = function (path) {
+  var pathArr = path.split('\\');
+  return pathArr[pathArr.length - 1];
+};
+
 exports.url2SiteDir = function (url) {
   var urlOpt = require('url').parse(url),
   urlPathArr = urlOpt.href.split('/');

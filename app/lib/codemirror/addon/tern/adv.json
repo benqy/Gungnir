@@ -1,16 +1,64 @@
 {
     "!name": "adv",
-    "!type": "Object",
     "adv": {
+        "ENUM":{
+            "!doc": "存放静态枚举类型",
+            "ADVSTATE": {
+                "!doc": "广告当前状态",
+                "uninit": {
+                    "!doc": "尚未初始化",
+                    "!type": "string"
+                },
+                "inited": {
+                    "!doc": "初始化完毕",
+                    "!type": "string"
+                },
+                "setuped": {
+                    "!doc": "资源准备就绪",
+                    "!type": "string"
+                },
+                "played": {
+                    "!doc": "已播放",
+                    "!type": "string"
+                },
+                "stoped": {
+                    "!doc": "已停止",
+                    "!type": "string"
+                }
+            },
+            "EVENTS": {
+                "!doc": "广告各个状态转换时触发的事件名称",
+                "inited": {
+                    "!doc": "初始化完毕",
+                    "!type": "string"
+                },
+                "setuped": {
+                    "!doc": "资源准备就绪",
+                    "!type": "string"
+                },
+                "played": {
+                    "!doc": "已播放",
+                    "!type": "string"
+                },
+                "stoped": {
+                    "!doc": "已停止",
+                    "!type": "string"
+                }
+            }
+        },
         "Class": {
             "!url": "http://ued.local.17173.com/classes/adv.cookie.html",
             "!doc": "所有构造函数的父类,ADV中所有构造函数都是通过adv.Class.extend来创建.",
             "!type": "fn()",
             "extend": {
-                "!type": "fn(ns: string, prop: object)",
+                "!type": "fn(ns: string, prop: object) -> adv.Class",
                 "!url": "https://developer.mozilla.org/en/docs/DOM/window.location",
                 "!doc": "继承当前构造函数,创建新的构造函数"
             }
+        },
+        "AdBase":{
+            "!type": "adv.Class",
+            "!doc": "广告基类,提供广告公共的实现,实现IAdv接口"
         },
         "cookie": {
             "!url": "http://ued.local.17173.com/classes/adv.cookie.html",

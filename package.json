@@ -22,7 +22,7 @@
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",
-    "toolbar": false,
+    "toolbar": true,
     "frame": false,
     "width": 1200,
     "height": 700,
@@ -49,6 +49,8 @@
           "app/lib/tern/plugin/doc_comment.js",
           "app/lib/tern/polyfill.js",
           "app/modules/studio/editor.js",
+          "app/modules/studio/directives.js",
+          "app/helpers/util.js",
           "app/modules/updater.js",
           "app/modules/directives.js"
       ]
