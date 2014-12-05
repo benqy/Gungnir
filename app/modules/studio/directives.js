@@ -94,7 +94,17 @@
             //防卡
             setTimeout(function () {
               treeNodes = studio.dirObjToTreeNode(ss.workspace);
+              var proItems = studio.getProItems(),proItem;
               studio.tree = $.fn.zTree.init($('#fileTree'), setting, treeNodes);
+              //加载不在工作目录内的项
+              for (var key in proItems) {
+                proItem = proItems[key];
+                if (!studio.tree.getNodeByParam('path', proItem.localFile)) {
+                  var pNode = studio.pathToTreeNode(proItem.localFile, null, true);
+                  studio.tree.addNodes(null,pNode);
+                }
+              };
+              //选中上一次选中的文件
               var node = studio.tree.getNodeByParam('path', ss.currentFile);
               if (node) {
                 studio.tree.selectNode(node);

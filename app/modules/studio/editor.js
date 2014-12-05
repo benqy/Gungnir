@@ -40,7 +40,24 @@
     var jqueryCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\jquery.json');
     var browserCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\browser.json');
     var advCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\adv.json');
-    var server = new CodeMirror.TernServer({ defs: [ecma5Code, jqueryCode, browserCode, advCode] });
+    var server = new CodeMirror.TernServer({
+      defs: [ecma5Code, jqueryCode, browserCode, advCode],
+      useWorker: true,
+      workerScript: execPath + '\\app\\lib\\codemirror\\addon\\tern\\worker.js',
+      workerDeps:[
+        execPath + '\\app\\lib\\acorn\\acorn.js',
+        execPath + '\\app\\lib\\acorn\\acorn_loose.js',
+        execPath + '\\app\\lib\\acorn\\util\\walk.js',
+        execPath + '\\app\\lib\\tern\\polyfill.js',
+        execPath + '\\app\\lib\\tern\\lib\\signal.js',
+        execPath + '\\app\\lib\\tern\\lib\\tern.js',
+        execPath + '\\app\\lib\\tern\\lib\\def.js',
+        execPath + '\\app\\lib\\tern\\lib\\comment.js',
+        execPath + '\\app\\lib\\tern\\lib\\infer.js',
+        execPath + '\\app\\lib\\tern\\plugin\\doc_comment.js'
+      ]
+    });
+    console.log(server)
     editor.setOption("extraKeys", {
       "'.'": function(cm) { 
         setTimeout(function () { server.complete(cm); }, 100);

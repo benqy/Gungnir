@@ -108,6 +108,7 @@
           util.mkdir(path, true);
           util.writeFileSync(file, data.text);
           proItem.localFile = file;
+          console.log(proItem)
         }
         studio.saveProItem(proItem);
         //更新目录结构
@@ -134,9 +135,10 @@
     return pathToTreeNode(path);
   };
 
-  var pathToTreeNode = studio.pathToTreeNode = function (path, parentNode) {
+  var pathToTreeNode = studio.pathToTreeNode = function (path, parentNode,outOfWorkspace) {
     //要从项目浏览器视图中排除的文件,TODO:改为可配置
-    if(~path.indexOf('node_modules')) return;
+    if (~path.indexOf('node_modules')) return;
+    if (!fs.existsSync(path)) return;
     var isDir = fs.statSync(path).isDirectory(),
         ipAddres = ip.address(),
         ss = adv.system.get(),
@@ -183,8 +185,13 @@
         parentNode.children.push(node);
       }
     } else {
-      node.icon = './img/home.png';
-      node.isProject = true;
+      if (outOfWorkspace) {
+        node.icon = './img/home.png';
+      }
+      else {
+        node.icon = './img/out-of-workspace.png';
+        node.isProject = true;
+      }
       node.dragAble = false;
       return node;
     }

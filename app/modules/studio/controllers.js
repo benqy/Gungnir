@@ -14,7 +14,8 @@
       $scope.addProItem = function () {
         $scope.currentProItem = {
           url: '',
-          localFile: ''
+          localFile: '',
+          isReg:false
         };
       };
 
