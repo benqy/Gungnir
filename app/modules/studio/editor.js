@@ -91,7 +91,6 @@
 
     },
     toggleToTab: function (index) {
-      console.log(index)
       var tab = $('.editor-tab-btn[data-index="' + index + '"]');
       var filepath = tab.data('filepath');
       var editor = this.editors[filepath];
@@ -114,7 +113,6 @@
       }
     },
     init: function (filepath, options) {
-      console.log(filepath,options)
       var editor = this.editors[filepath];
       if (editor) {
         var tab = $('.editor-tab-btn[data-filepath="' + filepath.replace(/\\/ig, '\\\\') + '"]');
