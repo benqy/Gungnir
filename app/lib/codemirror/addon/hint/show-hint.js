@@ -16,7 +16,7 @@
 
   // This is the old interface, kept around for now to stay
   // backwards-compatible.
-  CodeMirror.showHint = function(cm, getHints, options) {
+  CodeMirror.showHint = function (cm, getHints, options) {
     if (!getHints) return cm.showHint(options);
     if (options && options.async) getHints.async = true;
     var newOpts = {hint: getHints};
@@ -24,10 +24,9 @@
     return cm.showHint(newOpts);
   };
 
-  CodeMirror.defineExtension("showHint", function(options) {
+  CodeMirror.defineExtension("showHint", function (options) {
     // We want a single cursor position.
     if (this.listSelections().length > 1 || this.somethingSelected()) return;
-
     if (this.state.completionActive) this.state.completionActive.close();
     var completion = this.state.completionActive = new Completion(this, options);
     var getHints = completion.options.hint;
@@ -69,13 +68,14 @@
       this.close();
     },
 
-    showHints: function(data) {
+    showHints: function (data) {
       if (!data || !data.list.length || !this.active()) return this.close();
 
-      if (this.options.completeSingle && data.list.length == 1)
-        this.pick(data, 0);
-      else
-        this.showWidget(data);
+      //CUSTOM 这里如果只有
+      //if (this.options.completeSingle && data.list.length == 1)
+      //  this.pick(data, 0);
+      //else
+      this.showWidget(data);
     },
 
     showWidget: function(data) {

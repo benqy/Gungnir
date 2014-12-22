@@ -44,7 +44,7 @@
     var advCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\adv.json');
     var server = new CodeMirror.TernServer({
       defs: [ecma5Code, jqueryCode, browserCode, advCode],
-      useWorker: true,
+      useWorker: false,
       workerScript: execPath + '\\app\\lib\\codemirror\\addon\\tern\\worker.js',
       workerDeps:[
         execPath + '\\app\\lib\\acorn\\acorn.js',
@@ -107,6 +107,8 @@
       var filepath = tab.data('filepath');
       delete this.editors[filepath];
       tab.remove()
+      //语法提示弹出框
+      $('.CodeMirror-Tern-tooltip').remove();
       $('.logContentWrap[data-index="' + index + '"]').remove();
       if (!tab.hasClass('editor-tab-blur')) {
         $('.editor-tab-btn:eq(0)').trigger('click');
