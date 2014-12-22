@@ -19,7 +19,11 @@ http://pan.baidu.com/s/1kTFrmNd
 5. 代码编辑器
 
 
-###CHANGELOG
+###CHANGELOG  
+v0.1.7.1  
+
+1 修复自动bug  
+  
 v0.1.7.0  
 
 1. 添加简单的SSI功能(目前只实现include语法).
