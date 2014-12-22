@@ -63,6 +63,49 @@ var renderDir = function (urlOpt, dir) {
   return resData;
 };
 
+
+var DIRECTIVE_MATCHER = /<!--#([a-z]+)([ ]+([a-z]+)="(.+?)")*\s*-->/g;
+var ATTRIBUTE_MATCHER = /([a-z]+)="(.+?)"/g;
+var INTERPOLATION_MATCHER = /\$\{(.+?)\}/g;
+var parseAttributes =  function (directive) {
+  var attributes = [];
+
+  directive.replace(ATTRIBUTE_MATCHER, function (attribute, name, value) {
+    attributes.push({ name: name, value: value });
+  });
+
+  return attributes;
+};
+
+//读取文件并返回,支持SSI
+var resFile = function (path,root) {
+  var content = fs.readFileSync(path);
+  if (~path.indexOf('.shtml')) {
+    content = content.toString();
+    var directives = content.match(DIRECTIVE_MATCHER);
+    directives && directives.forEach(function (directive) {
+      var attributes = parseAttributes(directive);
+      var attribute = attributes[0];
+      if (attribute && attribute.name == 'virtual') {
+        var filename = attribute.value;
+        if (filename[0] == '/') {
+          filename = require('path').resolve(root + filename);
+        }
+        else {
+          filename = require('path').resolve(util.getFileDir(path) + '\\' + filename);
+        }
+        if (~filename.indexOf('.shtml')) {
+          content = content.replace(directive, resFile(filename, root));
+        }
+        else {
+          content = content.replace(directive, fs.readFileSync(filename).toString());
+        }
+      }
+    });
+  }
+  return content;
+};
+
 var runServer = function (adv) {
   var ss = adv.system.get(),proItem;
   var configs = ss.localServer;
@@ -95,12 +138,12 @@ var runServer = function (adv) {
           resData = renderDir(urlModule.parse(urlOpt.query.oriurl), localFile);
         }
         else {
-          resData = fs.readFileSync(localFile);
+          resData = resFile(localFile,ss.workspace);
         }
       }
       //代理单个文件
       else {
-        resData = fs.readFileSync(proItem.localFile);
+        resData = resFile(proItem.localFile, ss.workspace);
       }
       res.writeHead(200, header);
     }
@@ -116,7 +159,7 @@ var runServer = function (adv) {
         resData = renderDir(urlOpt, path);
       }
       else {
-        resData = fs.readFileSync(path);
+        resData = resFile(path, ss.workspace);
       }
       res.writeHead(404, header);
     }

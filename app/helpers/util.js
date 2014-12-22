@@ -135,6 +135,11 @@ exports.getFilename = function (path) {
   return pathArr[pathArr.length - 1];
 };
 
+exports.getFileDir = function (path) {
+  var pathArr = path.split('\\');
+  return pathArr.slice(0,pathArr.length - 1).join('\\');
+};
+
 exports.url2SiteDir = function (url) {
   var urlOpt = require('url').parse(url),
   urlPathArr = urlOpt.href.split('/');

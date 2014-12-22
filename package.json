@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.1.6.0",
+  "version": "0.1.7.0",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -22,7 +22,7 @@
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",
-    "toolbar": false,
+    "toolbar": true,
     "frame": false,
     "width": 1200,
     "height": 700,
@@ -55,6 +55,8 @@
           "app/modules/studio/controllers.js",
           "app/modules/studio/directives.js",
           "app/proxy/index.js",
+          "app/proxy/conditional.js",
+          "app/proxy/directiveHandler.js",
           "app/helpers/util.js",
           "app/modules/updater.js",
           "app/modules/directives.js"

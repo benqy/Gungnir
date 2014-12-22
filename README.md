@@ -19,7 +19,13 @@ http://pan.baidu.com/s/1kTFrmNd
 5. 代码编辑器
 
 
-###CHANGELOG  
+###CHANGELOG
+v0.1.7.0  
+
+1. 添加简单的SSI功能(目前只实现include语法).
+2. 修复codemirror自带的文件拖动功能导致的编辑器重复加载文本的bug.
+3. 其他bug修复
+  
 v0.1.6.0  
 
 1. 语法分析,提示功能现在使用独立的worker进程来实现,使UI界面更流畅.
