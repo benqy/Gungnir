@@ -98,6 +98,8 @@
       this.filepath = filepath;
       $('.editor-tab-btn').addClass('editor-tab-blur');
       tab.removeClass('editor-tab-blur');
+      //删除语法提示弹出框
+      $('.CodeMirror-Tern-tooltip').remove();
       $('.logContentWrap').hide();
       $('.logContentWrap[data-index="' + index + '"]').show();
       this.cm.focus();
@@ -107,8 +109,9 @@
       var filepath = tab.data('filepath');
       delete this.editors[filepath];
       tab.remove()
-      //语法提示弹出框
+      //删除语法提示弹出框
       $('.CodeMirror-Tern-tooltip').remove();
+
       $('.logContentWrap[data-index="' + index + '"]').remove();
       if (!tab.hasClass('editor-tab-blur')) {
         $('.editor-tab-btn:eq(0)').trigger('click');

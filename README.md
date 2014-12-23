@@ -19,7 +19,11 @@ http://pan.baidu.com/s/1kTFrmNd
 5. 代码编辑器
 
 
-###CHANGELOG  
+###CHANGELOG
+v0.1.8.1  
+
+1. bug修复 
+ 
 v0.1.8.0  
 
 1. 添加代理时,可以勾选"返回代码执行结果",则服务端会把所有文本当做一个js函数执行,并返回执行结果.函数签名为:function(query){},其中query为url参数对象.  

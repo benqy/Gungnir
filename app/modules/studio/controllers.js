@@ -15,7 +15,7 @@
         $scope.currentProItem = {
           url: '',
           localFile: '',
-          serverSide:true,
+          serverSide:false,
           isReg:false
         };
         console.log($scope.currentProItem)
