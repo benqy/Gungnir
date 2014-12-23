@@ -15,13 +15,16 @@
         $scope.currentProItem = {
           url: '',
           localFile: '',
+          serverSide:true,
           isReg:false
         };
+        console.log($scope.currentProItem)
       };
 
       $scope.saveProItem = function (currentProItem) {
         //http://www.17173cdn.com/a/b
         $scope.currentProItemErrorMsg = "正在下载页面...";
+        console.log(currentProItem)
         if (currentProItem.localFile && util.isdir(currentProItem.localFile)) {
           studio.saveProItem(currentProItem);
           $scope.currentProItem = null;
@@ -75,6 +78,12 @@
         });
       };
       //#end代理服务器
+
+      //打开程序控制台
+      $scope.openTerminal = function () {
+        require('nw.gui').Window.get().showDevTools('', false);
+
+      };
 
 
       //刷新目录

@@ -5,7 +5,7 @@
                 <a href="javascript://" ng-click="runServer()" class="btn btn-primary" ng-show="!serverRuning" title="启动服务器" style="border-radius:0;"><i class="glyphicon glyphicon-play"></i></a>
                 <a href="javascript://" ng-click="stopServer()" class="btn btn-success" style="display:none;" ng-show="serverRuning" title="运行中,点击关闭服务器" style="border-radius:0;"><i class="glyphicon glyphicon-stop"></i></a>
                 <a href="javascript:;" ng-click="addProItem()" class="btn btn-primary" ng-class="{'disabled':!hasWorkspace}" title="新增代理设置" style="border-radius:0;"><i class="glyphicon glyphicon-plus"></i></a>
-                <a href="javascript://" class="btn btn-primary disabled" title="打开项目目录" ng-click="openPath()"><i class="glyphicon glyphicon-folder-close"></i></a>
+                <a href="javascript://" class="btn btn-primary" title="打开软件控制台" ng-click="openTerminal()"><i class="glyphicon mdfi_hardware_laptop_windows"></i></a>
                 <a href="javascript://" class="btn btn-primary" title="刷新目录" ng-click="reload()"><i class="glyphicon glyphicon-retweet"></i></a>
                 <a href="javascript://" class="btn btn-primary disabled" title="复制预览地址" ng-click="publish()"><i class="glyphicon glyphicon-transfer"></i></a>
                 <a href="javascript://" class="btn btn-primary disabled" title="保存更改" id="editorSave" ng-click="save()" style="border-radius:0;"><i class="glyphicon glyphicon-floppy-disk"></i></a>
@@ -66,8 +66,11 @@
                     <input type="text" class="form-control" name="localFile" ng-pattern="/^[a-zA-Z]:(([a-zA-Z]*)||([a-zA-Z]*\\))*/" ng-model="currentProItem.localFile" placeholder="本地文件路径,为空则自动下载线上文件" />
                 </div>
                 <div class="form-group">
+                    <!--<label>
+                      <input type="checkbox" name="isReg" ng-model="currentProItem.isReg">正则匹配
+                    </label>-->
                     <label>
-                      <input type="checkbox" name="isReg" model="currentProItem.isReg">正则匹配
+                      <input type="checkbox" name="serverSide" ng-model="currentProItem.serverSide">返回代码执行结果
                     </label>
                 </div>
                 <div class="form-group">

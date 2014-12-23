@@ -39,7 +39,8 @@ var setHeader = function (urlOpt) {
   } else if (~filename.indexOf('.bmp')) {
     header['content-type'] = 'image/bmp';
   } else {
-    header['content-type'] = 'application/x-msdownload';
+    //header['content-type'] = 'application/x-msdownload';
+    header['content-type'] = 'text/plain';
   }
   return header;
 };
@@ -127,7 +128,7 @@ var runServer = function (adv) {
       //代理整个目录
       if (util.isdir(proItem.localFile)) {
         resData = '文件夹';
-        path = urlOpt.query.oriurl.replace(proItem.url, ''),
+        path = urlOpt.query.oriurl.toLowerCase().replace(proItem.url, ''),
           localFile = require('path').resolve(proItem.localFile + '\\' + path);
         localFile = decodeURIComponent(localFile);
         if (!fs.existsSync(localFile)) {
@@ -143,7 +144,28 @@ var runServer = function (adv) {
       }
       //代理单个文件
       else {
-        resData = resFile(proItem.localFile, ss.workspace);
+        //try {
+        //  customFn = new Function('query', route.responseData);
+        //  resData = customFn(urlOpt.query);
+        //  resData = resData;
+        //  console.log(resData);
+        //} catch (e) {
+        //  resData = JSON.stringify(e.message);
+        //  module.exports.fire('error', { msg: '自定义函数异常:' + resData });
+        //}
+        var fileText = resFile(proItem.localFile, ss.workspace);
+        if (proItem.serverSide) {
+          try {
+            var customFn = new Function('query', fileText);
+            resData = customFn(urlModule.parse(urlOpt.query.oriurl, true).query).toString();
+          } catch (e) {
+            resData = JSON.stringify(e.message);
+          }
+        }
+        else {
+          console.log(fileText.toString())
+          resData = fileText;
+        }
       }
       res.writeHead(200, header);
     }
@@ -207,7 +229,7 @@ module.exports = {
             port = localServerConfig.port;
             req.url = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port) + 
               '?proxyid=' + proItem.id + 
-              '&oriurl=' + encodeURIComponent(url);
+              '&oriurl=' + encodeURIComponent(req.url);
           }
         }
       }

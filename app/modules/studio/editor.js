@@ -44,7 +44,7 @@
     var advCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\adv.json');
     var server = new CodeMirror.TernServer({
       defs: [ecma5Code, jqueryCode, browserCode, advCode],
-      useWorker: false,
+      useWorker: true,
       workerScript: execPath + '\\app\\lib\\codemirror\\addon\\tern\\worker.js',
       workerDeps:[
         execPath + '\\app\\lib\\acorn\\acorn.js',
