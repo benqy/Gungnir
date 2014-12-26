@@ -3,6 +3,28 @@
   var util = require('./helpers/util');
   var fs = require('fs');
   var studio = adv.studio;
+
+  var openProject = function (path, $scope) {
+    var ss = adv.system.get();
+    ss.workspace = path;
+    adv.system.save();
+    studio.updateTree && studio.updateTree();
+    $scope.hasWorkspace = true;
+    $scope.$digest();
+  };
+
+  //打开项目文件
+  studio.directive('codeOpenproject', function () {
+    return function ($scope, elem) {
+      document.getElementById('openProjectDialog').addEventListener("change", function (evt) {
+        openProject(this.value, $scope);
+      }, false);
+      $(elem[0]).on('click', function () {
+        $('#openProjectDialog').trigger('click');
+      });
+    }
+  });
+
   studio.directive('codeTree', function () {
     return function ($scope, elem) {
       //选中文件,在编辑器中打开该文件
@@ -122,7 +144,7 @@
       studio.updateTree();
 
       document.ondrop = function (e) {
-        var path, $target = $(e.target), dir, system, ss = adv.system.get();
+        var path, $target = $(e.target), dir, system;
         e.preventDefault();
         if (!e.dataTransfer.files.length) return;
         //返回值
@@ -133,17 +155,11 @@
         }
         else {
           //if ($target.hasClass('drag-to-add-dir')) {
-          ss = adv.system.get();
-          ss.workspace = path;
-          adv.system.save();
-          studio.updateTree && studio.updateTree();
-          $scope.hasWorkspace = true;
-          $scope.$digest();
+          openProject(path, $scope);
         }
       };
     };
   });
-
 
   studio.directive('codeTabs', function () {
     return function ($scope, elem) {

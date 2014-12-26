@@ -10,6 +10,7 @@
     .controller('studio', function ($scope, $state, $stateParams) {
       var system = adv.system.get();
       $scope.hasWorkspace = !!system.workspace;
+
       //添加代理设置
       $scope.addProItem = function () {
         $scope.currentProItem = {

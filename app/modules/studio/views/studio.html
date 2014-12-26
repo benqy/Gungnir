@@ -1,13 +1,14 @@
-﻿<div class="content">
+<div class="content">
     <div class="sidebar sidebar-middle">
         <div class="list-group code-tool">
+            <input style="display:none;" id="openProjectDialog" type="file" nwdirectory/>
             <div class="btn-group">
-                <a href="javascript://" ng-click="runServer()" class="btn btn-primary" ng-show="!serverRuning" title="启动服务器" style="border-radius:0;"><i class="glyphicon glyphicon-play"></i></a>
+                <a href="javascript://" class="btn btn-primary"  style="border-radius:0;" title="打开项目" code-openproject><i class="glyphicon glyphicon glyphicon-folder-open"></i></a>
+                <a href="javascript://" ng-click="runServer()" class="btn btn-primary" ng-show="!serverRuning" title="启动服务器"><i class="glyphicon glyphicon-play"></i></a>
                 <a href="javascript://" ng-click="stopServer()" class="btn btn-success" style="display:none;" ng-show="serverRuning" title="运行中,点击关闭服务器" style="border-radius:0;"><i class="glyphicon glyphicon-stop"></i></a>
                 <a href="javascript:;" ng-click="addProItem()" class="btn btn-primary" ng-class="{'disabled':!hasWorkspace}" title="新增代理设置" style="border-radius:0;"><i class="glyphicon glyphicon-plus"></i></a>
-                <a href="javascript://" class="btn btn-primary" title="打开软件控制台" ng-click="openTerminal()"><i class="glyphicon mdfi_hardware_laptop_windows"></i></a>
+                <a href="javascript://" class="btn btn-primary" title="打开控制台" ng-click="openTerminal()"><i class="glyphicon mdfi_hardware_laptop_windows"></i></a>
                 <a href="javascript://" class="btn btn-primary" title="刷新目录" ng-click="reload()"><i class="glyphicon glyphicon-retweet"></i></a>
-                <a href="javascript://" class="btn btn-primary disabled" title="复制预览地址" ng-click="publish()"><i class="glyphicon glyphicon-transfer"></i></a>
                 <a href="javascript://" class="btn btn-primary disabled" title="保存更改" id="editorSave" ng-click="save()" style="border-radius:0;"><i class="glyphicon glyphicon-floppy-disk"></i></a>
             </div>
         </div>
@@ -19,36 +20,11 @@
         </div>
     </div>
     <div class="container-right container-right-middle" id="editorRightContent" ui-view ng-animate="'animate'">
-        <!--<ul class="nav nav-tabs">
-            <li class="active"><a href="javascript:;">abc.js</a></li>
-            <li><a href="javascript:;">Profile</a></li>
-            <li><a href="javascript:;">Messages</a></li>
-        </ul>-->
         <!--编辑器tab页-->
         <div class="list-group editor-tool" id="editorTabs" code-tabs>
             <div class="btn-group">
-                <!--<a href="javascript://"  data-filepath="abc.js"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">abc.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
-                <a href="javascript://" data-filepath="container-ri.js"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">container-ri.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
-                <a href="javascript://"  data-filepath="studio.js" class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">studio.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
-                <a href="javascript://" data-filepath="directives.js" class="btn btn-primary editor-tab-btn" style="border-radius:0;">directives.js<i class="mdfi-icon mdfi_navigation_close"></i></a>
-                <a href="javascript://" data-filepath="win.js" class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">win.js<i class="mdfi-icon mdfi_navigation_close"></i></a>-->
             </div>
         </div>
-        <!--<div class="logContentWrap" data-filepath="abc.js">
-            1
-        </div>
-        <div class="logContentWrap"  data-filepath="container-ri.js">
-            2
-        </div>
-        <div class="logContentWrap"  data-filepath="studio.js">
-            3
-        </div>
-        <div class="logContentWrap"  data-filepath="directives.js">
-            4
-        </div>
-        <div class="logContentWrap"  data-filepath="win.js">
-            5
-        </div>-->
     </div>
     <!--代理设置弹窗-->
     <div class="dialog panel panel-primary" ng-class="{'hidden':!currentProItem}">

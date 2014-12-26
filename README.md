@@ -19,7 +19,11 @@ http://pan.baidu.com/s/1kTFrmNd
 5. 代码编辑器
 
 
-###CHANGELOG
+###CHANGELOG  
+v0.1.8.2  
+
+1. 因为拖动目录打开来打开项目的方式比较不符合大众口味,所以增加了打开项目的按钮.  
+
 v0.1.8.1  
 
 1. bug修复 
