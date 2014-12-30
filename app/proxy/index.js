@@ -163,7 +163,6 @@ var runServer = function (adv) {
           }
         }
         else {
-          console.log(fileText.toString())
           resData = fileText;
         }
       }

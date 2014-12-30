@@ -79,7 +79,6 @@
     if (!ss.workspace) return;
     var datas = studio.getProItems();
     var proFilePath = ss.workspace + '\\zproject.json';
-    console.log(datas)
     delete datas[proItem.id];
     console.log(datas)
     util.writeFileSync(proFilePath, JSON.stringify(datas));

@@ -19,13 +19,11 @@
           serverSide:false,
           isReg:false
         };
-        console.log($scope.currentProItem)
       };
 
       $scope.saveProItem = function (currentProItem) {
         //http://www.17173cdn.com/a/b
         $scope.currentProItemErrorMsg = "正在下载页面...";
-        console.log(currentProItem)
         if (currentProItem.localFile && util.isdir(currentProItem.localFile)) {
           studio.saveProItem(currentProItem);
           $scope.currentProItem = null;
