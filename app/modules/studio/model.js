@@ -136,7 +136,7 @@
 
   var pathToTreeNode = studio.pathToTreeNode = function (path, parentNode,outOfWorkspace) {
     //要从项目浏览器视图中排除的文件,TODO:改为可配置
-    if (~path.indexOf('node_modules')) return;
+    if (~path.indexOf('node_modules') || ~path.indexOf('.git')) return;
     if (!fs.existsSync(path)) return;
     var isDir = fs.statSync(path).isDirectory(),
         ipAddres = ip.address(),

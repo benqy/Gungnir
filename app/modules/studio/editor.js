@@ -81,6 +81,8 @@
       php: htmlmixed,
       aspx: htmlmixed,
       js: 'javascript',
+      coffee:'coffeescript',
+      md:'markdown',
       css: 'css',
       txt: 'javascript',
       json: 'json',

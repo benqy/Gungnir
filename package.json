@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.1.8.3",
+  "version": "0.1.8.4",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -37,6 +37,9 @@
           "app/lib/acorn/acorn.js",
           "app/lib/acorn/acorn_loose.js",
           "app/lib/acorn/util/walk.js",
+          "app/lib/codemirror/theme/ambiance.css",
+          "app/lib/codemirror/mode/coffeescript/coffeescript.js",
+          "app/lib/codemirror/mode/markdown/markdown.js",
           "app/lib/codemirror/addon/tern/ecma5.json",
           "app/lib/codemirror/addon/tern/browser.json",
           "app/lib/codemirror/addon/tern/jquery.json",
