@@ -7,7 +7,7 @@
     theme: 'ambiance',
     tabSize: 2,
     //关闭自带的拖动显示
-    dragDrop:false,
+    dragDrop: false,
     autofocus: true,
     lineNumbers: true,
     lineWrapping: true,
@@ -46,7 +46,7 @@
       defs: [ecma5Code, jqueryCode, browserCode, advCode],
       useWorker: true,
       workerScript: execPath + '\\app\\lib\\codemirror\\addon\\tern\\worker.js',
-      workerDeps:[
+      workerDeps: [
         execPath + '\\app\\lib\\acorn\\acorn.js',
         execPath + '\\app\\lib\\acorn\\acorn_loose.js',
         execPath + '\\app\\lib\\acorn\\util\\walk.js',
@@ -60,10 +60,10 @@
       ]
     });
     editor.setOption("extraKeys", {
-      "'.'": function(cm) { 
+      "'.'": function (cm) {
         setTimeout(function () { server.complete(cm); }, 100);
         throw CodeMirror.Pass; // tell CodeMirror we didn't handle the key 
-      } ,
+      },
       "Ctrl-.": function (cm) { server.complete(cm); },
       "Ctrl-I": function (cm) { server.showType(cm); },
       "Alt-.": function (cm) { server.jumpToDef(cm); },
@@ -81,8 +81,8 @@
       php: htmlmixed,
       aspx: htmlmixed,
       js: 'javascript',
-      coffee:'coffeescript',
-      md:'markdown',
+      coffee: 'coffeescript',
+      md: 'markdown',
       css: 'css',
       txt: 'javascript',
       json: 'json',
@@ -93,6 +93,7 @@
 
     },
     toggleToTab: function (index) {
+      this.currrentTabIndex = index;
       var tab = $('.editor-tab-btn[data-index="' + index + '"]');
       var filepath = tab.data('filepath');
       var editor = this.editors[filepath];
@@ -106,7 +107,18 @@
       $('.logContentWrap[data-index="' + index + '"]').show();
       this.cm.focus();
     },
+    nextTab: function () {
+      if (!this.currrentTabIndex) return;
+      var tab = $('.editor-tab-btn[data-index="' + this.currrentTabIndex + '"]').next();
+      if (!tab[0]) tab = $('.editor-tab-btn:eq(0)');
+      var index = tab.attr('data-index');
+      if (index != this.currrentTabIndex) {
+        this.toggleToTab(index);
+      }
+    },
     closeTab: function (index) {
+      //未指定索引则关闭当前标签页
+      index = index || this.currrentTabIndex;
       var tab = $('.editor-tab-btn[data-index="' + index + '"]');
       var filepath = tab.data('filepath');
       delete this.editors[filepath];
@@ -180,10 +192,15 @@
           me.commentSelection();
         },
         "Ctrl-Tab": function () {
-          adv.studio.nextFile && adv.studio.nextFile();
+          //adv.studio.nextFile && adv.studio.nextFile();
+          me.nextTab();
         },
-        "Ctrl-W": function () {
-          adv.studio.prevFile && adv.studio.prevFile();
+        //"Ctrl-W": function () {
+        //  adv.studio.prevFile && adv.studio.prevFile();
+        //}
+        //关闭当前标签页
+        "Ctrl-W": function (cm) {
+          me.closeTab();
         }
       });
       this.editors[filepath] = this.cm;

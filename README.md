@@ -20,6 +20,11 @@ http://pan.baidu.com/s/1kTFrmNd
 
 
 ###CHANGELOG  
+v0.1.8.5  
+
+1. 支持coffeescript和markdown语法提示
+2. 增加快捷键:Ctrl+W关闭窗口,Ctrl+Tab循环切换编辑页
+
 v0.1.8.2  
 
 1. 因为拖动目录打开来打开项目的方式比较不符合大众口味,所以增加了打开项目的按钮.  
