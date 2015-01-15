@@ -81,6 +81,19 @@
             var node = treeNodes[0], targetFile;
             if (node && targetNode && targetNode.isDir && confirm('确认移动文件:' + node.name)) {
               targetFile = require('path').resolve(targetNode.path + '\\' + node.name);
+              if (node.isDir) {
+                //更新该目录下所有代理设置
+                studio.proEach(function (key, proItem) {
+                  proItem.localFile = proItem.localFile.replace(node.path, targetFile);
+                  studio.saveProItem(proItem);
+                });
+              }
+              //如果对应的代理配置,则更新
+              var proItem = studio.getItemByPath(node.path);
+              proItem && (proItem.localFile = targetFile);
+              studio.saveProItem(proItem);
+              //关闭编辑器
+              adv.codeEditer.closeByFilePath(node.path);
               fs.renameSync(node.path, targetFile);
               adv.system.setCurrentFile(targetFile);
               studio.updateTree();

@@ -13,6 +13,7 @@
 
       //添加代理设置
       $scope.addProItem = function () {
+        $scope.currentProItemErrorMsg = "";
         $scope.currentProItem = {
           url: '',
           localFile: '',
@@ -160,6 +161,7 @@
           else {
             fs.unlinkSync($scope.currentNode.path);
           }
+          studio.delProItem(studio.getItemByPath($scope.currentNode.path));
           studio.tree.removeNode($scope.currentNode);
           $scope.currentNode = null;
         }
@@ -260,6 +262,11 @@
           if (cei.isDir) {
             var pathSpt = cei.path.split('\\');
             basePath = pathSpt.slice(0, pathSpt.length - 1).join('\\');
+            //更新该目录下所有代理设置
+            studio.proEach(function (key,proItem) {
+              proItem.localFile = proItem.localFile.replace(cei.path,basePath + '\\' + cei.name);
+              studio.saveProItem(proItem);
+            });
           }
           else {
             basePath = cei.path;
@@ -269,6 +276,13 @@
             adv.msg('目录已存在!', adv.MSG_LEVEL.warnings);
           }
           else {
+            //如果对应的代理配置,则更新
+            var proItem = studio.getItemByPath($scope.currentNode.path);
+            proItem && (proItem.localFile = fullName);
+            studio.saveProItem(proItem);
+            //关闭已打开的编辑器
+            adv.codeEditer.closeByFilePath(basePath + '\\' + cei.oldName);
+
             fs.renameSync(basePath + '\\' + cei.oldName, fullName);
             adv.system.setCurrentFile(cei.path + '\\' + cei.name);
             succes = true;

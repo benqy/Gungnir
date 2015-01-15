@@ -48,6 +48,13 @@
     return pItems;
   };
 
+  studio.proEach = function (fn) {
+    var proItems = studio.getProItems();
+    Object.keys(proItems).forEach(function (key) {
+      fn(key, proItems[key]);
+    });
+  };
+
   studio.general = function () {
     return {
       path: ''
@@ -55,6 +62,7 @@
   };
 
   studio.saveProItem = function (proItem) {
+    if (!proItem) return;
     var ss = adv.system.get();
     if (!ss.workspace) return;
     var datas = studio.getProItems();
@@ -75,14 +83,15 @@
   };
 
   studio.delProItem = function (proItem) {
-    var ss = adv.system.get();
-    if (!ss.workspace) return;
-    var datas = studio.getProItems();
-    var proFilePath = ss.workspace + '\\zproject.json';
-    delete datas[proItem.id];
-    console.log(datas)
-    util.writeFileSync(proFilePath, JSON.stringify(datas));
-    return { success: true, msg: '完成' };
+    if (proItem) {
+      var ss = adv.system.get();
+      if (!ss.workspace) return;
+      var datas = studio.getProItems();
+      var proFilePath = ss.workspace + '\\zproject.json';
+      delete datas[proItem.id];
+      util.writeFileSync(proFilePath, JSON.stringify(datas));
+      return { success: true, msg: '完成' };
+    }
   };
 
   studio.downFile = function (proItem, fn) {

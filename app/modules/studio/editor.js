@@ -105,7 +105,7 @@
       $('.CodeMirror-Tern-tooltip').remove();
       $('.logContentWrap').hide();
       $('.logContentWrap[data-index="' + index + '"]').show();
-      this.cm.focus();
+      this.cm && this.cm.focus();
     },
     nextTab: function () {
       if (!this.currrentTabIndex) return;
@@ -129,6 +129,23 @@
       $('.logContentWrap[data-index="' + index + '"]').remove();
       if (!tab.hasClass('editor-tab-blur')) {
         $('.editor-tab-btn:eq(0)').trigger('click');
+      }
+    },
+    //关闭匹配指定本地路径的文件,如果为文件夹,则关闭所有该文件夹下的文件.
+    closeByFilePath: function (filepath) {
+      if (util.isdir(filepath)) {
+        $('.editor-tab-btn').each(function (i, n) {
+          var $n = $(n),index;
+          if (~$n.data('filepath').indexOf(filepath)) {
+            index = $n.data('index');
+            index && this.closeTab(index);
+          }
+        }.bind(this));
+      }
+      else {
+        var tab = $('.editor-tab-btn[data-filepath="' + filepath.replace(/\\/ig, '\\\\') + '"]'),
+          index = tab.data('index');
+        index && this.closeTab(index);
       }
     },
     init: function (filepath, options) {

@@ -84,6 +84,6 @@
   
   //require('nw.gui').Shell.openItem('AdStudioFlush.exe');
   process.on('uncaughtException', function(err) {
-    console.log('un catch error' + err);
+    console.dir(err);
   });
 })(this);

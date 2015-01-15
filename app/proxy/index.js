@@ -243,7 +243,7 @@ module.exports = {
   runServer: function (adv, fn) {
     if (localServer && localServer.address()) {
       localServer.close(function () {
-        runServer();
+        runServer(adv);
         fn();
       });
     }
