@@ -144,15 +144,6 @@ var runServer = function (adv) {
       }
       //代理单个文件
       else {
-        //try {
-        //  customFn = new Function('query', route.responseData);
-        //  resData = customFn(urlOpt.query);
-        //  resData = resData;
-        //  console.log(resData);
-        //} catch (e) {
-        //  resData = JSON.stringify(e.message);
-        //  module.exports.fire('error', { msg: '自定义函数异常:' + resData });
-        //}
         var fileText = resFile(proItem.localFile, ss.workspace);
         if (proItem.serverSide) {
           try {
@@ -212,31 +203,27 @@ module.exports = {
   runProxyServer: function (adv) {
     var ss = adv.system.get(),
       localServerConfig = ss.localServer;
-    proxyServer = httpProxy.createServer(function (req, res, proxy) {
+    var proxy = httpProxy.createProxyServer({ prependPath: false });
+
+    proxyServer = http.createServer(function (req, res) {
       ss = adv.system.get();
-      var buffer = httpProxy.buffer(req),
-        url = req.url.toLowerCase(),
+      var url = req.url.toLowerCase(),
+        target = req.url,
         urlOpt = require('url').parse(url, true),
         proItems = adv.studio.getProItems();
-      host = urlOpt.hostname || 'localhost', port = urlOpt.port || 80;
       if (localServer && localServer.address()) {
         //判断url是否匹配某个代理项,如果是,则代理到本地文件.
         for (var key in proItems) {
           var proItem = proItems[key];
           if (matchProxy(proItem, urlOpt)) {
-            host = localServerConfig.host;
-            port = localServerConfig.port;
-            req.url = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port) + 
+            target = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port) +
               '?proxyid=' + proItem.id + 
               '&oriurl=' + encodeURIComponent(req.url);
           }
         }
       }
-      proxy.proxyRequest(req, res, {
-        host: host,
-        port: port,
-        buffer: buffer
-      });
+      req.url = target
+      proxy.web(req, res, { target: target });
     });
     proxyServer.listen(ss.proxyServer.port);
   },

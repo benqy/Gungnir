@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.1.8.6",
+  "version": "0.1.9.0",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "iconv-lite": "~0.2.11",
-    "http-proxy": "~0.10.3"
+    "http-proxy": "~1.8.1",
+    "bufferhelper": "~0.2.0",
+    "ip": "~0.3.2",
+    "when": "~3.4.3"
   },
   "devDependencies": {},
   "scripts": {
@@ -33,6 +36,7 @@
   "gungnir":{
       "files":[
           "app/img/out-of-workspace.png",
+          "app/img/proxy-file.png",
           "app/index.html",
           "app/lib/acorn/acorn.js",
           "app/lib/acorn/acorn_loose.js",

@@ -174,7 +174,12 @@
       if (!parentNode) {
         node.open = true;
       }
-      node.icon = './img/folder.png';
+      if (node.isProxy) {
+        node.icon = './img/proxy-file.png';
+      }
+      else {
+        node.icon = './img/folder.png';
+      }
       node.children = [];
       fs.readdirSync(path)
         .forEach(function (file) {
@@ -182,7 +187,12 @@
         });
     } else {
       node.fileType = getFileType(node.name);
-      node.icon = generalTypeIcon(node);
+      if (node.isProxy) {
+        node.icon = './img/proxy-file.png';
+      }
+      else {
+        node.icon = generalTypeIcon(node);
+      }
     }
     if (parentNode) {
       //如果已经是一个树节点,则直接添加到树中,否则添加到数据里
@@ -194,7 +204,7 @@
       }
     } else {
       if (outOfWorkspace) {
-        node.icon = './img/home.png';
+        node.icon = './img/proxy-file.png';
       }
       else {
         node.icon = './img/out-of-workspace.png';

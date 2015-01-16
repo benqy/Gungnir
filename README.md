@@ -20,6 +20,11 @@ http://pan.baidu.com/s/1eQ6FyGM
 
 
 ###CHANGELOG  
+v0.1.9.0  
+
+1. 重写代理模块,提高速度,减少出错概率.
+2. 被设置了代理的文件,图片将显示为一个地球以区分普通本地文件
+
 v0.1.8.5  
 
 1. 支持coffeescript和markdown语法提示
