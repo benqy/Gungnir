@@ -16,7 +16,7 @@ var isGbk = function (contentType, buffer) {
   return false;
 };
 
-
+exports.isGbk = isGbk;
 exports.downloadPage = function (url) {
   var deferred = when.defer(),
     gzipDeferred = when.defer(),

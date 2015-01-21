@@ -5,7 +5,7 @@
     $stateProvider
       .state('system', {
         url: "/system",
-        templateUrl: "modules/system/views/content.html",
+        //templateUrl: "modules/system/views/content.html",
         controller: 'system',
         onEnter: function () {
           adv.nav.changeStatus(adv.nav.NAVLIST.system);

@@ -1,6 +1,6 @@
 (function (global) {
   'use strict';
-  var adv = global.adv = angular.module('adv', ['ui.router', 'adv.filters', 'adv.directives', 'adv.system', 'adv.studio']),
+  var adv = global.adv = angular.module('adv', ['ui.router', 'adv.filters', 'adv.directives', 'adv.system', 'adv.studio','adv.network']),
       fs = require('fs'),
       baseModuleDir = './app/modules/';
   adv.config(function ($stateProvider, $urlRouterProvider) {
@@ -74,8 +74,8 @@
     }
   });
 
-  adv.regModule('system');
-  adv.regModule('studio');
+
+ // adv.regModule('network');
  
 
   window.ondragover = function (e) { e.preventDefault(); return false; };

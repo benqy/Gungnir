@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.1.9.0",
+  "version": "0.2.0.0",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -25,7 +25,7 @@
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",
-    "toolbar": true,
+    "toolbar": false,
     "frame": false,
     "width": 1200,
     "height": 700,
@@ -35,9 +35,12 @@
   },
   "gungnir":{
       "files":[
+          "app/css/network.css",
           "app/img/out-of-workspace.png",
           "app/img/proxy-file.png",
+          "app/img/setting.png",
           "app/index.html",
+          "app/network.html",
           "app/lib/acorn/acorn.js",
           "app/lib/acorn/acorn_loose.js",
           "app/lib/acorn/util/walk.js",
@@ -57,17 +60,22 @@
           "app/lib/tern/lib/tern.js",
           "app/lib/tern/plugin/doc_comment.js",
           "app/lib/tern/polyfill.js",
+          "app/modules/app.js",
+          "app/modules/directives.js",
           "app/modules/studio/views/studio.html",
           "app/modules/studio/editor.js",
           "app/modules/studio/model.js",
           "app/modules/studio/controllers.js",
           "app/modules/studio/directives.js",
+          "app/modules/network/controllers.js",
+          "app/modules/network/route.js",
+          "app/modules/network/views/network.html",
           "app/proxy/index.js",
+          "app/proxy/spider.js",
           "app/proxy/conditional.js",
           "app/proxy/directiveHandler.js",
           "app/helpers/util.js",
-          "app/modules/updater.js",
-          "app/modules/directives.js"
+          "app/modules/updater.js"
       ]
   }
 }

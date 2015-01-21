@@ -1,0 +1,62 @@
+﻿<div class="content" id="logWrap" style="padding-left:8px;">
+    <div>
+        <form class="form-inline">
+          <div class="form-group  primary">
+            <div class="input-group">
+              <div class="input-group-addon">@</div>
+              <input  ng-model="query" type="text" class="form-control" id="exampleInputAmount" placeholder="筛选">
+            </div>
+          </div>
+          <a href="javascript://" class="btn btn-primary" ng-click="clear()">清空列表</a>
+        </form>
+    </div>    
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th ng-click="order=order=='date'?'-date':'date';">req time
+                        <i ng-show="order=='date'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-date'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
+                    <th ng-click="order=order=='filename'?'-filename':'filename';">Name
+                        <i ng-show="order=='filename'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-filename'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
+                    <th ng-click="order=order=='method'?'-method':'method';">Method
+                        <i ng-show="order=='method'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-method'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>                        
+                    </th>
+                    <th ng-click="order=order=='contentType'?'-contentType':'contentType';">Type
+                        <i ng-show="order=='contentType'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-contentType'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
+                    <th ng-click="order=order=='statusCode'?'-statusCode':'statusCode';">Status
+                        <i ng-show="order=='statusCode'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-statusCode'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
+                    <th ng-click="order=order=='size'?'-size':'size';">Size
+                        <i ng-show="order=='size'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-size'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
+                    <th ng-click="order=order=='delay'?'-delay':'delay';">Time
+                        <i ng-show="order=='delay'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-delay'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="log in logs| filter:{filename:query} | orderBy:order:false">
+                    <td>{{log.date| date: 'HH:mm:ss'}}</td>
+                    <td><a href="javascript:;" title="{{log.url}}"><span style="display: inline-block; max-width: 250px;">{{log.filename.slice(0,35)}}</span></a></td>
+                    <td>{{log.method}}</td>
+                    <td>{{log.contentType}}</td>
+                    <td>{{log.statusCode}}</td>
+                    <!--<td><a href="javascript://" log-head-content="{{log.id}}">点击查看</a></td>
+                    <td><a href="javascript://" log-content="{{log.id}}">点击查看</a></td>-->
+                    <td>{{log.size}}KB</td>
+                    <td>{{log.delay}}ms</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

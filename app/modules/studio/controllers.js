@@ -24,8 +24,8 @@
 
       $scope.saveProItem = function (currentProItem) {
         //http://www.17173cdn.com/a/b
-        $scope.currentProItemErrorMsg = "正在下载页面...";
-        if (currentProItem.localFile && util.isdir(currentProItem.localFile)) {
+        $scope.currentProItemErrorMsg = "保存...";
+        if (currentProItem.localFile) {
           studio.saveProItem(currentProItem);
           $scope.currentProItem = null;
           $scope.currentProItemErrorMsg = '完成';
@@ -74,7 +74,9 @@
         proxy.stopServer(function () {
           adv.studio.serverRuning = false;
           $scope.serverRuning = adv.studio.serverRuning;
-          $scope.$digest();
+          try{
+            $scope.$digest();
+          }catch(e){}
         });
       };
       //#end代理服务器

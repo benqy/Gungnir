@@ -116,7 +116,6 @@
           util.mkdir(path, true);
           util.writeFileSync(file, data.text);
           proItem.localFile = file;
-          console.log(proItem)
         }
         studio.saveProItem(proItem);
         //更新目录结构
@@ -193,6 +192,10 @@
       else {
         node.icon = generalTypeIcon(node);
       }
+    }
+    if (node.name == 'zproject.json') {
+      node.name = '代理列表';
+      node.icon = './img/setting.png';
     }
     if (parentNode) {
       //如果已经是一个树节点,则直接添加到树中,否则添加到数据里

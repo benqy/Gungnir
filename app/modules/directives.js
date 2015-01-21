@@ -88,5 +88,38 @@
         require('nw.gui').Window.get().close();
       });
     };
-  }]);
+  }])
+  //打开网络监控面板
+  .directive('avNetwork', function () {
+    return function ($scope, elem) {
+      var proxy = require('./proxy');
+      proxy.on('log', function (logObj) {
+        logObj.content = 'abc';
+        //console.log(JSON.stringify(logObj));
+        //console.log(logObj)
+        adv.networkWin && adv.networkWin.emit('httplog', logObj);
+      });
+      var networkWinUrl = ('file:///' + require('path').dirname(process.execPath) + '/app/network.html#/network').replace(/\\/g,'/');
+      //console.log(networkWinUrl)
+      $(elem[0]).on('click', function () {
+        if (!adv.networkWin) {
+          adv.networkWin = gui.Window.open(networkWinUrl, {
+            position: 'center',
+            "toolbar": false,
+            "frame": false,
+            "width": 1000,
+            "height": 650,
+            "icon": "app/img/logo.png"
+          });
+          adv.networkWin.on('close', function () {
+            adv.networkWin = null;
+            this.close(true);
+          });
+        }
+        else {
+         // adv.networkWin.close();
+        }
+      });
+    }
+  });
 })();

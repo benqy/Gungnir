@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Network</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/network.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="-webkit-app-region: drag;">
+        <div class="container">
+            <div class="navbar-header">
+                <img src="img/logo.png">
+                <a class="navbar-brand" href="javascript://">NETWORK</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <div class="btn-group window-tool">
+                    <a class="btn rectbtn" href="javascript://" title="点击检查更新" av-update><i class="glyphicon  mdfi_action_system_update_tv"></i></a>
+                    <a class="btn rectbtn" href="javascript://" av-minisize><i class="glyphicon glyphicon-minus"></i></a>
+                    <a class="btn rectbtn" href="javascript://" av-max-toggle><i class="glyphicon glyphicon-fullscreen"></i></a>
+                    <a class="btn rectbtn" href="javascript://" av-close><i class="glyphicon glyphicon-remove"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container app" ui-view></div>
+    <script src="lib/jquery-2.0.3.js"></script>
+    <script src="lib/angular/angular1.1.5.js"></script>
+    <script src="lib/angular/angular-ui-router.js"></script>
+    <script src="lib/jquery.ztree.all-3.5.js"></script>
+        <!--end codemirror-->
+    <script src="modules/app.js"></script>
+    <script>
+        angular.module('adv.system', []);
+        angular.module('adv.studio', []);
+        adv.regModule('network');
+    </script>
+    <script src="modules/filters.js"></script>
+    <script src="modules/directives.js"></script>
+    <script>
+        //启动app
+        angular.bootstrap($('body'), ['adv']);
+    </script>
+</body>
+</html>

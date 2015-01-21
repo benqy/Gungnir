@@ -1,13 +1,14 @@
 
 //regex:(?insx)^http://cms3\.local\.17173\.com/fed/src/(?<fils>.*)$
 //E:\work_place\cms3.0\fed\src\${fils}
-
+var zlib = require('zlib');
 var spider = require('./spider');
 
 var proxyServer,
   localServer;
 var httpProxy = require('http-proxy'),
   fs = require('fs'),
+  iconv = require('iconv-lite'),
   util = require('../helpers/util'),
   http = require('http');
 
@@ -199,6 +200,64 @@ var matchProxy = function (proItem, urlOpt) {
   return isMatch;
 };
 
+/**
+ * @name noErrorDecodeUri
+ * @function
+ *
+ * @description 尝试对url进行decodeURIComponent,如果失败,则还回原始url
+ * @param {string} url 要decode的url
+ * @returns {string} decode之后的url
+ */
+var noErrorDecodeUri = function (url) {
+  try {
+    return window.decodeURIComponent(url);
+  } catch (e) {
+    return url;
+  }
+};
+
+var resDataType = {
+  text: 'text',
+  image: 'image',
+  javascript: 'javascript',
+  css: 'css',
+  file: 'file'
+};
+
+/**
+   * @name parseRes
+   * @function
+   *
+   * @description 判断http返回的内容的类型以及是否经过gzip压缩
+   * @param {object} resHeader http response header
+   * @param {url} url http请求的地址
+   * @returns {Object} dataType:返回内容的格式,gzip:是否经过gzip压缩
+   */
+var parseRes = function (resHeader, url) {
+  var dataType = resDataType.file, ct = resHeader['content-type'] || '', gzip = false;
+  if (~url.indexOf('.png') || ~url.indexOf('.jpg') || ~url.indexOf('.gif') || ~url.indexOf('.bmp') || ~url.indexOf('.ico') || ~ct.indexOf('image')) {
+    dataType = resDataType.image;
+  }
+  else if (~ct.indexOf('css') || ~url.indexOf('.css')) {
+    dataType = resDataType.css;
+  }
+  else if (~ct.indexOf('javascript') || ~ct.indexOf('json') || ~url.indexOf('.js') || ~url.indexOf('.json')) {
+    dataType = resDataType.javascript;
+  }
+  else if (~ct.indexOf('html') || ~ct.indexOf('csv') || ~ct.indexOf('text') || ~ct.indexOf('xml') || ~url.indexOf('.txt')
+     || ~url.indexOf('.html') || ~url.indexOf('.htm') || ~url.indexOf('.shtml') || ~url.indexOf('.xml') || ~url.indexOf('.asp') || ~url.indexOf('.php')) {
+    dataType = resDataType.text;
+  }
+
+  if (!!resHeader['content-encoding'] && !!~resHeader['content-encoding'].indexOf('gzip')) {
+    gzip = true;
+  }
+  return {
+    dataType: dataType,
+    gzip: gzip
+  };
+}
+var events = [];
 module.exports = {
   runProxyServer: function (adv) {
     var ss = adv.system.get(),
@@ -223,9 +282,60 @@ module.exports = {
         }
       }
       req.url = target
+      req.reqDate = new Date();
       proxy.web(req, res, { target: target });
     });
     proxyServer.listen(ss.proxyServer.port);
+
+    proxy.on('proxyRes', function (proxyRes, req, res) {
+      var logObj = {}, pathArr, buffer = [], resStr = '',
+          urlOpt = require('url').parse(req.url, true),
+          url = noErrorDecodeUri(req.url),
+          filename;
+      pathArr = url.split('/');
+      filename = pathArr[pathArr.length - 1];
+      filename = filename || url;
+      logObj.url = url;
+      logObj.filename = filename;
+      logObj.method = req.method;
+      logObj.contentType = proxyRes.headers['content-type'] || '';
+      logObj.statusCode = proxyRes.statusCode;
+      logObj.reqHeader = req.headers;
+      logObj.queryObject = urlOpt.query || {};
+      logObj.resHeader = proxyRes.headers;
+      logObj.delay = new Date() - req.reqDate;
+      logObj.id = util.generalId();
+      proxyRes.on('data', function (trunk) {
+        buffer.push(trunk);
+        resStr += trunk;
+      });
+      proxyRes.on('end', function () {
+        buffer = Buffer.concat(buffer);
+        var resObj = parseRes(proxyRes.headers, url, buffer);
+        logObj.resObj = resObj;
+        if (resObj.gzip) {
+          zlib.unzip(buffer, function (err, buffer) {
+            if (spider.isGbk(logObj.contentType, buffer)) {
+              //将gbk转为utf8
+              buffer = iconv.decode(buffer, 'GBK');
+            }
+            logObj.content = buffer;
+            logObj.size = buffer.length / 1000;
+            logObj.date = new Date();
+            module.exports.emit('log', logObj);
+          });
+        }
+        else {
+          if (spider.isGbk(logObj.contentType, buffer)) {
+            buffer = iconv.decode(buffer, 'GBK');
+          }
+          logObj.content = buffer;
+          logObj.size = buffer.length / 1000;
+          logObj.date = new Date();
+          module.exports.emit('log', logObj);
+        }
+      });
+    });
   },
   runServer: function (adv, fn) {
     if (localServer && localServer.address()) {
@@ -261,5 +371,17 @@ module.exports = {
       fn && fn();
     });
   },
-  downloadPage: spider.downloadPage
+  downloadPage: spider.downloadPage,
+  on: function (name, fn) {
+    events[name] = events[name] || [];
+    events[name].push(fn);
+  },
+  emit: function (name, data) {
+    var fns = events[name];
+    if (fns) {
+      fns.forEach(function (fn) {
+        fn(data);
+      });
+    }
+  }
 };
