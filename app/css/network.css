@@ -1,0 +1,36 @@
+﻿.content{
+    overflow:auto;
+    display:block !important;
+}
+.content-left{
+    width:480px;
+}
+.content-right{ 
+   width:calc(100% - 480px);
+}
+tr{
+}
+th{
+    min-width:108px;
+    cursor:pointer;
+}
+td{
+    color:#ccc;
+}
+td a{
+    color:#bbb;
+}
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+    background-color:#222;
+}
+.form-group{
+    width:500px;
+}
+.form-inline{
+    padding:5px;
+}
+.input-group-addon {
+    border-radius: 4px;
+    background-color:#3276b1;
+    border:1px solid #3276b1;
+}
