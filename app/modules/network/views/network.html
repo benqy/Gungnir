@@ -1,26 +1,26 @@
-﻿<div class="content" id="logWrap" style="padding-left:8px;">
-    <div>
+﻿<div class="content" id="logWrap">
+    <div class="content-tool">
         <form class="form-inline">
           <div class="form-group  primary">
             <div class="input-group">
-              <div class="input-group-addon">@</div>
+              <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
               <input  ng-model="query" type="text" class="form-control" id="exampleInputAmount" placeholder="筛选">
             </div>
           </div>
           <a href="javascript://" class="btn btn-primary" ng-click="clear()">清空列表</a>
         </form>
     </div>    
-    <div>
-        <table class="table table-striped">
+    <div class="content-list">
+        <table class="table table-striped"  ng-class="{'hidden':currentLog}">
             <thead>
                 <tr>
+                    <th ng-click="order=order=='filename'?'-filename':'filename';" style="width:250px">Name
+                        <i ng-show="order=='filename'" class="glyphicon glyphicon-sort-by-attributes"></i>
+                        <i ng-show="order=='-filename'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                    </th>
                     <th ng-click="order=order=='date'?'-date':'date';">req time
                         <i ng-show="order=='date'" class="glyphicon glyphicon-sort-by-attributes"></i>
                         <i ng-show="order=='-date'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
-                    </th>
-                    <th ng-click="order=order=='filename'?'-filename':'filename';">Name
-                        <i ng-show="order=='filename'" class="glyphicon glyphicon-sort-by-attributes"></i>
-                        <i ng-show="order=='-filename'" class="glyphicon glyphicon-sort-by-attributes-alt"></i>
                     </th>
                     <th ng-click="order=order=='method'?'-method':'method';">Method
                         <i ng-show="order=='method'" class="glyphicon glyphicon-sort-by-attributes"></i>
@@ -46,8 +46,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="log in logs| filter:{filename:query} | orderBy:order:false">
+                    <td><a ng-click="show(log)" href="javascript:;" title="{{log.url}}"><span style="display: inline-block; max-width: 250px;word-wrap: break-word;">{{log.filename.slice(0,35)}}</span></a></td>
                     <td>{{log.date| date: 'HH:mm:ss'}}</td>
-                    <td><a href="javascript:;" title="{{log.url}}"><span style="display: inline-block; max-width: 250px;">{{log.filename.slice(0,35)}}</span></a></td>
                     <td>{{log.method}}</td>
                     <td>{{log.contentType}}</td>
                     <td>{{log.statusCode}}</td>
@@ -58,5 +58,76 @@
                 </tr>
             </tbody>
         </table>
+        <div class="name-container" ng-class="{'hidden':!currentLog}">
+            <table class="table table-striped namelist">
+                <thead>
+                    <tr>
+                        <th style="width:250px">Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="log in logs| filter:{filename:query} | orderBy:order:false">
+                        <td ng-class="{'td-active':currentLog && currentLog == log }" ng-click="show(log)" ><a href="javascript:;" title="{{log.url}}"><span style="display: inline-block; max-width: 225px;word-wrap: break-word;">{{log.filename.slice(0,35)}}</span></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="dialog panel panel-primary" ng-class="{'hidden':!currentLog}">
+        <a class="close-btn glyphicon  mdfi_content_clear" ng-click="hide()" href="javascript://"></a>
+        <ul class="nav nav-tabs" av-tabs>
+          <li role="presentation" class="active" data-index="0"><a href="javascript:;">Headers</a></li>
+          <li role="presentation"  data-index="1"><a href="javascript:;">Response</a></li>
+          <li role="presentation"  data-index="2"><a href="javascript:;">Cookies</a></li>
+        </ul>
+        <div class="nav-tabs-container">
+            <p><strong>Request URL</strong>{{currentLog.url}}</p>
+            <p><strong>Request method</strong>{{currentLog.method}}</p>
+            <p><strong>Status Code</strong>{{currentLog.statusCode}}</p>
+            <h4>Request Header</h4>
+            <p class="child" ng-repeat="(k,v) in currentLog.reqHeader">
+               <strong>{{k}}</strong>{{v}}
+            </p>
+            <h4>Query String Parameters</h4>
+            <p class="child" ng-repeat="(k,v) in currentLog.queryObject track by $index">
+               <strong>{{k}}</strong>{{v}}
+            </p>
+            <h4>Response Header</h4>
+            <p class="child" ng-repeat="(k,v) in currentLog.resHeader">
+               <strong>{{k}}</strong>{{v}}
+            </p>
+        </div>
+        <div class="nav-tabs-container"  ng-bind-html="rawHtml">
+            {{currentLog.resContent}}
+        </div>
+        <div class="nav-tabs-container">
+            <table class="table table-striped" width="100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>Domain</th>
+                        <th>Path</th>
+                        <th>Expires/Max-Age</th>
+                        <th>Size</th>
+                        <th>Http</th>
+                        <th>Secure</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cookie in currentLog.cookies">
+                        <td>{{cookie.Name}}</td>
+                        <td><span style="max-width:400px;display: block;word-wrap: break-word;">{{cookie.Value}}</span></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

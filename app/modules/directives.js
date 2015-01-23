@@ -89,12 +89,23 @@
       });
     };
   }])
+  .directive('avTabs',function () {
+    return function ($scope, elem) {
+      var $tabs = $(elem[0]);
+      $tabs.find('li').on('click', function () {
+        $tabs.find('li').removeClass('active');
+        $(this).addClass('active');
+        $('.nav-tabs-container').hide();
+        $tabs.nextAll('.nav-tabs-container').eq($(this).data('index')).show();
+      });
+    }
+  })
   //打开网络监控面板
   .directive('avNetwork', function () {
     return function ($scope, elem) {
       var proxy = require('./proxy');
       proxy.on('log', function (logObj) {
-        logObj.content = 'abc';
+        logObj.content = logObj.content.toString();
         //console.log(JSON.stringify(logObj));
         //console.log(logObj)
         adv.networkWin && adv.networkWin.emit('httplog', logObj);

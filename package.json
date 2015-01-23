@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.2.0.1",
+  "version": "0.2.1.0",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -61,6 +61,7 @@
           "app/lib/tern/plugin/doc_comment.js",
           "app/lib/tern/polyfill.js",
           "app/modules/app.js",
+          "app/modules/win.js",
           "app/modules/directives.js",
           "app/modules/studio/views/studio.html",
           "app/modules/studio/editor.js",

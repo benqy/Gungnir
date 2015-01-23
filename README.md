@@ -7,7 +7,10 @@ Gungnir
 
 ###下载
 v0.1.8.6版本,如果此版本不是最新,点击右上角的检查更新按钮即可  
-http://pan.baidu.com/s/1nt7NgPN
+http://pan.baidu.com/s/1nt7NgPN  
+
+v0.2.0.1版本
+http://pan.baidu.com/s/1sj4XqbF
 
 
 ###帮助文档
@@ -21,6 +24,10 @@ http://pan.baidu.com/s/1nt7NgPN
 
 
 ###CHANGELOG   
+v0.2.0.1  
+
+1. NETWORK完善
+
 v0.2.0.0  
 
 1. 增加多窗口的支持

@@ -292,6 +292,7 @@ module.exports = {
           urlOpt = require('url').parse(req.url, true),
           url = noErrorDecodeUri(req.url),
           filename;
+      if (urlOpt.query.httpmocknolog) return;
       pathArr = url.split('/');
       filename = pathArr[pathArr.length - 1];
       filename = filename || url;
