@@ -19,6 +19,22 @@ td{
     -webkit-user-select:text;
     color:#ccc;
 }
+td.url-name{
+    position: relative;
+}
+
+a.add-pro{
+    position: absolute;
+}
+a.url-name{
+    display: block;
+    word-wrap: break-word;
+    overflow: hidden;
+    position: relative;
+    top: 0px;
+    left: 26px;
+    width: 205px;
+}
 td a{
     color:#bbb;
 }

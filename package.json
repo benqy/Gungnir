@@ -1,6 +1,6 @@
 {
   "name": "Gungnir",
-  "version": "0.2.1.0",
+  "version": "0.2.2.0",
   "description": "Web Develop Editor",
   "main": "app/index.html",
   "author": "hmjlr123@gmail.com",
@@ -39,6 +39,7 @@
           "app/img/out-of-workspace.png",
           "app/img/proxy-file.png",
           "app/img/setting.png",
+          "app/img/network.png",
           "app/index.html",
           "app/network.html",
           "app/lib/acorn/acorn.js",

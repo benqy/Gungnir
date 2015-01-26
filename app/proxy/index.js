@@ -39,6 +39,8 @@ var setHeader = function (urlOpt) {
     header['content-type'] = 'image/gif';
   } else if (~filename.indexOf('.bmp')) {
     header['content-type'] = 'image/bmp';
+  } else if (~filename.indexOf('.ico')) {
+    header['content-type'] = 'image/x-icon';
   } else {
     //header['content-type'] = 'application/x-msdownload';
     header['content-type'] = 'text/plain';
@@ -166,7 +168,12 @@ var runServer = function (adv) {
       path = require('path').resolve(ss.workspace + urlOpt.path);
       path = decodeURIComponent(path)
       if (!fs.existsSync(path)) {
-        resData = '文件不存在:' + path;
+        if (urlOpt.path == '/favicon.ico') {
+          resData = fs.readFileSync(require('path').dirname(process.execPath) + '\\app\\img\\logo.ico');
+        }
+        else {
+          resData = '文件不存在:' + path;
+        }
       }
       else if (util.isdir(path)) {
         resData = renderDir(urlOpt, path);
@@ -336,6 +343,10 @@ module.exports = {
           module.exports.emit('log', logObj);
         }
       });
+    });
+
+    proxy.on('error', function(e) {
+      console.dir('proxy error', e);
     });
   },
   runServer: function (adv, fn) {

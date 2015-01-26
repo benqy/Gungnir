@@ -46,7 +46,9 @@
             </thead>
             <tbody>
                 <tr ng-repeat="log in logs| filter:{filename:query} | orderBy:order:false">
-                    <td><a ng-click="show(log)" href="javascript:;" title="{{log.url}}"><span style="display: inline-block; max-width: 250px;word-wrap: break-word;">{{log.filename.slice(0,35)}}</span></a></td>
+                    <td class="url-name">
+                        <a href="javascript:;" class="add-pro" ng-click="addProItem(log)"  title="新增代理设置"><i class="glyphicon glyphicon-plus"></i></a>
+                        <a class="url-name" ng-click="show(log)" href="javascript:;" title="{{log.url}}">{{log.filename.slice(0,35)}}</a></td>
                     <td>{{log.date| date: 'HH:mm:ss'}}</td>
                     <td>{{log.method}}</td>
                     <td>{{log.contentType}}</td>
@@ -68,7 +70,10 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="log in logs| filter:{filename:query} | orderBy:order:false">
-                        <td ng-class="{'td-active':currentLog && currentLog == log }" ng-click="show(log)" ><a href="javascript:;" title="{{log.url}}"><span style="display: inline-block; max-width: 225px;word-wrap: break-word;">{{log.filename.slice(0,35)}}</span></a></td>
+                        <td class="url-name" ng-class="{'td-active':currentLog && currentLog == log }" ng-click="show(log)" >
+                            <a  class="add-pro" href="javascript:;" ng-click="addProItem(log)"  title="新增代理设置"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a  class="url-name" href="javascript:;" title="{{log.url}}">{{log.filename.slice(0,35)}}</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -86,7 +91,7 @@
             <p><strong>Request method</strong>{{currentLog.method}}</p>
             <p><strong>Status Code</strong>{{currentLog.statusCode}}</p>
             <h4>Request Header</h4>
-            <p class="child" ng-repeat="(k,v) in currentLog.reqHeader">
+            <p class="child" ng-repeat="(k,v) in currentLog.reqHeader track by $index">
                <strong>{{k}}</strong>{{v}}
             </p>
             <h4>Query String Parameters</h4>
@@ -94,12 +99,11 @@
                <strong>{{k}}</strong>{{v}}
             </p>
             <h4>Response Header</h4>
-            <p class="child" ng-repeat="(k,v) in currentLog.resHeader">
+            <p class="child" ng-repeat="(k,v) in currentLog.resHeader track by $index">
                <strong>{{k}}</strong>{{v}}
             </p>
         </div>
         <div class="nav-tabs-container"  ng-bind-html="rawHtml">
-            {{currentLog.resContent}}
         </div>
         <div class="nav-tabs-container">
             <table class="table table-striped" width="100%">

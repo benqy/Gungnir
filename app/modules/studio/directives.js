@@ -40,6 +40,11 @@
             adv.codeEditer.init(node.path, { filename: node.name });
             $('.CodeMirror').show();
           }
+          //如果正在添加代理设置,则自动填入点击的文件
+          if ($scope.currentProItem) {
+            $scope.currentProItem.localFile = node.path;
+            $scope.$digest();
+          }
         }
         adv.system.save();
         $scope.currentNode = node;

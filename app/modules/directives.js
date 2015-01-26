@@ -120,8 +120,11 @@
             "frame": false,
             "width": 1000,
             "height": 650,
-            "icon": "app/img/logo.png"
+            "min_width": 1000,
+            "min_height": 650,
+            "icon": "app/img/network.png"
           });
+          adv.networkWin.mainWin = window;
           adv.networkWin.on('close', function () {
             adv.networkWin = null;
             this.close(true);

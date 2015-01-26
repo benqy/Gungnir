@@ -12,6 +12,9 @@ http://pan.baidu.com/s/1nt7NgPN
 v0.2.0.1版本
 http://pan.baidu.com/s/1sj4XqbF
 
+如果更新出现问题,可以下载这个打包好的node_modules包覆盖
+http://pan.baidu.com/s/1kTxIdc7
+
 
 ###帮助文档
 
@@ -24,9 +27,10 @@ http://pan.baidu.com/s/1sj4XqbF
 
 
 ###CHANGELOG   
-v0.2.0.1  
+v0.2.2.0  
 
-1. NETWORK完善
+1. NETWORK完善  
+2. bug修复
 
 v0.2.0.0  
 
