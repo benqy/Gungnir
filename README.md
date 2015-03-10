@@ -6,14 +6,8 @@ Gungnir
 请求日记,重写response等更多功能将在目前功能稳定后开始开发.
 
 ###下载
-v0.1.8.6版本,如果此版本不是最新,点击右上角的检查更新按钮即可  
-http://pan.baidu.com/s/1nt7NgPN  
-
-v0.2.0.1版本
-http://pan.baidu.com/s/1sj4XqbF
-
-如果更新出现问题,可以下载这个打包好的node_modules包覆盖
-http://pan.baidu.com/s/1kTxIdc7
+v0.2.2.1版本
+http://pan.baidu.com/s/1qWHlVFu
 
 
 ###帮助文档
