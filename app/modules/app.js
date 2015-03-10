@@ -1,5 +1,8 @@
 (function (global) {
   'use strict';
+  var gui = require('nw.gui');
+  gui.App.setCrashDumpDir(require('path').dirname(process.execPath) + '\\dump');
+
   var adv = global.adv = angular.module('adv', ['ui.router', 'adv.filters', 'adv.directives', 'adv.system', 'adv.studio','adv.network']),
       fs = require('fs'),
       baseModuleDir = './app/modules/';
