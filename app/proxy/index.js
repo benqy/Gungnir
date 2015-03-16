@@ -298,55 +298,75 @@ module.exports = {
     proxyServer.listen(ss.proxyServer.port);
     //日记
     proxyServer.proxy.on('proxyResponse', function (req, res, response) {
-      var logObj = {}, pathArr, buffer = [], resStr = '',
-          urlOpt = require('url').parse(req.url.toLowerCase(), true),
-          url = noErrorDecodeUri(req.url),
-          filename;
-      if (urlOpt.query.httpmocknolog) return;
-      pathArr = url.split('/');
-      filename = pathArr[pathArr.length - 1];
-      filename = filename || url;
-      logObj.url = url;
-      logObj.filename = filename;
-      logObj.method = req.method;
-      logObj.contentType = response.headers['content-type'] || '';
-      logObj.statusCode = response.statusCode;
-      logObj.reqHeader = req.headers;
-      logObj.queryObject = urlOpt.query || {};
-      logObj.resHeader = response.headers;
-      logObj.delay = new Date() - req.reqDate;
-      logObj.id = util.generalId();
-      response.on('data', function (trunk) {
-        buffer.push(trunk);
-        resStr += trunk;
-      });
-      response.on('end', function () {
-        buffer = Buffer.concat(buffer);
-        var resObj = parseRes(response.headers, url, buffer);
-        logObj.resObj = resObj;
-        if (resObj.gzip) {
-          zlib.unzip(buffer, function (err, buffer) {
-            if(err)console.dir(err);
-            if (spider.isGbk(logObj.contentType, buffer)) {
-              //将gbk转为utf8
-              buffer = iconv.decode(buffer, 'GBK');
-            }
-            logObj.content = buffer;
-            logObj.size = buffer.length / 1000;
-            logObj.date = new Date();
-            module.exports.emit('log', logObj);
-          });
-        }
-        else {
-          if (spider.isGbk(logObj.contentType, buffer)) {
-            buffer = iconv.decode(buffer, 'GBK');
+      try{
+        var logObj = {}, pathArr, buffer = [], resStr = '',
+            urlOpt = require('url').parse(req.url.toLowerCase(), true),
+            url = noErrorDecodeUri(req.url),
+            filename;
+        if (urlOpt.query.httpmocknolog) return;
+        pathArr = url.split('/');
+        filename = pathArr[pathArr.length - 1];
+        filename = filename || url;
+        logObj.url = url;
+        logObj.filename = filename;
+        logObj.method = req.method;
+        logObj.contentType = response.headers['content-type'] || '';
+        logObj.statusCode = response.statusCode;
+        logObj.reqHeader = req.headers;
+        logObj.queryObject = urlOpt.query || {};
+        logObj.resHeader = response.headers;
+        logObj.delay = new Date() - req.reqDate;
+        logObj.id = util.generalId();
+        response.on('data', function (trunk) {
+          try{
+            buffer.push(trunk);
+            resStr += trunk;
           }
-          logObj.content = buffer;
-          logObj.size = buffer.length / 1000;
-          logObj.date = new Date();
-          module.exports.emit('log', logObj);
-        }
-      });
+          catch (e) {
+            console.log('index.js-325', e.toString());
+          }
+        });
+        response.on('end', function () {
+          buffer = Buffer.concat(buffer);
+          var resObj = parseRes(response.headers, url, buffer);
+          logObj.resObj = resObj;
+          if (resObj.gzip) {
+            zlib.unzip(buffer, function (err, buffer) {
+              if (err) console.dir(err);
+              try{
+                if (spider.isGbk(logObj.contentType, buffer)) {
+                  //将gbk转为utf8
+                  buffer = iconv.decode(buffer, 'GBK');
+                }
+                logObj.content = buffer;
+                logObj.size = buffer.length / 1000;
+                logObj.date = new Date();
+                module.exports.emit('log', logObj);
+              }
+              catch (e) {
+                console.log('index.js-346', e.toString());
+              }
+            });
+          }
+          else {
+            try{
+              if (spider.isGbk(logObj.contentType, buffer)) {
+                buffer = iconv.decode(buffer, 'GBK');
+              }
+              logObj.content = buffer;
+              logObj.size = buffer.length / 1000;
+              logObj.date = new Date();
+              module.exports.emit('log', logObj);
+            }
+            catch (e) {
+              console.log('index.js-361', e.toString());
+            }
+          }
+        });
+      }
+      catch (e) {
+        console.log('index.js-368', e.toString());
+      }
     });
   },
   //runProxyServer: function (adv) {

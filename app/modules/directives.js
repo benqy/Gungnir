@@ -108,7 +108,12 @@
         logObj.content = logObj.content.toString();
         //console.log(JSON.stringify(logObj));
         //console.log(logObj)
-        adv.networkWin && adv.networkWin.emit('httplog', logObj);
+        try{
+          adv.networkWin && adv.networkWin.emit('httplog', logObj);
+        }
+        catch(e){
+          console.log('directives.js-114', e.toString());
+        }
       });
       var networkWinUrl = ('file:///' + require('path').dirname(process.execPath) + '/app/network.html#/network').replace(/\\/g,'/');
       //console.log(networkWinUrl)
