@@ -1,4 +1,3 @@
-
 //regex:(?insx)^http://cms3\.local\.17173\.com/fed/src/(?<fils>.*)$
 //E:\work_place\cms3.0\fed\src\${fils}
 var zlib = require('zlib');

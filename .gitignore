@@ -224,3 +224,4 @@ app/node_modules/bufferhelper/package.json
 /nw.pak
 /nwsnapshot.exe
 /app/node_modules
+zproject.json

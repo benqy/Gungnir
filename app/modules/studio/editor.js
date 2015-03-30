@@ -44,7 +44,7 @@
     var advCode = util.readJsonSync(execPath + '\\app\\lib\\codemirror\\addon\\tern\\adv.json');
     var server = new CodeMirror.TernServer({
       defs: [ecma5Code, jqueryCode, browserCode, advCode],
-      useWorker: true,
+      useWorker: false,
       workerScript: execPath + '\\app\\lib\\codemirror\\addon\\tern\\worker.js',
       workerDeps: [
         execPath + '\\app\\lib\\acorn\\acorn.js',
@@ -78,12 +78,13 @@
     MODES: {
       html: htmlmixed,
       shtml: htmlmixed,
-      php: htmlmixed,
+      php: 'application/x-httpd-php',
       aspx: htmlmixed,
       js: 'javascript',
       coffee: 'coffeescript',
       md: 'markdown',
       css: 'css',
+      scss:'sass',
       txt: 'javascript',
       json: 'json',
       'null': 'null',
@@ -173,6 +174,7 @@
         var fileSuff = filepath.match(/\.([^\.]+$)/);
         var mode = fileSuff ? fileSuff[1] : 'null';
         if (!options.mode) options.mode = this.MODES[mode] || 'null';
+        console.log(options.mode);
         if (mode == 'js') {
           options.lint = true;
         }
