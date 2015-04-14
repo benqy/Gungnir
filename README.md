@@ -6,8 +6,8 @@ Gungnir
 请求日记,重写response等更多功能将在目前功能稳定后开始开发.
 
 ###下载
-v0.2.2.1版本
-http://pan.baidu.com/s/1qWHlVFu
+v0.2.3.1版本
+http://pan.baidu.com/s/1nt9lNk9
 
 
 ###帮助文档
