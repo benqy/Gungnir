@@ -235,7 +235,7 @@
     else if (~fileName.toLowerCase().indexOf(".json")) {
       return studio.FILE_TYPES.json;
     }
-    else if (~fileName.toLowerCase().indexOf(".js")) {
+    else if (~fileName.toLowerCase().indexOf(".js") || ~fileName.toLowerCase().indexOf(".bb")) {
       return studio.FILE_TYPES.javascript;
     }
     else if (~fileName.toLowerCase().indexOf(".css")) {

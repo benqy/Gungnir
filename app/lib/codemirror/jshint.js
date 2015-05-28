@@ -3056,6 +3056,7 @@ if (typeof window === 'undefined') window = {};
         }
 
         function assume() {
+          state.option.esnext = true;
           if (state.option.es5) {
             warning("I003");
           }
@@ -3158,6 +3159,7 @@ if (typeof window === 'undefined') window = {};
           };
 
           state.option.inESNext = function (strict) {
+            return true;
             if (strict) {
               return !state.option.moz && state.option.esnext;
             }
@@ -3997,6 +3999,7 @@ if (typeof window === 'undefined') window = {};
           var x = symbol(s, 42);
 
           x.led = function (left) {
+            //gungnir
             if (!state.option.esnext) {
               warning("W119", state.tokens.curr, "arrow function syntax (=>)");
             }

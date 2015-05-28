@@ -20,7 +20,9 @@
     autoCloseBrackets: true,
     highlightSelectionMatches: { showToken: /\w/ },
     matchTags: { bothTags: true },
-    profile: 'xhtml'
+    profile: 'xhtml',
+    //自动编译Babel文件为js文件 http://babeljs.io/
+    autoCompileBabel:true
   };
 
   var htmlmixed = {
@@ -81,6 +83,7 @@
       php: 'application/x-httpd-php',
       aspx: htmlmixed,
       js: 'javascript',
+      bb: 'javascript',
       coffee: 'coffeescript',
       md: 'markdown',
       css: 'css',
@@ -166,16 +169,16 @@
       //生成tab按钮
       var tab = $('<a href="javascript://" title="' + filepath + '" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename || filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
       $('#editorTabs .btn-group').append(tab);
-      options = $.extend({}, defaultConfig, options);
+      this.options = options = $.extend({}, defaultConfig, options);
       if (filepath) {
         txt = util.readFileSync(filepath);
         this.filepath = filepath;
         //如果没指定编辑器模式,则根据文件扩展名判断
         var fileSuff = filepath.match(/\.([^\.]+$)/);
         var mode = fileSuff ? fileSuff[1] : 'null';
+        this.fileSuffix = mode;
         if (!options.mode) options.mode = this.MODES[mode] || 'null';
-        console.log(options.mode);
-        if (mode == 'js') {
+        if (mode == 'js' || mode == 'bb') {
           options.lint = true;
         }
       }
@@ -280,11 +283,19 @@
       else {
         var txt = adv.codeEditer.cm.getValue();
         util.writeFileSync(adv.codeEditer.filepath, txt);
+        if (this.options.autoCompileBabel && this.fileSuffix == 'bb') {
+          this.transformBabel();
+        }
         this.hasChange = false;
         var fileNameArr = this.filepath.split('\\');
         adv.msg('文件:' + fileNameArr[fileNameArr.length - 1] + '保存成功!');
         this.fire('save');
       }
+    },
+    transformBabel:function(){
+      var babel = require('./node_modules/babel');
+      var txt = this.cm.getValue();
+      util.writeFileSync(adv.codeEditer.filepath.replace('.bb','.js'), babel.transform(txt).code);
     },
     fire: function (eventName, obj) {
       this.events[eventName] && this.events[eventName].forEach(function (fn) {
