@@ -91,6 +91,7 @@
       txt: 'javascript',
       json: 'json',
       'null': 'null',
+      ts:'text/typescript',
       adv: 'javascript'
     },
     editors: {
@@ -176,7 +177,7 @@
         //如果没指定编辑器模式,则根据文件扩展名判断
         var fileSuff = filepath.match(/\.([^\.]+$)/);
         var mode = fileSuff ? fileSuff[1] : 'null';
-        this.fileSuffix = mode;
+        
         if (!options.mode) options.mode = this.MODES[mode] || 'null';
         if (mode == 'js' || mode == 'bb') {
           options.lint = true;
@@ -195,6 +196,7 @@
           changeObj: changeObj
         });
       });
+      this.cm.fileSuffix = mode;
 
       //绑定按键
       this.cm.addKeyMap({
@@ -283,7 +285,7 @@
       else {
         var txt = adv.codeEditer.cm.getValue();
         util.writeFileSync(adv.codeEditer.filepath, txt);
-        if (this.options.autoCompileBabel && this.fileSuffix == 'bb') {
+        if (this.options.autoCompileBabel && this.editors[this.filepath].fileSuffix == 'bb') {
           this.transformBabel();
         }
         this.hasChange = false;
@@ -295,7 +297,7 @@
     transformBabel:function(){
       var babel = require('./node_modules/babel');
       var txt = this.cm.getValue();
-      util.writeFileSync(adv.codeEditer.filepath.replace('.bb','.js'), babel.transform(txt).code);
+      util.writeFileSync(this.filepath.replace('.bb','.js'), babel.transform(txt).code);
     },
     fire: function (eventName, obj) {
       this.events[eventName] && this.events[eventName].forEach(function (fn) {
