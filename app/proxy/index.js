@@ -164,7 +164,7 @@ var runServer = function (adv) {
     //非代理
     else {
       header = setHeader(urlOpt);
-      path = require('path').resolve(ss.workspace + urlOpt.path);
+      path = require('path').resolve(ss.workspace + urlOpt.path.split('?')[0]);
       path = decodeURIComponent(path)
       if (!fs.existsSync(path)) {
         if (urlOpt.path == '/favicon.ico') {
