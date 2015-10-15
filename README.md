@@ -12,7 +12,8 @@ http://pan.baidu.com/s/1hqJEgyK
 
 ###帮助文档
 
-[简易教程](http://benq.im/2015/04/17/gungnir-01/)
+[简易教程](http://benq.im/2015/04/17/gungnir-01/)  
+
 1. 当web服务器使用   
 2. 调试线上文件  
 3. 使用已存在的本地文件  
