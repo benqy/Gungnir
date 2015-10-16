@@ -25,6 +25,19 @@
     }
   });
 
+  studio.directive('studioTheme', function () {
+    return function ($scope, elem) {
+      $(elem[0]).on('click', 'a', function () {
+        $('.themeBtn').removeClass('current');
+        $(this).addClass('current');
+        var systemData = hmd.system.get();
+        systemData.theme = $(this).text();
+        hmd.system.save(systemData);
+        hmd.editor.setTheme(systemData.theme);
+      });
+    };
+  });
+
   studio.directive('codeTree', function () {
     return function ($scope, elem) {
       //选中文件,在编辑器中打开该文件

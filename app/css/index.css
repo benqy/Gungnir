@@ -389,11 +389,6 @@ div.errors{
     background-color: #d9534f !important;
     border-color: #d43f3a !important;
 }
-.CodeMirror-focused .cm-matchhighlight {
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
-        background-position: bottom;
-        background-repeat: repeat-x;
-      }
 
 .editor-tool .mdfi-icon{
     width: 16px;

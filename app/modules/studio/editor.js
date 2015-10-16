@@ -4,7 +4,7 @@
 
 
   var defaultConfig = {
-    theme: 'ambiance',
+    theme: 'monokai',
     tabSize: 2,
     //关闭自带的拖动显示
     dragDrop: false,
@@ -153,6 +153,13 @@
         index && this.closeTab(index);
       }
     },
+    setTheme: function (theme) {
+      //if(theme != 'default'){
+      $('#editorThemeStyleSheet').remove();
+      var styleSheet = $('<link id="editorThemeStyleSheet" href="lib/codemirror/theme/' + theme + '.css" rel="stylesheet" />');
+      $('head').append(styleSheet);
+      // }
+    },
     init: function (filepath, options) {
       var editor = this.editors[filepath];
       if (editor) {
@@ -171,6 +178,7 @@
       var tab = $('<a href="javascript://" title="' + filepath + '" data-index="' + index + '" data-filepath="' + filepath + '"  class="btn btn-primary editor-tab-btn editor-tab-blur" style="border-radius:0;">' + (options.filename || filepath) + '<i class="mdfi-icon mdfi_navigation_close"></i></a>');
       $('#editorTabs .btn-group').append(tab);
       this.options = options = $.extend({}, defaultConfig, options);
+      this.setTheme(options.theme);
       if (filepath) {
         txt = util.readFileSync(filepath);
         this.filepath = filepath;
