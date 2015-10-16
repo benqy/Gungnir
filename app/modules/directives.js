@@ -100,6 +100,14 @@
       });
     }
   })
+  .directive('avDropdownlist', [function () {
+    return function (scope, elem) {
+      var $el = $(elem[0]);
+      $el.on('click', 'button', function () {
+        $el.find('ul').toggle();
+      });
+    };
+  }])
   //打开网络监控面板
   .directive('avNetwork', function () {
     return function ($scope, elem) {

@@ -11,14 +11,17 @@
     fs.mkdirSync(ss.dataPath);
   }
 
-  var ssData = {
+  var defaultSystemData = {
     //编辑器当前选中的文件
     currentFile: null,
+    //编辑器样式
+    theme: 'ambiance',
     //工作目录
     workspace:null
   };
+
   ss.get = function () {
-    ssData = util.readJsonSync(dataFile);
+    var ssData = $.extend(defaultSystemData,util.readJsonSync(dataFile));
     ssData.localServer = {
       host: ip,
       port: 10086
@@ -26,6 +29,7 @@
     ssData.proxyServer = {
       port: 17173
     };
+    
     return ssData;
   };
 
@@ -36,7 +40,19 @@
   };
 
   ss.save = function (data) {
-    ssData = data || ssData;
+    var ssData = data || defaultSystemData;
     util.writeFileSync(dataFile, JSON.stringify(ssData));
+  };
+
+  //读取theme目录,生成样式列表
+  ss.readCssList = function (path) {
+    var files = fs.readdirSync(path), themes = {};
+    files.forEach(function (file) {
+      if (~file.indexOf('.css')) {
+        file = file.replace('.css', '');
+        themes[file] = file;
+      }
+    });
+    return themes;
   };
 })();

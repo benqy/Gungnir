@@ -170,6 +170,19 @@ body {
     padding: 5px 15px;
 }
 
+.list-group ul.dropdown-menu{
+  max-height:500px;
+  overflow:auto;
+}
+.list-group ul.dropdown-menu a{
+    width:100%;
+}
+.list-group ul.dropdown-menu a.current{
+    color: #ffffff;
+  text-decoration: none;
+  background-color: #428bca;
+}
+
 .sidebar-list-item h4{
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -30,10 +30,13 @@
       $(elem[0]).on('click', 'a', function () {
         $('.themeBtn').removeClass('current');
         $(this).addClass('current');
-        var systemData = hmd.system.get();
+        var systemData = adv.system.get();
+        var oldClass = 'cm-s-' + systemData.theme,newClass;
         systemData.theme = $(this).text();
-        hmd.system.save(systemData);
-        hmd.editor.setTheme(systemData.theme);
+        newClass = 'cm-s-' + systemData.theme;
+        $('.' + oldClass).removeClass(oldClass).addClass(newClass);
+        adv.system.save(systemData);
+        adv.codeEditer.setTheme(systemData.theme);
       });
     };
   });
@@ -50,7 +53,7 @@
             //$('.CodeMirror').hide();
             //$('.logContentWrap').text('').append('<img class="content-img" src="' + node.path + '" alt="">');
           } else {
-            adv.codeEditer.init(node.path, { filename: node.name });
+            adv.codeEditer.init(node.path, { filename: node.name,theme:ss.theme });
             $('.CodeMirror').show();
           }
           //如果正在添加代理设置,则自动填入点击的文件
@@ -182,7 +185,8 @@
         path = e.dataTransfer.files[0].path;
         if (!fs.statSync(path).isDirectory()) {
           //console.log(fs.statSync(path));
-          adv.codeEditer.init(path, { filename: util.getFilename(path) });
+          var ss = adv.system.get();
+          adv.codeEditer.init(path, { filename: util.getFilename(path), theme: ss.theme });
         }
         else {
           //if ($target.hasClass('drag-to-add-dir')) {

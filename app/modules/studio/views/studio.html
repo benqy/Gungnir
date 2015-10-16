@@ -7,7 +7,14 @@
                 <a href="javascript://" ng-click="runServer()" class="btn btn-primary" ng-show="!serverRuning" title="启动服务器"><i class="glyphicon glyphicon-play"></i></a>
                 <a href="javascript://" ng-click="stopServer()" class="btn btn-success" style="display:none;" ng-show="serverRuning" title="运行中,点击关闭服务器" style="border-radius:0;"><i class="glyphicon glyphicon-stop"></i></a>
                 <a href="javascript:;" ng-click="addProItem()" class="btn btn-primary" ng-class="{'disabled':!hasWorkspace}" title="新增代理设置" style="border-radius:0;"><i class="glyphicon glyphicon-plus"></i></a>
-                <a href="javascript://" class="btn btn-primary" title="打开控制台" ng-click="openTerminal()"><i class="glyphicon mdfi_hardware_laptop_windows"></i></a>
+                <div class="btn-group" av-dropdownlist role="group">
+                  <button type="button"  class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <i class="glyphicon glyphicon-list"></i>
+                  </button>
+                  <ul class="dropdown-menu" studio-theme>
+                    <li ng-repeat="theme in themes | toArray"><a class="themeBtn" ng-class="{current:currpreTheme == theme}" href="javascript:;">{{theme}}</a></li>
+                  </ul>
+  	            </div>
                 <a href="javascript://" class="btn btn-primary" title="刷新目录" ng-click="reload()"><i class="glyphicon glyphicon-retweet"></i></a>
                 <a href="javascript://" class="btn btn-primary disabled" title="保存更改" id="editorSave" ng-click="save()" style="border-radius:0;"><i class="glyphicon glyphicon-floppy-disk"></i></a>
             </div>

@@ -300,6 +300,11 @@
           $scope.closeExplorerItemForm();
         }
       };
+
+      //编辑器样式
+      var ssData = adv.system.get();
+      $scope.themes = adv.system.readCssList('./app/lib/codemirror/theme');
+      $scope.currpreTheme = ssData.theme;
     });
 
 })();
