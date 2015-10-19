@@ -1,121 +1,114 @@
 ﻿(function () {
-  var serverPath = 'https://raw.githubusercontent.com/benqy/Gungnir/master/',
+  //配置文件,用于判断是否有新版本
+  var packageFile = 'https://raw.githubusercontent.com/benqy/Gungnir/master/package.json',
+  //当前程序的运行目录
   execPath = require('path').dirname(process.execPath),
-  //补丁文件临时目录
+  //补丁文件存放目录
   updatePath = execPath + '\\update',
   fs = require('fs'),
   util = require('./helpers/util'),
   when = require('./node_modules/when');
-  adv.extend({
-    updater: {
-      get: function (url) {
-        var deferred = when.defer(),
-         gzipDeferred = when.defer(),
-         https = require('https'),
-         BufferHelper = require('./node_modules/bufferhelper'),
-         urlOpt = require('url').parse(url);
-        var req = null;
-        //超时
-        var timer = setTimeout(function () {
-          req.abort();
-          alert('请求失败,可能github被墙了,' + url);
-          deferred.resolve();
-        }, 120000);
-        req = https.get(urlOpt, function (res) {
-          var isGzip = !!res.headers['content-encoding'] && !!~res.headers['content-encoding'].indexOf('gzip');
-          var bufferHelper = new BufferHelper();
-          res.on('data', function (chunk) {
-            bufferHelper.concat(chunk);
-          });
-
-          res.on('end', function () {
-            var buffer = bufferHelper.toBuffer();
-            clearTimeout(timer);
-            //判断是否需要gzip解压缩
-            gzipDeferred.promise.then(function (buffer) {
-              deferred.resolve({
-                buffer: buffer,
-                urlOpt: urlOpt
-              });
-            });
-
-            if (isGzip) {
-              require('zlib').unzip(buffer, function (err, buffer) {
-                gzipDeferred.resolve(buffer);
-              });
-            }
-            else {
-              gzipDeferred.resolve(buffer);
-            }
-          });
-          res.on('error', function () {
-            alert('更新出错!');
-          });
+  var checkUpdateTimer;
+  adv.updater = {
+    //下载指定url的内容并返回promise对象
+    get: function (url) {
+      var deferred = when.defer(),
+          gzipDeferred = when.defer(),
+          BufferHelper = require('./node_modules/bufferhelper'),
+          urlOpt = require('url').parse(url);
+      var req = null;
+      var protocolModule = ~url.indexOf('https') ? require('https') : require('http');
+      //超时
+      var timer = setTimeout(function () {
+        req.abort();
+        adv.msg('===更新失败,请检查网络===', adv.MSG_LEVEL.error);
+        deferred.resolve();
+      }, 120000);
+      req = protocolModule.get(urlOpt, function (res) {
+        //是否经过gzip压缩
+        var isGzip = !!res.headers['content-encoding'] && !!~res.headers['content-encoding'].indexOf('gzip');
+        var bufferHelper = new BufferHelper();
+        res.on('data', function (chunk) {
+          bufferHelper.concat(chunk);
         });
-        return deferred.promise;
-      },
-      updateInfo: function (total, curr) {
-        adv.msg('===正在更新:' + curr + '/' + total + '===', adv.MSG_LEVEL.warnings);
-      },
-      install: function (version) {
-        //移动下载下来的update目录里的内容到
-        var cmd1 = 'xcopy "' + updatePath + '\\app\\*" "' + execPath + '\\app" /s /e /y';
-        //移动配置文件
-        var cmd2 = 'xcopy "' + updatePath + '\\package.json" "' + execPath + '\\package.json" /s /e /y';
-        require("child_process").exec(cmd1);
-        require("child_process").exec(cmd2);
-        setTimeout(function () {
-          require("child_process").exec('rd /q /s "' + updatePath + '"');
-        }, 5000);
-        adv.msg('===版本:' + version + '更新完成,请重启===')
-      },
-      checkUpdate: function () {
-        var locPackage = require('nw.gui').App.manifest;
-        //获取版本信息和更新文件列表
-        adv.updater.get(serverPath + '/package.json?' + new Date() * 1)
-          .then(function (packageData) {
-            packageData.text = packageData.buffer.toString();
-            if (!packageData.text) return;
-            var remotePackage = JSON.parse(packageData.text);
-            if (remotePackage.version != locPackage.version){
-              if (confirm('是否更新到最新版本:' + remotePackage.version)) {
-                var totalFile = remotePackage.gungnir.files.length,
-                  updateCount = 0;
-                adv.updater.updateInfo(totalFile, updateCount);
-                //下载更新文件
-                remotePackage.gungnir.files.forEach(function (file) {
-                  adv.updater.get(serverPath + '/' + file + '?' + new Date() * 1)
-                    .then(function (data) {
-                      //补丁文件要存放的临时目录
-                      var fullFilename = require('path').resolve(updatePath + '\\' + file);
 
-                      //创建补丁文件目录
-                      var lfArr = fullFilename.split('\\');
-                      var dirName = lfArr.slice(0, lfArr.length - 1).join('\\');
-                      if (!fs.existsSync(dirName)) {
-                        util.mkdir(dirName, true);
-                      }
-
-                      //存放文件
-                      fs.writeFileSync(fullFilename, data.buffer);
-
-                      fs.writeFileSync(updatePath + '\\package.json', packageData.buffer);
-                      updateCount++;
-                      adv.updater.updateInfo(totalFile, updateCount);
-
-                      //补丁下载完毕则安装更新
-                      if (updateCount == totalFile) {
-                        adv.updater.install(remotePackage.version);
-                      }
-                    });
-                });
-              }
-            }
-            else {
-              adv.msg('当前版本:' + remotePackage.version + ',已经是最新版');
-            }
+        res.on('end', function () {
+          var buffer = bufferHelper.toBuffer();
+          clearTimeout(timer);
+          //判断是否需要gzip解压缩
+          gzipDeferred.promise.then(function (buffer) {
+            deferred.resolve({
+              buffer: buffer,
+              urlOpt: urlOpt
+            });
           });
-      }
+
+          if (isGzip) {
+            require('zlib').unzip(buffer, function (err, buffer) {
+              gzipDeferred.resolve(buffer);
+            });
+          }
+          else {
+            gzipDeferred.resolve(buffer);
+          }
+        });
+        res.on('error', function () {
+          alert('更新出错!');
+        });
+      });
+      return deferred.promise;
+    },
+    ///安装补丁包
+    checkUpdate: function () {
+      adv.msg('===正在检查更新===');
+      //超时检查
+      checkUpdateTimer = setTimeout(function () {
+        adv.msg('==更新失败,可能github被墙了==', adv.MSG_LEVEL.error);
+      }, 120000);
+      var locPackage = require('nw.gui').App.manifest;
+      //获取版本信息和更新文件列表
+      adv.updater.get(packageFile)
+      .then(function (packageData) {
+        clearTimeout(checkUpdateTimer);
+        packageData.text = packageData.buffer.toString();
+        if (!packageData.text) return;
+        var remotePackage = JSON.parse(packageData.text);
+        if (remotePackage.updater.version != locPackage.updater.version) {
+          if (confirm('是否更新到最新版本:' + remotePackage.updater.version)) {
+            //如果update目录不存在则创建
+            if (!fs.existsSync(updatePath)) {
+              util.mkdir(updatePath, true);
+            }
+            //保存最新的配置文件
+            fs.writeFileSync(updatePath + '\\package.json', packageData.buffer);
+            //下载补丁包
+            adv.updater.update(remotePackage.updater.package);
+          }
+        }
+        else {
+          adv.msg('当前版本:' + remotePackage.updater.version + ',已经是最新版');
+        }
+      });
+    },
+    //下载补丁包
+    update: function (packageUrl) {
+      adv.msg('===正在下载更新文件===', adv.MSG_LEVEL.warnings);
+      adv.updater.get(packageUrl + '?' + new Date() * 1)
+      .then(function (data) {
+        fs.writeFileSync(updatePath + '\\update.zip', data.buffer);
+        adv.msg('===下载完成正在安装===');
+        adv.updater.install();
+      });
+    },
+    //安装补丁包
+    install: function () {
+      //移动配置文件
+      require("child_process").exec('xcopy "' + updatePath + '\\package.json" "' + execPath + '\\package.json" /s /e /y');
+      //解压缩补丁文件
+      var unzip = execPath + '\\7z.exe x ' + updatePath + '\\update.zip -y';
+      require("child_process").exec(unzip, function () {
+        adv.msg('===更新完成,重启后生效===');
+      });
     }
-  });
-})()
+  };
+})();
