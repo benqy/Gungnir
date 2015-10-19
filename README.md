@@ -6,8 +6,8 @@ Gungnir
 请求日记,重写response等更多功能将在目前功能稳定后开始开发.
 
 ###下载
-v0.2.5.0版本
-http://pan.baidu.com/s/1hqJEgyK
+[v0.2.6.0版本](http://7ktooc.com1.z0.glb.clouddn.com/gungnir.zip)
+
 
 
 ###帮助文档
@@ -18,7 +18,8 @@ http://pan.baidu.com/s/1hqJEgyK
 2. 调试线上文件  
 3. 使用已存在的本地文件  
 4. 代理整个目录   
-5. 代码编辑器
+5. 模拟接口
+6. 代码编辑器
 
 
 ###CHANGELOG   
@@ -26,6 +27,13 @@ v0.2.2.0
 
 1. NETWORK完善  
 2. bug修复
+
+v0.2.6.0
+
+1. 代码编辑器样式可选择.
+2. 优化自动更新
+3. bug修复
+4. codemirror更行到5.7版
 
 v0.2.0.0  
 
