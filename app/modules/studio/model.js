@@ -180,10 +180,24 @@
         node.icon = './img/folder.png';
       }
       node.children = [];
+      //排序
+      var arr1 = [], arr2 = []
+      //递归读取目录
       fs.readdirSync(path)
         .forEach(function (file) {
-          pathToTreeNode(path + '\\' + file, node);
+          var fullPath = path + '\\' + file;
+          if(fs.statSync(fullPath).isDirectory()){
+            arr1.push(fullPath);
+          }
+          else {
+            arr2.push(fullPath);
+          }
         });
+      arr1 = arr1.concat(arr2);
+      arr1.forEach(function (fullPath) {
+        pathToTreeNode(fullPath, node);
+      });
+
     } else {
       node.fileType = getFileType(node.name);
       if (node.isProxy) {
