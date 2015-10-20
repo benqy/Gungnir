@@ -1,4 +1,4 @@
-/* BASICS */
+ï»¿/* BASICS */
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -304,19 +304,24 @@ div.CodeMirror-dragcursors {
   visibility: visible;
 }
 
-/**¸ßÁÁÓëÑ¡ÖĞµ¥´ÊÆ¥ÅäµÄËùÓĞµ¥´Ê**/
+/**é«˜äº®ä¸é€‰ä¸­å•è¯åŒ¹é…çš„æ‰€æœ‰å•è¯**/
 .CodeMirror-focused .cm-matchhighlight {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
         background-position: bottom;
         background-repeat: repeat-x;
       }
-/**ĞĞÄ©Î²¶àÓàµÄ¿Õ°×**/
+/**è¡Œæœ«å°¾å¤šä½™çš„ç©ºç™½**/
 .cm-trailingspace {
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
     background-position: bottom left;
     background-repeat: repeat-x;
     }
-
+/**è‡ªå®šä¹‰æ»šåŠ¨æ¡æ ·å¼**/
+.CodeMirror-overlayscroll-horizontal div, .CodeMirror-overlayscroll-vertical div{
+    position: absolute;
+    background: #357ebd !important;
+    border-radius: 3px;
+}
 .CodeMirror-selected { background: #d9d9d9; }
 .CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
 .CodeMirror-crosshair { cursor: crosshair; }

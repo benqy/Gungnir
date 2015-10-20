@@ -23,7 +23,8 @@
     showTrailingSpace: true,
     profile: 'xhtml',
     //自动编译Babel文件为js文件 http://babeljs.io/
-    autoCompileBabel:true
+    autoCompileBabel: true,
+    scrollbarStyle: "overlay"
   };
 
   var htmlmixed = {

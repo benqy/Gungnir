@@ -64,7 +64,7 @@ box-shadow: 0 10px 20px black;
 }
 
 .cm-s-ambiance .CodeMirror-guttermarker { color: #aaa; }
-.cm-s-ambiance .CodeMirror-guttermarker-subtle { color: #111; }
+.cm-s-ambiance .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
 
 .cm-s-ambiance .CodeMirror-cursor { border-left: 1px solid #7991E8; }
 
