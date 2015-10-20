@@ -1,9 +1,10 @@
-//regex:(?insx)^http://cms3\.local\.17173\.com/fed/src/(?<fils>.*)$
-//E:\work_place\cms3.0\fed\src\${fils}
+
 var zlib = require('zlib');
 var spider = require('./spider');
 
+//代理服务器
 var proxyServer,
+  //web服务器
   localServer;
 var httpProxy = require('http-proxy'),
   fs = require('fs'),
@@ -66,8 +67,9 @@ var renderDir = function (urlOpt, dir) {
   return resData;
 };
 
-
+//SSI命令
 var DIRECTIVE_MATCHER = /<!--#([a-z]+)([ ]+([a-z]+)="(.+?)")*\s*-->/g;
+//SSI命令中的属性
 var ATTRIBUTE_MATCHER = /([a-z]+)="(.+?)"/g;
 var INTERPOLATION_MATCHER = /\$\{(.+?)\}/g;
 var parseAttributes =  function (directive) {
@@ -109,9 +111,13 @@ var resFile = function (path,root) {
   return content;
 };
 
+//web服务器
 var runServer = function (adv) {
-  var ss = adv.system.get(),proItem;
+  var ss = adv.system.get(),
+      //配置好的代理规则项
+      proItem;
   var configs = ss.localServer;
+  //设置浏览器代理
   module.exports.setProxy();
   var serverHandler = function (req, res) {
     var ss = adv.system.get();
@@ -121,10 +127,10 @@ var runServer = function (adv) {
       urlOpt = urlModule.parse(req.url, true),
       header,
       resData = '';
+    //是否设置了代理.
     if (urlOpt.query.proxyid) {
       proItem = adv.studio.getProItems()[urlOpt.query.proxyid];
     }
-    //是代理项
     if (proItem && fs.existsSync(proItem.localFile)) {
       header = setHeader(urlModule.parse(urlOpt.query.oriurl, true));
       //代理整个目录
@@ -161,11 +167,11 @@ var runServer = function (adv) {
       }
       res.writeHead(200, header);
     }
-    //非代理
+    //非代理(即普通的本地web服务器)
     else {
       header = setHeader(urlOpt);
       path = require('path').resolve(ss.workspace + urlOpt.path.split('?')[0]);
-      path = decodeURIComponent(path)
+      path = decodeURIComponent(path);
       if (!fs.existsSync(path)) {
         if (urlOpt.path == '/favicon.ico') {
           resData = fs.readFileSync(require('path').dirname(process.execPath) + '\\app\\img\\logo.ico');
@@ -190,7 +196,7 @@ var runServer = function (adv) {
   localServer.timeout = 5000;
 };
 
-//判断url是否匹配某个代理项
+//判断url是否匹配某个代理项设置.
 var matchProxy = function (proItem, urlOpt) {
   var proItemUrlOpt = require('url').parse(proItem.url.toLowerCase().trim(), true),
     isMatch = false;
@@ -265,7 +271,9 @@ var parseRes = function (resHeader, url) {
 }
 var events = [];
 module.exports = {
+  //运行代理服务器
   runProxyServer: function (adv) {
+    
     var ss = adv.system.get(),
       localServerConfig = ss.localServer;
     proxyServer = httpProxy.createServer(function (req, res, proxy) {
@@ -273,10 +281,11 @@ module.exports = {
       var buffer = httpProxy.buffer(req),
         url = req.url.toLowerCase(),
         urlOpt = require('url').parse(url, true),
+        //代理配置列表
         proItems = adv.studio.getProItems();
       host = urlOpt.hostname || 'localhost', port = urlOpt.port || 80;
       if (localServer && localServer.address()) {
-        //判断url是否匹配某个代理项,如果是,则代理到本地文件.
+        //判断url是否匹配某个代理项,如果是,则交给本地web服务器处理.
         for (var key in proItems) {
           var proItem = proItems[key];
           if (matchProxy(proItem, urlOpt)) {
