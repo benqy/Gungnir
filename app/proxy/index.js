@@ -1,4 +1,3 @@
-
 var zlib = require('zlib');
 var spider = require('./spider');
 

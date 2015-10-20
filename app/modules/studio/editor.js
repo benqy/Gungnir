@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   var util = require('./helpers/util');
 
 
@@ -11,7 +11,6 @@
     autofocus: true,
     lineNumbers: true,
     lineWrapping: true,
-    extraKeys: { "Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }, "Ctrl-J": "toMatchingTag" },
     foldGutter: true,
     gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     styleActiveLine: true,
@@ -70,8 +69,10 @@
       "Ctrl-I": function (cm) { server.showType(cm); },
       "Alt-.": function (cm) { server.jumpToDef(cm); },
       //"Alt-,": function (cm) { server.jumpBack(cm); },
-      "Ctrl-Q": function (cm) { server.rename(cm); },
-      "Ctrl-R": function (cm) { server.selectName(cm); }
+      //"Ctrl-Q": function (cm) { server.rename(cm); },
+      "Ctrl-R": function (cm) { server.selectName(cm); },
+      "Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }, 
+      "Ctrl-J": "toMatchingTag"
     })
     editor.on("cursorActivity", function (cm) { server.updateArgHints(cm); });
   };
