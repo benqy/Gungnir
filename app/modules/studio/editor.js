@@ -19,6 +19,8 @@
     autoCloseBrackets: true,
     highlightSelectionMatches: { showToken: /\w/ },
     matchTags: { bothTags: true },
+    //显示行末尾多余的空白
+    showTrailingSpace: true,
     profile: 'xhtml',
     //自动编译Babel文件为js文件 http://babeljs.io/
     autoCompileBabel:true

@@ -25,7 +25,7 @@
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",
-    "toolbar": false,
+    "toolbar": true,
     "frame": false,
     "width": 1200,
     "height": 700,
