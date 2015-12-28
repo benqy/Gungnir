@@ -5,6 +5,7 @@
 
   var defaultConfig = {
     theme: 'monokai',
+     blastCode: { effect: 1},
     tabSize: 2,
     //关闭自带的拖动显示
     dragDrop: false,
@@ -131,7 +132,7 @@
       var tab = $('.editor-tab-btn[data-index="' + index + '"]');
       var filepath = tab.data('filepath');
       delete this.editors[filepath];
-      tab.remove()
+      tab.remove();
       //删除语法提示弹出框
       $('.CodeMirror-Tern-tooltip').remove();
 

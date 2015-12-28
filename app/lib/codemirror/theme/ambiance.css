@@ -71,11 +71,14 @@ box-shadow: 0 10px 20px black;
 .cm-s-ambiance .CodeMirror-activeline-background {
   /**background: none repeat scroll 0% 0% rgba(255, 255, 255, 0.031);**/
   border:2px solid #282828;
-  background: none repeat scroll 0% 0% rgba(16, 16, 16, 1);
+  border-left:none;
+  border-right:none;
+  background: none repeat scroll 0% 0% rgba(16, 16, 16, 0.3);
 }
 
 .cm-s-ambiance.CodeMirror{
-    background:#1E1E1E;
+  background: transparent url('img/3.jpg');
+  background-size: cover;
 }
 .cm-s-ambiance .CodeMirror-gutters {
     background:#1E1E1E;
