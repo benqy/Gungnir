@@ -22,7 +22,7 @@
   "keywords": [
     "adv"
   ],
-  version:'0.2.8.0',
+  "version":"0.2.8.0",
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",
