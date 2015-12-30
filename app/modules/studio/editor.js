@@ -97,7 +97,8 @@
       json: 'json',
       'null': 'null',
       ts:'text/typescript',
-      adv: 'javascript'
+      adv: 'javascript',
+      jsx:'jsx'
     },
     editors: {
 

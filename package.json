@@ -22,7 +22,7 @@
   "keywords": [
     "adv"
   ],
-  "version":"0.2.8.0",
+  "version":"0.2.9.0",
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",
@@ -35,7 +35,7 @@
     "min_height": 700
   },
   "updater":{
-    "version":"0.2.7.0",
-    "package":"http://7ktooc.com1.z0.glb.clouddn.com/updater.zip"
+    "version":"0.2.9.0",
+    "package":"http://7ktooc.com1.z0.glb.clouddn.com/update.zip"
   }
 }
