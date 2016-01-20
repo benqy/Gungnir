@@ -1,11 +1,10 @@
 (function () {
   var util = require('./helpers/util');
 
-
-
   var defaultConfig = {
     theme: 'monokai',
-     blastCode: { effect: 1},
+    //输入带闪瞎眼特技
+    blastCode: { effect: 1},
     tabSize: 2,
     //关闭自带的拖动显示
     dragDrop: false,
@@ -67,7 +66,7 @@
     editor.setOption("extraKeys", {
       "'.'": function (cm) {
         setTimeout(function () { server.complete(cm); }, 100);
-        throw CodeMirror.Pass; // tell CodeMirror we didn't handle the key 
+        throw CodeMirror.Pass; // tell CodeMirror we didn't handle the key
       },
       "Ctrl-.": function (cm) { server.complete(cm); },
       "Ctrl-I": function (cm) { server.showType(cm); },
@@ -75,9 +74,9 @@
       //"Alt-,": function (cm) { server.jumpBack(cm); },
       //"Ctrl-Q": function (cm) { server.rename(cm); },
       "Ctrl-R": function (cm) { server.selectName(cm); },
-      "Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }, 
+      "Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); },
       "Ctrl-J": "toMatchingTag"
-    })
+    });
     editor.on("cursorActivity", function (cm) { server.updateArgHints(cm); });
   };
 

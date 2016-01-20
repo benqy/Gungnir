@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   //配置文件,用于判断是否有新版本
   var packageFile = 'https://raw.githubusercontent.com/benqy/Gungnir/master/package.json',
   //当前程序的运行目录

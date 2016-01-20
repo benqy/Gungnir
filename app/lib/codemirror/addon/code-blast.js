@@ -1,8 +1,8 @@
 /*
+闪瞎眼特效
 Based on Joel Besada's lovely experiment
 https://twitter.com/JoelBesada/status/670343885655293952
  */
-
 ;(function () {
 	var shakeTime = 0,
 		shakeTimeMax = 0,
@@ -28,17 +28,20 @@ https://twitter.com/JoelBesada/status/670343885655293952
 	var throttledShake = throttle(shake, 100);
 	var throttledSpawnParticles = throttle(spawnParticles, 100);
 
+  //原先是取当前元素的颜色,现在改为随机颜色
 	function getRGBComponents(node) {
 		var color = getComputedStyle(node).color;
-		if (color) {
+		/*if (color) {
 			try {
 				return color.match(/(\d+), (\d+), (\d+)/).slice(1);
 			} catch(e) {
 				return [255, 255, 255];
 			}
 		} else {
-			return [255, 255, 255];
-		}
+			return [Math.floor(Math.random()*255), Math.floor(Math.random()*255), Math.floor(Math.random()*255)];
+		}*/
+    /*return []*/
+    return [Math.floor(Math.random()*255), Math.floor(Math.random()*255), Math.floor(Math.random()*255)];
 	}
 
 	function spawnParticles(type) {
@@ -63,13 +66,13 @@ https://twitter.com/JoelBesada/status/670343885655293952
 			color: color
 		};
 		if (effect === 1) {
-			p.size = random(2, 4);
+			p.size = random(2, 6);
 			p.vx = PARTICLE_VELOCITY_RANGE.x[0] + Math.random() *
 					(PARTICLE_VELOCITY_RANGE.x[1] - PARTICLE_VELOCITY_RANGE.x[0]);
 			p.vy = PARTICLE_VELOCITY_RANGE.y[0] + Math.random() *
 					(PARTICLE_VELOCITY_RANGE.y[1] - PARTICLE_VELOCITY_RANGE.y[0]);
 		} else if (effect === 2) {
-			p.size = random(2, 8);
+			p.size = random(2, 6);
 			p.drag = 0.92;
 			p.vx = random(-3, 3);
 			p.vy = random(-3, 3);
@@ -124,7 +127,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 
 	function random(min, max) {
 		if (!max) { max = min; min = 0; }
-		return min + ~~(Math.random() * (max - min + 1))
+		return min + ~~(Math.random() * (max - min + 1));
 	}
 
 	function throttle (callback, limit) {
@@ -137,7 +140,7 @@ https://twitter.com/JoelBesada/status/670343885655293952
 					wait = false;
 				}, limit);
 			}
-		}
+		};
 	}
 
 	function loop() {
