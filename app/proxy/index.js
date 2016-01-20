@@ -130,6 +130,7 @@ var runServer = function (adv) {
     if (urlOpt.query.proxyid) {
       proItem = adv.studio.getProItems()[urlOpt.query.proxyid];
     }
+    
     if (proItem && fs.existsSync(proItem.localFile)) {
       header = setHeader(urlModule.parse(urlOpt.query.oriurl, true));
       //代理整个目录
@@ -287,7 +288,7 @@ module.exports = {
         //判断url是否匹配某个代理项,如果是,则交给本地web服务器处理.
         for (var key in proItems) {
           var proItem = proItems[key];
-          if (matchProxy(proItem, urlOpt)) {
+          if (!proItem.disable && matchProxy(proItem, urlOpt)) {
             host = localServerConfig.host;
             port = localServerConfig.port;
             req.url = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port) +
