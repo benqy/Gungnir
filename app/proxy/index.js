@@ -273,7 +273,6 @@ var events = [];
 module.exports = {
   //运行代理服务器
   runProxyServer: function (adv) {
-    
     var ss = adv.system.get(),
       localServerConfig = ss.localServer;
     proxyServer = httpProxy.createServer(function (req, res, proxy) {
@@ -377,101 +376,6 @@ module.exports = {
       }
     });
   },
-  //runProxyServer: function (adv) {
-  //  var ss = adv.system.get(),
-  //    localServerConfig = ss.localServer;
-  //  var proxy = httpProxy.createProxyServer({ prependPath: false });
-
-  //  proxyServer = http.createServer(function (req, res) {
-  //    ss = adv.system.get();
-  //    var url = req.url.toLowerCase(),
-  //      target = req.url,
-  //      urlOpt = require('url').parse(url, true),
-  //      proItems = adv.studio.getProItems();
-  //    if (localServer && localServer.address()) {
-  //      //判断url是否匹配某个代理项,如果是,则代理到本地文件.
-  //      for (var key in proItems) {
-  //        var proItem = proItems[key];
-  //        if (matchProxy(proItem, urlOpt)) {
-  //          target = 'http://' + ss.localServer.host + (ss.localServer.port == 80 ? '' : ':' + ss.localServer.port) +
-  //            '?proxyid=' + proItem.id + 
-  //            '&oriurl=' + encodeURIComponent(req.url);
-  //        }
-  //      }
-  //    }
-  //    req.url = target
-  //    req.reqDate = new Date();
-  //    proxy.web(req, res, { target: target });
-  //  });
-  //  proxyServer.listen(ss.proxyServer.port);
-
-  //  proxy.on('proxyRes', function (proxyRes, req, res) {
-  //    var logObj = {}, pathArr, buffer = [], resStr = '',
-  //        urlOpt = require('url').parse(req.url, true),
-  //        url = noErrorDecodeUri(req.url),
-  //        filename;
-  //    if (urlOpt.query.httpmocknolog) return;
-  //    pathArr = url.split('/');
-  //    filename = pathArr[pathArr.length - 1];
-  //    filename = filename || url;
-  //    logObj.url = url;
-  //    logObj.filename = filename;
-  //    logObj.method = req.method;
-  //    logObj.contentType = proxyRes.headers['content-type'] || '';
-  //    logObj.statusCode = proxyRes.statusCode;
-  //    logObj.reqHeader = req.headers;
-  //    logObj.queryObject = urlOpt.query || {};
-  //    logObj.resHeader = proxyRes.headers;
-  //    logObj.delay = new Date() - req.reqDate;
-  //    logObj.id = util.generalId();
-  //    proxyRes.on('data', function (trunk) {
-  //      buffer.push(trunk);
-  //      resStr += trunk;
-  //    });
-  //    proxyRes.on('end', function () {
-  //      try {
-  //        buffer = Buffer.concat(buffer);
-  //        var resObj = parseRes(proxyRes.headers, url, buffer);
-  //        logObj.resObj = resObj;
-  //        if (resObj.gzip) {
-  //          zlib.unzip(buffer, function (err, buffer) {
-  //            if(err)console.dir(err);
-  //            if (spider.isGbk(logObj.contentType, buffer)) {
-  //              //将gbk转为utf8
-  //              buffer = iconv.decode(buffer, 'GBK');
-  //            }
-  //            logObj.content = buffer;
-  //            logObj.size = buffer.length / 1000;
-  //            logObj.date = new Date();
-  //            module.exports.emit('log', logObj);
-  //          });
-  //        }
-  //        else {
-  //          if (spider.isGbk(logObj.contentType, buffer)) {
-  //            buffer = iconv.decode(buffer, 'GBK');
-  //          }
-  //          logObj.content = buffer;
-  //          logObj.size = buffer.length / 1000;
-  //          logObj.date = new Date();
-  //          module.exports.emit('log', logObj);
-  //        }
-  //      }
-  //      catch (e) {
-  //        console.dir(e)
-  //      }
-  //    });
-
-  //  });
-
-  //  proxy.on('error', function (err, req, res) {
-  //    console.log(err)
-  //    res.writeHead(500, {
-  //      'Content-Type': 'text/plain'
-  //    });
-
-  //    res.end('服务异常.');
-  //  });
-  //},
   runServer: function (adv, fn) {
     if (localServer && localServer.address()) {
       localServer.close(function () {

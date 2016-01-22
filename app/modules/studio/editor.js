@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   var util = require('./helpers/util');
 
   var defaultConfig = {

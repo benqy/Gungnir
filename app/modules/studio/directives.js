@@ -7,6 +7,7 @@
   var openProject = function (path, $scope) {
     var ss = adv.system.get();
     ss.workspace = path;
+    adv.workspace = path;
     adv.system.save();
     studio.updateTree && studio.updateTree();
     $scope.hasWorkspace = true;
@@ -142,14 +143,15 @@
 
       //刷新文件目录
       studio.updateTree = function () {
-        var treeNodes, ss = adv.system.get();
-        if (ss.workspace) {
+        var treeNodes, ss = adv.system.get(),workspace = adv.workspace || ss.workspace;
+        adv.workspace = adv.workspace || ss.workspace;
+        if (workspace) {
           //如果目录已被删除或者被变更为一个文件,则删除workspace
-          if (fs.existsSync(ss.workspace) && util.isdir(ss.workspace)) {
+          if (fs.existsSync(workspace) && util.isdir(workspace)) {
             adv.msg('正在加载项目...');
             //防卡
             setTimeout(function () {
-              treeNodes = studio.dirObjToTreeNode(ss.workspace);
+              treeNodes = studio.dirObjToTreeNode(workspace);
               var proItems = studio.getProItems(),proItem;
               studio.tree = $.fn.zTree.init($('#fileTree'), setting, treeNodes);
               //加载不在工作目录内的项
@@ -159,7 +161,7 @@
                   var pNode = studio.pathToTreeNode(proItem.localFile, null, true);
                   studio.tree.addNodes(null,pNode);
                 }
-              };
+              }
               //选中上一次选中的文件
               var node = studio.tree.getNodeByParam('path', ss.currentFile);
               if (node) {
@@ -171,6 +173,7 @@
           }
           else {
             ss.workspace = '';
+            adv.workspace = '';
             adv.system.save(ss);
           }
         }

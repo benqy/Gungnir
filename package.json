@@ -22,7 +22,8 @@
   "keywords": [
     "adv"
   ],
-  "version":"0.2.9.0",
+  "version":"0.2.10.0",
+  "single-instance" : false,
   "window": {
     "title": "Gungnir",
     "icon": "app/img/logo.png",

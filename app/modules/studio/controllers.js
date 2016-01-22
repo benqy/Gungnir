@@ -5,7 +5,6 @@
   var util = require('./helpers/util');
   var proxy = require('./proxy'),
     fs = require('fs');
-  proxy.runProxyServer(adv);
   studio
     .controller('studio', function ($scope, $state, $stateParams) {
       var system = adv.system.get();
@@ -65,10 +64,11 @@
       $scope.runServer = function () {
         proxy.runServer(adv, function () {
           adv.studio.serverRuning = true;
+          proxy.runProxyServer(adv);
           $scope.serverRuning = adv.studio.serverRuning;
         });
       };
-      $scope.runServer();
+      //$scope.runServer();
       //关闭服务器
       $scope.stopServer = function () {
         proxy.stopServer(function () {
@@ -156,6 +156,7 @@
             require("child_process").exec('rd /q /s ' + $scope.currentNode.path);
             if (ss.workspace == $scope.currentNode.path) {
               ss.workspace = '';
+              adv.workspace = '';
               $scope.hasWorkspace = false;
               adv.system.save(ss);
             }
