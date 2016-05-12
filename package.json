@@ -22,7 +22,7 @@
   "keywords": [
     "adv"
   ],
-  "version":"0.2.11.1",
+  "version":"0.2.11.2",
   "single-instance" : false,
   "window": {
     "title": "Gungnir",
@@ -37,6 +37,6 @@
   },
   "updater":{
     "version":"0.2.11.1",
-    "package":"http://7ktooc.com1.z0.glb.clouddn.com/update02111.zip"
+    "package":"http://7ktooc.com1.z0.glb.clouddn.com/update02112.zip"
   }
 }
