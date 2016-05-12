@@ -1,4 +1,4 @@
-﻿/*初始化*/
+/*初始化*/
 html {
     height: 100%;
     -webkit-user-select: none;
@@ -371,6 +371,7 @@ border-bottom-left-radius: 0;
 
 /*****************code editer*********************/
 .logContentWrap {
+	position:relative;
     height: calc(100% - 51px);
     overflow: auto;
     border-radius: 0;
@@ -386,6 +387,7 @@ border-bottom-left-radius: 0;
 }
 .CodeMirror {
     height:100%;
+  z-index:210;
 }
 
 #msg{

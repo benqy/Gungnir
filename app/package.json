@@ -1,0 +1,22 @@
+{
+  "name": "gungnir",
+  "version": "0.2.7",
+  "description": "gannia",
+  "main": "app.js",
+  "dependencies": {
+    "babel": "^5.4.7",
+    "bufferhelper": "^0.2.0",
+    "http-proxy": "^0.10.4",
+    "iconv-lite": "^0.4.4",
+    "ip": "^0.3.2",
+    "ssi": "^0.3.0",
+    "uglify-js": "^2.4.15",
+    "when": "^3.4.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hmjlr123@gmail.com",
+  "license": "ISC"
+}

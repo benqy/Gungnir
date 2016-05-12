@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   var util = require('./helpers/util');
 
   var defaultConfig = {
@@ -173,10 +173,12 @@
         return;
       };
       var index = util.generalId();
-      var me = this, txt = '', wrap = $('<div class="logContentWrap" data-index="' + index + '" data-filepath="' + filepath + '">'), el;
+      var me = this, txt = '', wrap = $('<div class="logContentWrap" data-index="' + index + '" data-filepath="' + filepath + '">'), 
+          el,cmbg = $('<div class="CodeMirrorBg"></div>');
       //生成编辑器
       el = $('<textarea name="" class="logContent"></textarea>');
       wrap.append(el);
+      wrap.append(cmbg);
       wrap.show();
       $('#editorRightContent').append(wrap);
       //生成tab按钮

@@ -82,10 +82,13 @@ var parseAttributes =  function (directive) {
 };
 
 //读取文件并返回,支持SSI
-var resFile = function (path,root) {
-  var content = fs.readFileSync(path);
-  if (~path.indexOf('.shtml')) {
-    content = content.toString();
+var resFile = function (filename,root) {
+  var ssi = require('ssi');
+  var content = fs.readFileSync(filename, {
+    encoding: 'utf8'
+  });
+  if (~filename.indexOf('.shtml')) {
+  /*  content = content.toString();
     var directives = content.match(DIRECTIVE_MATCHER);
     directives && directives.forEach(function (directive) {
       var attributes = parseAttributes(directive);
@@ -105,7 +108,10 @@ var resFile = function (path,root) {
           content = content.replace(directive, fs.readFileSync(filename).toString());
         }
       }
-    });
+    });*/
+    var parser = new ssi('./', './', '/**/*.shtml');
+    content = parser.parse(filename, content).contents;
+    console.log(content)
   }
   return content;
 };

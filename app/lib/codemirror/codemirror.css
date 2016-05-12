@@ -1,4 +1,16 @@
-﻿/* BASICS */
+/* BASICS */
+
+.CodeMirrorBg{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  background: transparent url('theme/img/utrl.jpg');
+  background-size: cover;
+  -webkit-filter: brightness(60%);
+}
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -147,7 +159,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .CodeMirror {
   position: relative;
   overflow: hidden;
-  background: white;
+  background: transparent !important;
 }
 
 .CodeMirror-scroll {
