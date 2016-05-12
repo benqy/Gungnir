@@ -36,7 +36,7 @@
     "min_height": 700
   },
   "updater":{
-    "version":"0.2.11.1",
+    "version":"0.2.11.2",
     "package":"http://7ktooc.com1.z0.glb.clouddn.com/update02112.zip"
   }
 }
