@@ -387,7 +387,7 @@ border-bottom-left-radius: 0;
 }
 .CodeMirror {
     height:100%;
-  z-index:210;
+  z-index:9;
 }
 
 #msg{

@@ -6,7 +6,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 200;
+  z-index: -100;
   background: transparent url('theme/img/utrl.jpg');
   background-size: cover;
   -webkit-filter: brightness(60%);
