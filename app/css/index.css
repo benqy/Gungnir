@@ -20,29 +20,17 @@ body {
 }
 /***************************自定义滚动条*******************/
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-    background: rgba(0,0,0,0.9);
+  background: #1E1E1E;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
-    background: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(202,202,202,0.07)),color-stop(100%,rgba(229,229,229,0.07)));
-    background: -webkit-linear-gradient(left,rgba(202,202,202,0.07) 0%,rgba(229,229,229,0.07) 100%);
-    box-shadow: 0 0 1px 0 rgba(0,0,0,.15) inset,0 1px 0 0 #fff;
-    background-color: #ccc;
-}
-
-::-webkit-scrollbar, ::-webkit-scrollbar-thumb {
-    overflow: visible;
-    /*border-radius: 4px;*/
-    border-right: solid 1px #a6a6a6;
+    width: 4px;
+    background-color: #353B45 !important;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: -webkit-gradient(linear,left top,right top,color-stop(0%,rgba(233,233,233,0.05)),color-stop(100%,rgba(221,221,221,0.05)));
-    background: -webkit-linear-gradient(left,rgba(233,233,233,0.05) 0%,rgba(221,221,221,0.05) 100%);
-    box-shadow: 0 2px 1px 0 rgba(0,0,0,.05);
-    background-color: #ddd;
+    background-color: #353B45 !important;
+    border-radius: 3px;
 }
 
 
@@ -114,7 +102,7 @@ body {
 }
 
 .app .sidebar {
-    padding: 15px;
+    padding: 15px 0 0 10px;
     width: 250px;
     height: 100%;
 }
@@ -124,9 +112,9 @@ body {
 .app .container-right {
     width: calc(100% - 250px);
     overflow: auto;
-    height: 100%;
+    height: calc(100% - 35px);
     padding-top: 15px;
-    padding-right: 15px;
+    padding-right: 10px;
 }
     .app .container-right-middle{
         width: calc(100% - 300px);
@@ -164,7 +152,7 @@ body {
 }
 
 .list-group {
-    margin-bottom: 15px;    
+    margin-bottom: 15px;
 }
 .list-group-item {
     padding: 5px 15px;
@@ -336,17 +324,43 @@ border-bottom-left-radius: 0;
 /*************ZTREE**************/
 .code-tool{
     margin-bottom: 0;
-    background-color: #428bca;
+    /*background-color: #428bca;*/
     border-color: #428bca;
     text-align: center;
 }
 .code-tool a {
     width: 45px;
 }
+
+.code-tool .btn-group .btn-primary,
+.code-tool .btn-group .btn-success{
+  background-color: #1E1E1E !important;
+  border-color: #1E1E1E !important;
+}
+
 .ztree {
-    background: #fff;
-    height: calc(100% - 71px);
-    overflow: auto;
+    height: calc(100% - 70px);
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+.ztree li span.button.root_open,
+.ztree li span.button.center_open{
+  background:url('../img/menu_down.png') no-repeat;
+}
+.ztree li span.button.center_close,
+.ztree li span.button.center_close,
+.ztree li span.button.root_close{
+    background:url('../img/menu_right.png') no-repeat;
+}
+.ztree li span.button.center_docu,
+.ztree li span.button.bottom_docu{
+  background:none;
+}
+.ztree li ul.line {
+  background: none;
+}
+.ztree li{
+  padding: 3px 0;
 }
 
 .ztree li span{
@@ -356,8 +370,20 @@ border-bottom-left-radius: 0;
     max-width: 204px;
     display: inline-block;
 }
+.ztree li a{
+  padding: 3px 3px 3px 1px !important;
+  height: 22px;
+  border:none;
+  color:#9DA5B4;
+  width: 100%;
+}
 .ztree li a.curSelectedNode {
-    height: 18px;
+    height: 22px;
+    background-color: #31363F;
+    border:none;
+    opacity: 0.8;
+    color:#9DA5B4;
+    width: 100%;
 }
 
 /**************ENDZTREE***************/
@@ -371,11 +397,12 @@ border-bottom-left-radius: 0;
 
 /*****************code editer*********************/
 .logContentWrap {
+  border-bottom: 1px solid #181A1F;
 	position:relative;
-    height: calc(100% - 51px);
-    overflow: auto;
-    border-radius: 0;
-    display:none;
+  height: calc(100% - 36px);
+  overflow: auto;
+  border-radius: 0;
+  display:none;
 }
 .logContent {
     display:none;
@@ -390,9 +417,18 @@ border-bottom-left-radius: 0;
   z-index:9;
 }
 
+.msg-tool{
+  height:35px;
+  border-top: 1px solid #181A1F;
+}
+
 #msg{
-    width:100%;
-    height:36px;
+  display: block;
+  vertical-align: middle;
+  color:#8E96A4;
+  font-size:12px;
+  height: 100%;
+  line-height: 35px;
 }
 
 div.warnings{
@@ -418,6 +454,7 @@ div.errors{
     background:#2D2D30;
     border-bottom: 2px solid #357ebd;
     height:36px;
+    margin-left: 65px;
 }
 .editor-tool a{
     cursor:default;

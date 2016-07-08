@@ -28,7 +28,7 @@
       });
   };
 
-  adv.extend({      
+  adv.extend({
     storeDir: require('nw.gui').App.dataPath
   });
 
@@ -54,7 +54,8 @@
         .removeClass(adv.MSG_LEVEL.info)
         .removeClass(adv.MSG_LEVEL.warnings)
         .removeClass(adv.MSG_LEVEL.debug)
-        .removeClass(adv.MSG_LEVEL.errors);
+        .removeClass(adv.MSG_LEVEL.errors)
+        .text('');
       }, 5000);
     }
   });
@@ -79,12 +80,12 @@
 
 
  // adv.regModule('network');
- 
+
 
   window.ondragover = function (e) { e.preventDefault(); return false; };
   window.ondrop = function (e) { e.preventDefault(); return false; };
 
-  
+
   //require('nw.gui').Shell.openItem('AdStudioFlush.exe');
   process.on('uncaughtException', function(err) {
     console.dir(err);
