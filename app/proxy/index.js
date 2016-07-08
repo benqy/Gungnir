@@ -84,9 +84,7 @@ var parseAttributes =  function (directive) {
 //读取文件并返回,支持SSI
 var resFile = function (filename,root) {
   var ssi = require('ssi');
-  var content = fs.readFileSync(filename, {
-    encoding: 'utf8'
-  });
+  var content;
   if (~filename.indexOf('.shtml')) {
   /*  content = content.toString();
     var directives = content.match(DIRECTIVE_MATCHER);
@@ -110,8 +108,12 @@ var resFile = function (filename,root) {
       }
     });*/
     var parser = new ssi('./', './', '/**/*.shtml');
-    content = parser.parse(filename, content).contents;
-    console.log(content)
+    content = parser.parse(filename, fs.readFileSync(filename, {
+      encoding: 'utf8'
+    })).contents;
+  }
+  else{
+    content = fs.readFileSync(filename);
   }
   return content;
 };
@@ -136,7 +138,7 @@ var runServer = function (adv) {
     if (urlOpt.query.proxyid) {
       proItem = adv.studio.getProItems()[urlOpt.query.proxyid];
     }
-    
+
     if (proItem && fs.existsSync(proItem.localFile)) {
       header = setHeader(urlModule.parse(urlOpt.query.oriurl, true));
       //代理整个目录
@@ -207,7 +209,7 @@ var matchProxy = function (proItem, urlOpt) {
   var proItemUrlOpt = require('url').parse(proItem.url.toLowerCase().trim(), true),
     isMatch = false;
   //域名和端口匹配
-  if (urlOpt.host == proItemUrlOpt.host && urlOpt.port == proItemUrlOpt.port) {    
+  if (urlOpt.host == proItemUrlOpt.host && urlOpt.port == proItemUrlOpt.port) {
     if (urlOpt.pathname.trim() == proItemUrlOpt.pathname.trim()) {
       isMatch = true;
     }
