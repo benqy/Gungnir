@@ -1,9 +1,8 @@
-﻿
 var path = require("path");
 
 var Conditional = require("./Conditional");
 
-var DIRECTIVE_MATCHER = /<!--#([a-z]+)([ ]+([a-z]+)="(.+?)")* -->/g;
+var DIRECTIVE_MATCHER = /<!--#([a-z]+)([ ]+([a-z]+)="(.+?)")*\s*-->/g;
 var ATTRIBUTE_MATCHER = /([a-z]+)="(.+?)"/g;
 var INTERPOLATION_MATCHER = /\$\{(.+?)\}/g;
 

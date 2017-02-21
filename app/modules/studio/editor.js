@@ -86,7 +86,7 @@
       shtml: htmlmixed,
       php: 'application/x-httpd-php',
       aspx: htmlmixed,
-      js: 'javascript',
+      js: 'jsx',
       bb: 'javascript',
       coffee: 'coffeescript',
       md: 'markdown',
@@ -171,9 +171,9 @@
         var tab = $('.editor-tab-btn[data-filepath="' + filepath.replace(/\\/ig, '\\\\') + '"]');
         this.toggleToTab(tab.data('index'));
         return;
-      };
+      }
       var index = util.generalId();
-      var me = this, txt = '', wrap = $('<div class="logContentWrap" data-index="' + index + '" data-filepath="' + filepath + '">'), 
+      var me = this, txt = '', wrap = $('<div class="logContentWrap" data-index="' + index + '" data-filepath="' + filepath + '">'),
           el,cmbg = $('<div class="CodeMirrorBg"></div>');
       //生成编辑器
       el = $('<textarea name="" class="logContent"></textarea>');
@@ -192,7 +192,7 @@
         //如果没指定编辑器模式,则根据文件扩展名判断
         var fileSuff = filepath.match(/\.([^\.]+$)/);
         var mode = fileSuff ? fileSuff[1] : 'null';
-        
+
         if (!options.mode) options.mode = this.MODES[mode] || 'null';
         if (mode == 'js' || mode == 'bb') {
           options.lint = true;

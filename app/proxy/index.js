@@ -111,6 +111,7 @@ var resFile = function (filename,root) {
     content = parser.parse(filename, fs.readFileSync(filename, {
       encoding: 'utf8'
     })).contents;
+    console.log(content)
   }
   else{
     content = fs.readFileSync(filename);
@@ -138,7 +139,7 @@ var runServer = function (adv) {
     if (urlOpt.query.proxyid) {
       proItem = adv.studio.getProItems()[urlOpt.query.proxyid];
     }
-
+    
     if (proItem && fs.existsSync(proItem.localFile)) {
       header = setHeader(urlModule.parse(urlOpt.query.oriurl, true));
       //代理整个目录
@@ -209,7 +210,7 @@ var matchProxy = function (proItem, urlOpt) {
   var proItemUrlOpt = require('url').parse(proItem.url.toLowerCase().trim(), true),
     isMatch = false;
   //域名和端口匹配
-  if (urlOpt.host == proItemUrlOpt.host && urlOpt.port == proItemUrlOpt.port) {
+  if (urlOpt.host == proItemUrlOpt.host && urlOpt.port == proItemUrlOpt.port) {    
     if (urlOpt.pathname.trim() == proItemUrlOpt.pathname.trim()) {
       isMatch = true;
     }
