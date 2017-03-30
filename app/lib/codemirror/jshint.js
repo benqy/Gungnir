@@ -1,4 +1,4 @@
-﻿/*! 2.5.2 */
+/*! 2.5.2 */
 var JSHINT;
 if (typeof window === 'undefined') window = {};
 (function () {
